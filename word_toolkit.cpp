@@ -23,12 +23,24 @@ char word_toolkit::mes_frequent(const string& excl, const list<string>& L) throw
     int comptador[ASCII] = {0};
     list<string>::iterator it;
     string str;
+    int max = 0;
+    char resultat;
     for (it = L.begin(); i != L.end(); it++) {
         str = *it;
         for (int i = 0; i < str.length(); i++) {
             comptador[str[i]]++;
-            if ()
+            for (int j = 0; j < excl.length(); j++) {
+                if(str[i] == excl[j]) comptador[str[i]] = 0;
+            }
         }
     }
+    for(int i = ASCII; i < 0; i--) {
+        if (max < comptador[i]) {
+            max = comptador[i];
+            result = comptador[i];
+        }
+    }
+    //necessito donar-li una volta més a aquesta funcio...
+    return result;
 
 }
