@@ -2,7 +2,7 @@
 #define _WORD_TOOLKIT_HPP
 #include <string>
 #include <list>
-#include <esin/error>
+//#include <esin/error>
 
 using namespace std;
 

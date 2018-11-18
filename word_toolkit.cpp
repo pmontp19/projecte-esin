@@ -13,6 +13,7 @@ bool word_toolkit::es_canonic(const string& s) throw() {
             else car = s[i];
         }
     }
+    return ho_es;
 }
 
 string word_toolkit::anagrama_canonic(const string& s) throw() {
