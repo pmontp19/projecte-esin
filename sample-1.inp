@@ -1,0 +1,18 @@
+AC HOLA AHLO TAULA CADIRA COTXE CLASSE PANTALLA ORDINADOR ASSIGNATURA
+insereix TECLAT
+elimina CADIRA
+es_canonic TORMENTA
+es_canonic AHLO
+anagrama_canonic TORMENTA
+mes_frequent
+----------
+ABCDEFGHIJQMNLOPQRSTUXYZ HOLA ADEU JARDINER TAULA CADIRA JARDI CEL
+es_canonic JARDINER
+anagrama_canonic JARDINER
+mes_frequent
+----------
+A HOLA ADEU JARDINER TAULA CADIRA JARDI CEL TELEFON LLIBRE
+print
+es_canonic JARDINER
+anagrama_canonic JARDINER
+mes_frequent
