@@ -40,6 +40,11 @@
     /*Pre: Cert
     Post: destructor
     Cost: */
+    contador = 0;
+    k = 0;
+    n = 0;
+    actual.erase(actual.begin(),actual.end());
+    final = true;
   }
   bool iter_subset::end() throw(){
     /*Pre: Cert
@@ -147,4 +152,5 @@
     return !(actual==c.actual);
 
   }
+
 
