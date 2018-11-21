@@ -1,5 +1,4 @@
 #include "word_toolkit.hpp"
-#include <vector>
 
 
  bool word_toolkit::es_canonic(const string& s) throw(){
@@ -39,7 +38,7 @@ char word_toolkit::mes_frequent(const string& excl, const list<string>& L) throw
     retorna el caràcter '\0', és a dir, el caràcter de codi ASCII 0.
 	Cost: lineal respecte al numero de caracters de string de la llista O(n) */
 	char resposta;
-	vector<int> contadors(26,0);
+	int contadors[26] = { };
 	if(L.size() > 0){
 		for(list<string>::const_iterator it = L.begin(); it!=L.end(); ++it){
 			string paraula = *it;
@@ -56,12 +55,15 @@ char word_toolkit::mes_frequent(const string& excl, const list<string>& L) throw
 		contadors[p] = -1;
 	}
     int posicio = -1;
-    for(uint j = 0; j<contadors.size(); j++){
-    	if(posicio < contadors[j]) posicio = contadors[j];
+    int max = 0;
+    for(uint j = 0; j<sizeof(contadors); j++){
+    	if(max < contadors[j]) {
+            max = contadors[j];
+            posicio = j;
+        }
     }
     if(posicio == -1) resposta = '\0';
     else resposta = 'A' + posicio;
-	return resposta;
-
+    return resposta;
 
 }
