@@ -34,6 +34,7 @@
     contador = its.contador;
     actual = its.actual;
     final = its.final;
+    return *this;
 
   }
   iter_subset::~iter_subset() throw(){
