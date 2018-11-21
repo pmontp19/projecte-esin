@@ -61,7 +61,7 @@
     Post: Operador de desreferència. Retorna el subconjunt apuntat per
     l'iterador; llança un error si l'iterador apunta al sentinella.
     Cost: constant O(1)*/
-    //if (final) throw error;
+    if (final) throw error(0);
     return actual;
 
   }
