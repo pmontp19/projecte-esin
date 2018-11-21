@@ -21,6 +21,7 @@
     k = its.k;
     contador = its.contador;
     actual = its.actual;
+    final = its.final;
 
   }
 
@@ -32,6 +33,7 @@
     k = its.k;
     contador = its.contador;
     actual = its.actual;
+    final = its.final;
 
   }
   iter_subset::~iter_subset() throw(){
@@ -88,6 +90,7 @@
       }
       else final = false;
     }
+    contador++;
     return *this;
   }
   iter_subset iter_subset::operator++(int) throw(){
@@ -121,6 +124,7 @@
       }
       else final = false;
     }
+    contador++;
     return *this;
   }
   bool iter_subset::operator==(const iter_subset& c) const throw(){
@@ -143,5 +147,4 @@
     return !(actual==c.actual);
 
   }
-
 
