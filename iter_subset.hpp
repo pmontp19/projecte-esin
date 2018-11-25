@@ -6,7 +6,6 @@
 
 using namespace std;
 using util::nat;
-
 typedef vector<nat> subset;
 
 class iter_subset {
