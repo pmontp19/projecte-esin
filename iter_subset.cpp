@@ -127,4 +127,3 @@ bool iter_subset::operator!=(const iter_subset& c) const throw(){
   return !(actual==c.actual);
 
 }
-
