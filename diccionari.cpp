@@ -8,7 +8,7 @@ diccionari::diccionari(const diccionari& D) throw(error) {
 
 }
 
-diccionari::operator=(const diccionari& D) throw(error) {
+diccionari& diccionari::operator=(const diccionari& D) throw(error) {
 
 }
 
