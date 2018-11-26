@@ -1,5 +1,4 @@
 nat n;
 nat k;
 subset actual;
-nat contador;
 bool final;

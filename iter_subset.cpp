@@ -5,7 +5,6 @@ iter_subset::iter_subset(nat n, nat k) throw(error): n(n), k(k), actual(k){
   Construeix un iterador sobre els subconjunts de k elements 
   de {1, ..., n}; si k > n no hi ha res a recórrer. 
   Cost: O(k) */
-  contador = 1;
   final = false;
   for(nat i = 0; i< k; i++){
       actual[i] = i+1;
@@ -19,7 +18,6 @@ iter_subset::iter_subset(const iter_subset& its) throw(error){
   Cost: constant O(1)*/
   n = its.n;
   k = its.k;
-  contador = its.contador;
   actual = its.actual;
   final = its.final;
 
@@ -31,7 +29,6 @@ iter_subset& iter_subset::operator=(const iter_subset& its) throw(error){
   Cost: constant O(1)*/
   n = its.n;
   k = its.k;
-  contador = its.contador;
   actual = its.actual;
   final = its.final;
   return *this;
@@ -41,7 +38,6 @@ iter_subset::~iter_subset() throw(){
   /*Pre: Cert
   Post: destructor
   Cost: */
-  contador = 0;
   k = 0;
   n = 0;
   actual.erase(actual.begin(),actual.end());
@@ -96,7 +92,6 @@ iter_subset& iter_subset::operator++() throw(){
     }
     else final = false;
   }
-  contador++;
   return *this;
 }
 iter_subset iter_subset::operator++(int) throw(){
@@ -113,6 +108,8 @@ bool iter_subset::operator==(const iter_subset& c) const throw(){
   Cost: O(k) */
   bool t = true;
   nat i = 0;
+  //puede que tengaos que mirar que coincidan las N y si no coinciden no es igual
+  //lo dijo en el departamento que miraramos en los juegos de prueba
   if(k != c.k) t = false;
   while (i < k && t){
     if( c.actual[i] == actual[i]) i++;
