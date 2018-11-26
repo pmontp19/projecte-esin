@@ -6,6 +6,7 @@
 
 using namespace std;
 using util::nat;
+
 typedef vector<nat> subset;
 
 class iter_subset {
@@ -24,7 +25,7 @@ public:
      de k elements presos d'entre n; o dit d'una altra forma, retorna
      cert quan l'iterador apunta a un subconjunt sentinella fictici 
      que queda a continuació de l'últim subconjunt vàlid. */
-  bool end() throw();
+  bool end() const throw();
 
   /* Operador de desreferència. Retorna el subconjunt apuntat per
      l'iterador; llança un error si l'iterador apunta al sentinella. */

@@ -1,10 +1,10 @@
 #include "iter_subset.hpp"
 
 iter_subset::iter_subset(nat n, nat k) throw(error): n(n), k(k), actual(k){
-//PRE: Cert
-/* Construeix un iterador sobre els subconjunts de k elements 
+  /*Pre: Cert
+  Construeix un iterador sobre els subconjunts de k elements 
   de {1, ..., n}; si k > n no hi ha res a recórrer. 
-  Cost: */
+  Cost: O(k) */
   contador = 1;
   final = false;
   for(nat i = 0; i< k; i++){
@@ -14,7 +14,7 @@ iter_subset::iter_subset(nat n, nat k) throw(error): n(n), k(k), actual(k){
   }
 
 iter_subset::iter_subset(const iter_subset& its) throw(error){
-  /*Pre:
+  /*Pre: Cert
   Post: Constructor per còpia
   Cost: constant O(1)*/
   n = its.n;
@@ -47,7 +47,7 @@ iter_subset::~iter_subset() throw(){
   actual.erase(actual.begin(),actual.end());
   final = true;
 }
-bool iter_subset::end() throw(){
+bool iter_subset::end() const throw(){
   /*Pre: Cert
   Post: Retorna cert si l'iterador ja ha visitat tots els subconjunts
   de k elements presos d'entre n; o dit d'una altra forma, retorna
@@ -61,7 +61,7 @@ subset iter_subset::operator*() const throw(error){
   Post: Operador de desreferència. Retorna el subconjunt apuntat per
   l'iterador; llança un error si l'iterador apunta al sentinella.
   Cost: constant O(1)*/
-  //if (final) throw error(0);
+  if (final) throw error(IterSubsetIncorr);
   return actual;
 
 }
@@ -70,7 +70,7 @@ iter_subset& iter_subset::operator++() throw(){
   Post: Operador de preincrement. 
   Avança l'iterador al següent subconjunt en la seqüència i el retorna; 
   no es produeix l'avançament si l'iterador ja apuntava al sentinella.
-  Cost: */
+  Cost: O(k) */
   int tam = k-1;
   nat num = n;
   bool acabat = false;
@@ -104,13 +104,13 @@ iter_subset iter_subset::operator++(int) throw(){
   Post: Operador de postincrement. 
   Avança l'iterador al següent subconjunt en la seqüència i retorna el seu valor
   previ; no es produeix l'avançament si l'iterador ja apuntava al sentinella.
-  Cost: */
+  Cost: O(k) */
   return ++*this;
 }
 bool iter_subset::operator==(const iter_subset& c) const throw(){
   /*Pre: Cert
   Post: Operadors relacionals.
-  Cost: */
+  Cost: O(k) */
   bool t = true;
   nat i = 0;
   if(k != c.k) t = false;
@@ -123,7 +123,7 @@ bool iter_subset::operator==(const iter_subset& c) const throw(){
 bool iter_subset::operator!=(const iter_subset& c) const throw(){
   /*Pre: Cert
   Post: Operadors relacionals.
-  Cost: */
+  Cost: o(k) */
   return !(actual==c.actual);
 
 }

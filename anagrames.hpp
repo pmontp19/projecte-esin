@@ -9,6 +9,8 @@ using namespace std;
 
 class anagrames : public diccionari {
 
+public:
+
   /* Construeix un anagrama buit. */
   anagrames() throw(error);
 
