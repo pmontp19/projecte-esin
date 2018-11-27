@@ -1,0 +1,10 @@
+struct node{
+	char valor;
+	node *esq;
+	node *dret;
+	node *cent;
+};
+node *arrel;
+char especial = '#';
+static node* copia_nodes(node *m);
+static void esborra_nodes(node *m);
