@@ -13,6 +13,19 @@
 
 Si es vol comprovar les comandes abans de fer-les, dry-run amb `make clean -n`.
 
+## Executar el programa amb jp_public
+Exemple amb mòdul iter_subset
+
+```bash
+./driver.e < jp_public/jp_public_iter_subset.in
+```
+
+Per passar els jocs de prova manualment, per mòduls (resultat correcte no hauria de donar cap sortida)
+
+```bash
+./driver.e < jp_public/jp_public_iter_subset.in | diff - jp_public/jp_public_iter_subset.res
+```
+
 ## Depurar amb gdb
 Estem fent servir [gdbgui](https://github.com/cs01/gdbgui) per depurar el programa. Seguint l'enllaç es troben instruccions d'instal·lació per Ubuntu, Windows i OS X.
 

@@ -5,12 +5,12 @@ iter_subset::iter_subset(nat n, nat k) throw(error): n(n), k(k), actual(k){
   Construeix un iterador sobre els subconjunts de k elements 
   de {1, ..., n}; si k > n no hi ha res a recórrer. 
   Cost: O(k) */
-  contador = 1;
   final = false;
+  final = k > n;
   for(nat i = 0; i< k; i++){
       actual[i] = i+1;
     }
-  if(k == 0 or n == 0 or k-n == 0) final = true;
+  if(k == 0 or n == 0 or k-n == 0) ultim = true;
   }
 
 iter_subset::iter_subset(const iter_subset& its) throw(error){
@@ -19,10 +19,9 @@ iter_subset::iter_subset(const iter_subset& its) throw(error){
   Cost: constant O(1)*/
   n = its.n;
   k = its.k;
-  contador = its.contador;
   actual = its.actual;
   final = its.final;
-
+  ultim = its.ultim;
 }
 
 iter_subset& iter_subset::operator=(const iter_subset& its) throw(error){
@@ -31,9 +30,9 @@ iter_subset& iter_subset::operator=(const iter_subset& its) throw(error){
   Cost: constant O(1)*/
   n = its.n;
   k = its.k;
-  contador = its.contador;
   actual = its.actual;
   final = its.final;
+  ultim = its.ultim;
   return *this;
 
 }
@@ -41,7 +40,6 @@ iter_subset::~iter_subset() throw(){
   /*Pre: Cert
   Post: destructor
   Cost: */
-  contador = 0;
   k = 0;
   n = 0;
   actual.erase(actual.begin(),actual.end());
@@ -74,6 +72,13 @@ iter_subset& iter_subset::operator++() throw(){
   int tam = k-1;
   nat num = n;
   bool acabat = false;
+
+  if(ultim) {
+    //actual = {};
+    final = true;
+  }
+  //if(final) return *this;
+  
   if(!final){
     while(num != 0 && !acabat){
       if(actual[tam] != num ) {
@@ -88,15 +93,17 @@ iter_subset& iter_subset::operator++() throw(){
   }
   tam = k-1;
   nat j = 0;
-  final = true;
-  while(j < actual.size() && final){
-    if(actual[j] == n - tam){
-      tam--;
-      j++;
+  if(!ultim){
+    ultim = true;
+    while(j < actual.size() && ultim){
+      if(actual[j] == n - tam){
+        tam--;
+        j++;
+      }
+      else ultim = false;
     }
-    else final = false;
   }
-  contador++;
+
   return *this;
 }
 iter_subset iter_subset::operator++(int) throw(){

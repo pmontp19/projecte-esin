@@ -1,16 +1,22 @@
-5 3
+5 1
 igual
 diferent
 print
+end
 preincrement
 igual
 diferent
 print
+end
 postincrement
+end
 print
 postincrement
+end
 print
 postincrement
+end
 print
 preincrement
+end
 print
