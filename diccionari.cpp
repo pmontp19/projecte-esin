@@ -5,19 +5,13 @@
 
 DUDAS
 
--LA FUNCION CHAR ESPECIAL COMO SE HACE? DE MOMENTO TENGO UNA VARIABLE GLOBAL EN REP
+-char especial en private esta bien segun el pero me da un warning	SOLUCIONADO
 
-- EL CONSTRUCTOR ENTONCES EL PRIMER VALOR QUE ESTA METIENDO EN EL NODO ARREL ES EL
-CARACTER DE NULO ENTONCES AL HACER LA INSERCION SEGURO QUE LO ESTA HACIENDO BIEN?
+- Dice que constructor esta correcto
 
--PREFIX DICE QUE TIENE QUE DEVOLVER EL CARACTER STRING BUIT QUE ES UNA PALABRA DEL
-DICCIONARIO, YO LO HAGO CON UN STRING BUIT QUE LE VAMOS SUMANDO CARACTERES Y SI
-NINGUNO COINCIDE LO DEVUELVE ENTONCES VACIO CUANDO NINGUNO COINCIDE YA ES QUE
-NO HAY NADA MAS PARECIDO Y ESO ES LO QUE DEVUELVE.
-
-El PREFIX COMO ESTA ECHO SI ENCUENTRA UNA PALABRA POR EJEMPLO PODARE Y LA RAIZ ES
-PODARGOLFZ DEVUELVE PODAR NO SE SI ESTA BIEN ECHO O NO PREGUNTAR Y EN CASO QUE NO
-COMO MIRARLO
+-El prefix hay que probarlo el decia de hacerlo de otra manera de recorrer todo
+y al final ir tirando hacia atras comprobando cual es el primero que tiene el caracter
+especial pero yo no veo como hacerlo y lo he hecho de esta forma pero habria que hacrlo mejor
 
 */
 
@@ -120,22 +114,75 @@ void diccionari::insereix(const string& p) throw(error) {
 
 }
 
-string diccionari::prefix(node *n, string s, nat i){
+string diccionari::prefix(node *n, string s, nat i, nat j){
 	string paraula = "";
 	if(n != NULL){
+		if(n->valor == especial){
+			j = i;
+		}
+		if(n->esq != NULL ){
+			if(n->valor == especial){
+				j = i;
+			}
+		}
+		if(n->dret != NULL ){
+			if(n->valor == especial){
+				j = i;
+			}
+		}
 		if(n->valor == s[i]){
-			paraula+= s[i] + prefix(n->cent, s, i+1);
+			paraula+= s[i] + prefix(n->cent, s, i+1, j);
 		}
 		else if(n->valor > s[i]){
-			paraula+=prefix(n->esq, s, i);
+			paraula+=prefix(n->esq, s, i, j);
 		}
 		else if(n->valor < s[i]){
-			paraula+=prefix(n->dret, s, i);
+			paraula+=prefix(n->dret, s, i, j);
 		}
 	}
-	return paraula;
-
+	string par = "";
+	for(nat q = 0; q<j; q++){
+		par+=paraula[q];
+	}
+	return par;
 }
+
+/*
+string diccionari::prefix(node *n, string s, nat i, nat j){
+	string paraula = "";
+	cout<<paraula<<endl;
+	if(n != NULL){
+		if(n->valor == especial){
+			j = i;
+		}
+		if(n->esq != NULL ){
+			if(n->valor == especial){
+				j = i;
+			}
+		}
+		if(n->dret != NULL ){
+			if(n->valor == especial){
+				j = i;
+			}
+		}
+		if(n->valor == s[i]){
+			cout<<"es igual"<<endl;
+			paraula+= s[i] + prefix(n->cent, s, i+1, j);
+		}
+		else if(n->valor > s[i]){
+			paraula+=prefix(n->esq, s, i, j);
+		}
+		else if(n->valor < s[i]){
+			paraula+=prefix(n->dret, s, i, j);
+		}
+	}
+	string par = "";
+	for(nat q = 0; q<j; q++){
+		par+=paraula[q];
+	}
+	return par;
+
+}*/
 
 string diccionari::prefix(const string& p) const throw(error) {
 	/*Pre:
@@ -143,9 +190,36 @@ string diccionari::prefix(const string& p) const throw(error) {
     al diccionari, o dit d'una forma més precisa, retorna la
     paraula més llarga del diccionari que és prefix de p.
 	Cost: */
-	string s = prefix(arrel, p, 0);
+	string s = prefix(arrel, p, 0, 0);
 	return s;
 
+}
+
+void diccionari::satisfan_patro(node *n, const vector<string>& q, list<string>& L, nat i, string par) {
+	if(n != NULL){
+		string par2 = par + n->valor;
+		satisfan_patro(n->esq, q , L, i, par);
+		if(i == q.size() and n->valor == especial){
+			L.push_back(par);
+		}
+		else if(i == q.size()){
+			satisfan_patro(n->cent, q , L, i, par2);
+		}
+		else{
+			string s = q[i];
+			nat cont = 0;
+			bool acabat = false;
+			while (cont < s.size() && !acabat){
+				if(s[cont] == n->valor){
+					acabat = true;
+					satisfan_patro(n->cent, q , L, i+1, par2);
+				}
+				else cont++;
+			}
+			satisfan_patro(n->dret, q , L, i, par);
+
+		}
+	}
 }
 
 void diccionari::satisfan_patro(const vector<string>& q, list<string>& L) const throw(error) {
@@ -154,6 +228,7 @@ void diccionari::satisfan_patro(const vector<string>& q, list<string>& L) const 
     patró especificat en el vector d'strings q, en ordre alfabètic
     ascendent. 
 	Cost: */
+	satisfan_patro(arrel, q, L, 0, "");
 
 }
 

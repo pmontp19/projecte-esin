@@ -5,8 +5,9 @@ struct node{
 	node *cent;
 };
 node *arrel;
-char especial = '#';
+static const char especial = '#';
 static node* copia_nodes(node *m);
 static void esborra_nodes(node *m);
 static node* insereix (node* n, nat posicio, string s);
-static string prefix(node *n, string s, nat i);
+static string prefix(node *n, string s, nat i, nat j);
+static void satisfan_patro(node *n, const vector<string>& q, list<string>& L, nat i, string par);

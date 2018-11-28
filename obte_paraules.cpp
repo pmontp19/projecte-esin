@@ -1,6 +1,13 @@
 #include "obte_paraules.hpp"
 #include "word_toolkit.hpp"
 #include "iter_subset.hpp"
+
+/*
+	comentari:
+	 diu que esta practicament be pero que hi ha un petit error i m'ha comentat
+	que tinc que retornar una llista sense repetir per tant segurament el error sera alla
+	que quan la provi veure l'error
+*/
   
 void obte_paraules::obte_paraules(nat k, const string& s, const anagrames& A, list<string>& paraules) throw(error) {
 	/*Pre: k no es major que la longitud de l'string s o k >= 3.
