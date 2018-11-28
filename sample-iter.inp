@@ -1,22 +1,8 @@
-5 1
+2 1
+end
+print
 igual
 diferent
-print
-end
-preincrement
+postincrement
 igual
 diferent
-print
-end
-postincrement
-end
-print
-postincrement
-end
-print
-postincrement
-end
-print
-preincrement
-end
-print

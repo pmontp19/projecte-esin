@@ -16,7 +16,7 @@ int main()
         ss1 >> valor2;
 
         iter_subset C(valor1,valor2);
-        iter_subset C2(valor1,valor2);
+        iter_subset C2(3,1);
 
         // Processem comandes
         while (getline(cin, linea) and linea != "----------")

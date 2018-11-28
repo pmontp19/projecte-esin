@@ -10,7 +10,6 @@ iter_subset::iter_subset(nat n, nat k) throw(error): n(n), k(k), actual(k){
   for(nat i = 0; i< k; i++){
       actual[i] = i+1;
     }
-  if(k == 0 or n == 0 or k-n == 0) ultim = true;
   }
 
 iter_subset::iter_subset(const iter_subset& its) throw(error){
@@ -21,7 +20,6 @@ iter_subset::iter_subset(const iter_subset& its) throw(error){
   k = its.k;
   actual = its.actual;
   final = its.final;
-  ultim = its.ultim;
 }
 
 iter_subset& iter_subset::operator=(const iter_subset& its) throw(error){
@@ -32,7 +30,6 @@ iter_subset& iter_subset::operator=(const iter_subset& its) throw(error){
   k = its.k;
   actual = its.actual;
   final = its.final;
-  ultim = its.ultim;
   return *this;
 
 }
@@ -63,46 +60,39 @@ subset iter_subset::operator*() const throw(error){
   return actual;
 
 }
+
 iter_subset& iter_subset::operator++() throw(){
   /*Pre: Cert
   Post: Operador de preincrement. 
   Avança l'iterador al següent subconjunt en la seqüència i el retorna; 
   no es produeix l'avançament si l'iterador ja apuntava al sentinella.
   Cost: O(k) */
-  int tam = k-1;
-  nat num = n;
-  bool acabat = false;
+  bool acabat = false, modificat = false;
+  nat i, j, max;
+  nat valor;
+  max = n;
 
-  if(ultim) {
-    //actual = {};
-    final = true;
-  }
-  //if(final) return *this;
-  
-  if(!final){
-    while(num != 0 && !acabat){
-      if(actual[tam] != num ) {
-        actual[tam]++;
-        acabat = true;
+  if (k > 0 && !final) {
+    for (i = k - 1; !acabat && !modificat; i--) {
+      valor = actual[i];
+      if (actual[i] < max - (k - 1) + i) {
+        actual[i]++;
+        if (i < k - 1) {
+          for (j = i + 1; j < k; j++) {
+            actual[j] = actual[j - 1] + 1;
+          }
         }
-      else{
-        tam--;
-        num--;
+        modificat = true;
       }
+      if (i==0) acabat = true;
+    }
+    if (!modificat) {
+      //si no s'ha modificat vol dir que estem al final
+      final = true;
     }
   }
-  tam = k-1;
-  nat j = 0;
-  if(!ultim){
-    ultim = true;
-    while(j < actual.size() && ultim){
-      if(actual[j] == n - tam){
-        tam--;
-        j++;
-      }
-      else ultim = false;
-    }
-  }
+  //si k<=0 final
+  else final = true;
 
   return *this;
 }
@@ -118,14 +108,15 @@ bool iter_subset::operator==(const iter_subset& c) const throw(){
   /*Pre: Cert
   Post: Operadors relacionals.
   Cost: O(k) */
-  bool t = true;
+  bool iguals = true;
   nat i = 0;
-  if(k != c.k) t = false;
-  while (i < k && t){
-    if( c.actual[i] == actual[i]) i++;
-    else t = false;
+  //if(k != c.k || n != c.n) iguals = false;
+  //if(c.end() != final) iguals = false;
+  while (i < k && iguals){
+    if( c.actual[i] == actual[i] || c.end() != final) i++;
+    else iguals = false;
     }
-  return t;
+  return iguals;
 }
 bool iter_subset::operator!=(const iter_subset& c) const throw(){
   /*Pre: Cert

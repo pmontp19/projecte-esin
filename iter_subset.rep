@@ -1,4 +1,4 @@
 nat n;
 nat k;
 subset actual;
-bool final, ultim;
+bool final;

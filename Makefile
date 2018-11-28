@@ -15,6 +15,7 @@ word_toolkit: word_toolkit.cpp
 link: driver anagrames diccionari iter_subset obte_paraules word_toolkit
 	g++ driver_joc_par.o anagrames.o diccionari.o iter_subset.o obte_paraules.o word_toolkit.o -o driver.e -lesin
 main_iter: main_iter.cc
+	rm main_iter.e
 	g++ main_iter.cc -std=c++98 -Wall -O0 -ansi -g -lesin -o main_iter.e
 
 clean:
