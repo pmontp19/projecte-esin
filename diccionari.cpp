@@ -13,6 +13,9 @@ DUDAS
 y al final ir tirando hacia atras comprobando cual es el primero que tiene el caracter
 especial pero yo no veo como hacerlo y lo he hecho de esta forma pero habria que hacrlo mejor
 
+Satisfa patro correcto solo falla cuando hace un load diccionario en la linia 47503 que
+no se ni qu es ese load.
+
 */
 
 char especial(){
@@ -113,15 +116,18 @@ void diccionari::insereix(const string& p) throw(error) {
 	arrel = insereix(arrel, 0, s);
 
 }
-
-string diccionari::prefix(node *n, string s, nat i, nat j){
-	strin paraula = "";
-}
-
 /*
-string diccionari::prefix(node *n, string s, nat i, nat j){
+string diccionari::prefix(node *n, string s, nat i){
 	string paraula = "";
-	cout<<paraula<<endl;
+	if(n == NULL){
+		if(i == s.size() && n->valor == especial){
+		}
+	}
+}*/
+
+
+string diccionari::prefix(node *n, string s, nat i, nat &j){
+	string paraula = "";
 	if(n != NULL){
 		if(n->valor == especial){
 			j = i;
@@ -137,7 +143,6 @@ string diccionari::prefix(node *n, string s, nat i, nat j){
 			}
 		}
 		if(n->valor == s[i]){
-			cout<<"es igual"<<endl;
 			paraula+= s[i] + prefix(n->cent, s, i+1, j);
 		}
 		else if(n->valor > s[i]){
@@ -147,13 +152,9 @@ string diccionari::prefix(node *n, string s, nat i, nat j){
 			paraula+=prefix(n->dret, s, i, j);
 		}
 	}
-	string par = "";
-	for(nat q = 0; q<j; q++){
-		par+=paraula[q];
-	}
-	return par;
+	return paraula;
 
-}*/
+}
 
 string diccionari::prefix(const string& p) const throw(error) {
 	/*Pre:
@@ -161,8 +162,13 @@ string diccionari::prefix(const string& p) const throw(error) {
     al diccionari, o dit d'una forma més precisa, retorna la
     paraula més llarga del diccionari que és prefix de p.
 	Cost: */
-	string s = prefix(arrel, p, 0, 0);
-	return s;
+	nat j = 0;
+	string s = prefix(arrel, p, 0, j);
+	string par = "";
+	for(int i = 0; i< j; i++){
+		par+=s[i];
+	}
+	return par;
 
 }
 
