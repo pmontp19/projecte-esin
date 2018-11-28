@@ -115,36 +115,7 @@ void diccionari::insereix(const string& p) throw(error) {
 }
 
 string diccionari::prefix(node *n, string s, nat i, nat j){
-	string paraula = "";
-	if(n != NULL){
-		if(n->valor == especial){
-			j = i;
-		}
-		if(n->esq != NULL ){
-			if(n->valor == especial){
-				j = i;
-			}
-		}
-		if(n->dret != NULL ){
-			if(n->valor == especial){
-				j = i;
-			}
-		}
-		if(n->valor == s[i]){
-			paraula+= s[i] + prefix(n->cent, s, i+1, j);
-		}
-		else if(n->valor > s[i]){
-			paraula+=prefix(n->esq, s, i, j);
-		}
-		else if(n->valor < s[i]){
-			paraula+=prefix(n->dret, s, i, j);
-		}
-	}
-	string par = "";
-	for(nat q = 0; q<j; q++){
-		par+=paraula[q];
-	}
-	return par;
+	strin paraula = "";
 }
 
 /*
@@ -202,10 +173,7 @@ void diccionari::satisfan_patro(node *n, const vector<string>& q, list<string>& 
 		if(i == q.size() and n->valor == especial){
 			L.push_back(par);
 		}
-		else if(i == q.size()){
-			satisfan_patro(n->cent, q , L, i, par2);
-		}
-		else{
+		else if (i < q.size()){
 			string s = q[i];
 			nat cont = 0;
 			bool acabat = false;
@@ -217,7 +185,6 @@ void diccionari::satisfan_patro(node *n, const vector<string>& q, list<string>& 
 				else cont++;
 			}
 			satisfan_patro(n->dret, q , L, i, par);
-
 		}
 	}
 }
