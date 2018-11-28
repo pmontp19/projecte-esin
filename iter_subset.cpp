@@ -69,17 +69,15 @@ iter_subset& iter_subset::operator++() throw(){
   Cost: O(k) */
   bool acabat = false, modificat = false;
   nat i, j, max;
-  nat valor;
   max = n;
 
   if (k > 0 && !final) {
     for (i = k - 1; !acabat && !modificat; i--) {
-      valor = actual[i];
-      if (actual[i] < max - (k - 1) + i) {
+      if (actual[i] < max - (k - 1) + i) {  //calcula que no sigui el valor maxim
         actual[i]++;
         if (i < k - 1) {
           for (j = i + 1; j < k; j++) {
-            actual[j] = actual[j - 1] + 1;
+            actual[j] = actual[j - 1] + 1;  //+1 de l'anterior fins al final
           }
         }
         modificat = true;
