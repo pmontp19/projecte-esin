@@ -75455,7 +75455,7 @@ ALCANZAR
 ###!
 ###!
 #pre ALLANAMIENTO
-AL
+ALLA
 ##ALLA
 ###!
 #spats [*,L,L,A,N,A,M,I,E,N,T]

@@ -9,13 +9,12 @@ DUDAS
 
 - Dice que constructor esta correcto ACABADO
 
--El prefix hay que probarlo el decia de hacerlo de otra manera de recorrer todo
-y al final ir tirando hacia atras comprobando cual es el primero que tiene el caracter
-especial pero yo no veo como hacerlo y lo he hecho de esta forma pero habria que hacrlo mejor
+-Prefix acabado
 
 Satisfa patro correcto ACABADO
 
 el paraules falla en un else++ hay que preguntar
+llista paraules no echo y funcion char especial hay que eliminarla
 
 
 
@@ -131,55 +130,20 @@ string diccionari::prefix(node *n, string s, nat i, nat &j){
 			j = i;
 		}
 		if(n->valor == s[i]){
-			prefix(n->dret, s, i, j);
 			prefix(n->esq, s, i, j);
 			paraula+= s[i] + prefix(n->cent, s, i+1, j);
 		}
 		else if(n->valor > s[i]){
 			paraula+=prefix(n->esq, s, i, j);
-			prefix(n->dret, s, i, j);
-		//	paraula+= s[i] + prefix(n->cent, s, i+1, j);
 		}
 		else if(n->valor < s[i]){
-			paraula+=prefix(n->dret, s, i, j);
 			prefix(n->esq, s, i, j);
-		//	paraula+= s[i] + prefix(n->cent, s, i+1, j);
+			paraula+=prefix(n->dret, s, i, j);
 		}
 	}
 	return paraula;
 
 }
-
-/*
-string diccionari::prefix(node *n, string s, nat i, nat &j){
-	string paraula = "";
-	if(n != NULL){
-		if(n->valor == especial){
-			j = i;
-		}
-/*		else if(n->esq != NULL ){
-			if(n->valor == especial){
-				j = i;
-			}
-		}*/
-	/*	else if(n->dret != NULL ){
-			if(n->valor == especial){
-				j = i;
-			}
-		}*//*
-		if(n->valor == s[i]){
-			paraula+= s[i] + prefix(n->cent, s, i+1, j);
-		}
-		else if(n->valor > s[i]){
-			paraula+=prefix(n->esq, s, i, j);
-		}
-		else if(n->valor < s[i]){
-			paraula+=prefix(n->dret, s, i, j);
-		}
-	}
-	return paraula;
-
-}*/
 
 string diccionari::prefix(const string& p) const throw(error) {
 	/*Pre:
