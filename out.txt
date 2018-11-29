@@ -55397,7 +55397,7 @@ BECARIO
 ###!
 ###!
 #pre CASAS
-
+CASA
 ##CASA
 ###!
 #spats [*,A,S,A]
@@ -55612,7 +55612,7 @@ BECARIO
 ###!
 ###!
 #pre DONANTE
-
+DON
 ##DON
 ###!
 #spats [*,O,N,A,N,T]
@@ -56638,7 +56638,7 @@ FINAL
 ###!
 ###!
 #pre GANAR
-
+GANA
 ##GANA
 ###!
 #spats [*,A,N,A]
@@ -58228,7 +58228,7 @@ LABOR
 ###!
 ###!
 #pre MISERIA
-
+MI
 ##MI
 ###!
 #spats [*,I,S,E,R,I]
@@ -58578,7 +58578,7 @@ LABOR
 ###!
 ###!
 #pre ODIOSA
-
+ODIO
 ##ODIO
 ###!
 #spats [*,D,I,O,S]
@@ -59071,7 +59071,7 @@ NADIE
 ###!
 ###!
 #pre PENAR
-
+PENA
 ##PENA
 ###!
 #spats [*,E,N,A]
@@ -59286,7 +59286,7 @@ NADIE
 ###!
 ###!
 #pre QUEJICA
-
+QUE
 ##QUE
 ###!
 #spats [*,U,E,J,I,C]
@@ -60084,7 +60084,7 @@ SACA
 ###!
 ###!
 #pre TRIBUTO
-
+TRIBU
 ##TRIBU
 ###!
 #spats [*,R,I,B,U,T]
@@ -60784,7 +60784,7 @@ SACA
 ###!
 ###!
 #pre VARAZO
-
+VARA
 ##VARA
 ###!
 #spats [*,A,R,A,Z]
@@ -61199,7 +61199,7 @@ SACA
 ###!
 ###!
 #pre YACER
-
+YA
 ##YA
 ###!
 #spats [*,A,C,E]
@@ -61414,7 +61414,7 @@ SACA
 ###!
 ###!
 #pre ZAQUEO
-
+ZAQUE
 ##ZAQUE
 ###!
 #spats [*,A,Q,U,E]
@@ -62761,7 +62761,7 @@ CASA
 ###!
 ###!
 #pre DONANTE
-
+DON
 ##DON
 ###!
 #spats [*,O,N,A,N,T]
@@ -63787,7 +63787,7 @@ FINAL
 ###!
 ###!
 #pre GANAR
-
+GANA
 ##GANA
 ###!
 #spats [*,A,N,A]
@@ -65377,7 +65377,7 @@ LABOR
 ###!
 ###!
 #pre MISERIA
-M
+MI
 ##MI
 ###!
 #spats [*,I,S,E,R,I]
@@ -66435,7 +66435,7 @@ PENA
 ###!
 ###!
 #pre QUEJICA
-
+QUE
 ##QUE
 ###!
 #spats [*,U,E,J,I,C]
@@ -67233,7 +67233,7 @@ SACA
 ###!
 ###!
 #pre TRIBUTO
-
+TRIBU
 ##TRIBU
 ###!
 #spats [*,R,I,B,U,T]
@@ -67933,7 +67933,7 @@ SACA
 ###!
 ###!
 #pre VARAZO
-
+VARA
 ##VARA
 ###!
 #spats [*,A,R,A,Z]
@@ -68348,7 +68348,7 @@ SACA
 ###!
 ###!
 #pre YACER
-
+YA
 ##YA
 ###!
 #spats [*,A,C,E]
@@ -68563,7 +68563,7 @@ SACA
 ###!
 ###!
 #pre ZAQUEO
-
+ZAQUE
 ##ZAQUE
 ###!
 #spats [*,A,Q,U,E]
@@ -72910,7 +72910,7 @@ ALLA
 ###!
 ###!
 #pre ANIMOSO
-
+ANIMO
 ##ANIMO
 ###!
 #spats [*,N,I,M,O,S]
@@ -75455,7 +75455,7 @@ ALCANZAR
 ###!
 ###!
 #pre ALLANAMIENTO
-ALLA
+AL
 ##ALLA
 ###!
 #spats [*,L,L,A,N,A,M,I,E,N,T]

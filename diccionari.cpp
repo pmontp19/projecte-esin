@@ -5,16 +5,19 @@
 
 DUDAS
 
--char especial en private esta bien segun el pero me da un warning	SOLUCIONADO
+-char especial en private esta bien segun el ACABADO
 
-- Dice que constructor esta correcto
+- Dice que constructor esta correcto ACABADO
 
 -El prefix hay que probarlo el decia de hacerlo de otra manera de recorrer todo
 y al final ir tirando hacia atras comprobando cual es el primero que tiene el caracter
 especial pero yo no veo como hacerlo y lo he hecho de esta forma pero habria que hacrlo mejor
 
-Satisfa patro correcto solo falla cuando hace un load diccionario en la linia 47503 que
-no se ni qu es ese load.
+Satisfa patro correcto ACABADO
+
+el paraules falla en un else++ hay que preguntar
+
+
 
 */
 
@@ -32,6 +35,7 @@ diccionari::diccionari() throw(error) {
 	arrel->cent = NULL;
 	arrel->dret = NULL;
 	arrel->valor = especial;
+	paraules = 0;
 }
 
 typename diccionari::node* diccionari::copia_nodes(node *m){
@@ -51,6 +55,7 @@ diccionari::diccionari(const diccionari& D) throw(error) {
 	/*Pre:
 	Post: Constructor per còpia
 	Cost: */
+	paraules = D.paraules;
 	arrel = copia_nodes(D.arrel);
 }
 
@@ -59,6 +64,7 @@ diccionari& diccionari::operator=(const diccionari& D) throw(error) {
 	Post: operador d'assignació 
 	Cost: */
 	if (this != &D) {
+		paraules = D.paraules;
 	    node* aux;
 	    aux = copia_nodes(D.arrel);
 	    esborra_nodes(arrel);
@@ -92,6 +98,7 @@ typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s){
 		if(posicio < s.size()){
 			n->cent = insereix(n->cent, posicio+1, s);
 		}
+		//else paraules++;
 	}
 	else{
 		if(n->valor > s[posicio]){
@@ -116,15 +123,6 @@ void diccionari::insereix(const string& p) throw(error) {
 	arrel = insereix(arrel, 0, s);
 
 }
-/*
-string diccionari::prefix(node *n, string s, nat i){
-	string paraula = "";
-	if(n == NULL){
-		if(i == s.size() && n->valor == especial){
-		}
-	}
-}*/
-
 
 string diccionari::prefix(node *n, string s, nat i, nat &j){
 	string paraula = "";
@@ -132,16 +130,43 @@ string diccionari::prefix(node *n, string s, nat i, nat &j){
 		if(n->valor == especial){
 			j = i;
 		}
-		if(n->esq != NULL ){
+		if(n->valor == s[i]){
+			prefix(n->dret, s, i, j);
+			prefix(n->esq, s, i, j);
+			paraula+= s[i] + prefix(n->cent, s, i+1, j);
+		}
+		else if(n->valor > s[i]){
+			paraula+=prefix(n->esq, s, i, j);
+			prefix(n->dret, s, i, j);
+		//	paraula+= s[i] + prefix(n->cent, s, i+1, j);
+		}
+		else if(n->valor < s[i]){
+			paraula+=prefix(n->dret, s, i, j);
+			prefix(n->esq, s, i, j);
+		//	paraula+= s[i] + prefix(n->cent, s, i+1, j);
+		}
+	}
+	return paraula;
+
+}
+
+/*
+string diccionari::prefix(node *n, string s, nat i, nat &j){
+	string paraula = "";
+	if(n != NULL){
+		if(n->valor == especial){
+			j = i;
+		}
+/*		else if(n->esq != NULL ){
 			if(n->valor == especial){
 				j = i;
 			}
-		}
-		if(n->dret != NULL ){
+		}*/
+	/*	else if(n->dret != NULL ){
 			if(n->valor == especial){
 				j = i;
 			}
-		}
+		}*//*
 		if(n->valor == s[i]){
 			paraula+= s[i] + prefix(n->cent, s, i+1, j);
 		}
@@ -154,7 +179,7 @@ string diccionari::prefix(node *n, string s, nat i, nat &j){
 	}
 	return paraula;
 
-}
+}*/
 
 string diccionari::prefix(const string& p) const throw(error) {
 	/*Pre:
@@ -165,7 +190,7 @@ string diccionari::prefix(const string& p) const throw(error) {
 	nat j = 0;
 	string s = prefix(arrel, p, 0, j);
 	string par = "";
-	for(int i = 0; i< j; i++){
+	for(nat i = 0; i< j; i++){
 		par+=s[i];
 	}
 	return par;
@@ -217,5 +242,6 @@ nat diccionari::num_pal() const throw() {
 	/*Pre:
 	Post: Retorna el nombre de paraules en el diccionari. 
 	Cost: */
+	return paraules;
     
 }

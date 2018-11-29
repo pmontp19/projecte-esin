@@ -5,6 +5,7 @@ struct node{
 	node *cent;
 };
 node *arrel;
+nat paraules;
 static const char especial = '#';
 static node* copia_nodes(node *m);
 static void esborra_nodes(node *m);
