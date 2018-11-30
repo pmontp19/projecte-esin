@@ -108,10 +108,10 @@ bool iter_subset::operator==(const iter_subset& c) const throw(){
   Cost: O(k) */
   bool iguals = true;
   nat i = 0;
-  //if(k != c.k || n != c.n) iguals = false;
-  //if(c.end() != final) iguals = false;
+  if(n != c.n) iguals = false;
+  if(c.end() != final) iguals = false;
   while (i < k && iguals){
-    if( c.actual[i] == actual[i] || c.end() != final) i++;
+    if( c.actual[i] == actual[i]) i++;
     else iguals = false;
     }
   return iguals;
