@@ -4,6 +4,7 @@
 #include <list>
 #include <esin/error>
 #include "diccionari.hpp"
+#include "iter_subset.hpp"
 
 using namespace std;
 

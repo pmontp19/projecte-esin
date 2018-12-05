@@ -1,0 +1,1 @@
+out.txt jp_public/jp_public_diccionari.res son distintos: byte 4040, línea 129

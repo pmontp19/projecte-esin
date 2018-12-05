@@ -89,6 +89,7 @@ iter_subset& iter_subset::operator++() throw(){
       final = true;
     }
   }
+
   //si k<=0 final
   else final = true;
 

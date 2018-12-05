@@ -110,16 +110,18 @@ typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s){
     }
     else {
         if(n->valor > s[posicio]){
-			n->esq = insereix(n->esq, posicio, s);
+			    n->esq = insereix(n->esq, posicio, s);
+		    }
+		    else if(n->valor < s[posicio]){
+			    n->dret = insereix(n->dret, posicio, s);
 		}
-		else if(n->valor < s[posicio]){
-			n->dret = insereix(n->dret, posicio, s);
-		}
+
 		else{   // (n->valor == s[posicio])
 			n->cent = insereix(n->cent, posicio+1, s);
 		}
     }
     return n;
+
 }
 
 void diccionari::insereix(const string& p) throw(error) {
