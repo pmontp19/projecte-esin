@@ -6,10 +6,10 @@ iter_subset::iter_subset(nat n, nat k) throw(error): n(n), k(k), actual(k){
   de {1, ..., n}; si k > n no hi ha res a recórrer. 
   Cost: O(k) */
   final = false;
+  final = k > n;
   for(nat i = 0; i< k; i++){
       actual[i] = i+1;
     }
-  if(k == 0 or n == 0 or k-n == 0) final = true;
   }
 
 iter_subset::iter_subset(const iter_subset& its) throw(error){
@@ -20,7 +20,6 @@ iter_subset::iter_subset(const iter_subset& its) throw(error){
   k = its.k;
   actual = its.actual;
   final = its.final;
-
 }
 
 iter_subset& iter_subset::operator=(const iter_subset& its) throw(error){
@@ -61,37 +60,39 @@ subset iter_subset::operator*() const throw(error){
   return actual;
 
 }
+
 iter_subset& iter_subset::operator++() throw(){
   /*Pre: Cert
   Post: Operador de preincrement. 
   Avança l'iterador al següent subconjunt en la seqüència i el retorna; 
   no es produeix l'avançament si l'iterador ja apuntava al sentinella.
   Cost: O(k) */
-  int tam = k-1;
-  nat num = n;
-  bool acabat = false;
-  if(!final){
-    while(num != 0 && !acabat){
-      if(actual[tam] != num ) {
-        actual[tam]++;
-        acabat = true;
+  bool acabat = false, modificat = false;
+  nat i, j, max;
+  max = n;
+
+  if (k > 0 && !final) {
+    for (i = k - 1; !acabat && !modificat; i--) {
+      if (actual[i] < max - (k - 1) + i) {  //calcula que no sigui el valor maxim
+        actual[i]++;
+        if (i < k - 1) {
+          for (j = i + 1; j < k; j++) {
+            actual[j] = actual[j - 1] + 1;  //+1 de l'anterior fins al final
+          }
         }
-      else{
-        tam--;
-        num--;
+        modificat = true;
       }
+      if (i==0) acabat = true;
+    }
+    if (!modificat) {
+      //si no s'ha modificat vol dir que estem al final
+      final = true;
     }
   }
-  tam = k-1;
-  nat j = 0;
-  final = true;
-  while(j < actual.size() && final){
-    if(actual[j] == n - tam){
-      tam--;
-      j++;
-    }
-    else final = false;
-  }
+
+  //si k<=0 final
+  else final = true;
+
   return *this;
 }
 iter_subset iter_subset::operator++(int) throw(){
@@ -105,22 +106,23 @@ iter_subset iter_subset::operator++(int) throw(){
 bool iter_subset::operator==(const iter_subset& c) const throw(){
   /*Pre: Cert
   Post: Operadors relacionals.
+  Es compara totes les variables de iter_subset
   Cost: O(k) */
-  bool t = true;
+  bool iguals = true;
   nat i = 0;
-  //puede que tengaos que mirar que coincidan las N y si no coinciden no es igual
-  //lo dijo en el departamento que miraramos en los juegos de prueba
-  if(k != c.k) t = false;
-  while (i < k && t){
-    if( c.actual[i] == actual[i]) i++;
-    else t = false;
+  
+  if ( (n != c.n || k != c.k) && (k!=0 && c.k!=0) ) iguals = false;
+  if (c.end() != final) iguals = false;
+  while (i < k && iguals){
+    if (c.actual[i] == actual[i]) i++;
+    else iguals = false;
     }
-  return t;
+  return iguals;
 }
 bool iter_subset::operator!=(const iter_subset& c) const throw(){
   /*Pre: Cert
   Post: Operadors relacionals.
   Cost: o(k) */
-  return !(actual==c.actual);
+  return !(*this==c);
 
 }

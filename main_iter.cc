@@ -16,7 +16,7 @@ int main()
         ss1 >> valor2;
 
         iter_subset C(valor1,valor2);
-        iter_subset C2(valor1,valor2);
+        iter_subset C2(2,0);
 
         // Processem comandes
         while (getline(cin, linea) and linea != "----------")
@@ -43,16 +43,23 @@ int main()
                 if (C!=C2) cout << "true";
                 else cout << "false";
             }
+            else if (comanda == "end")
+            {
+                if (C.end()) cout << "true";
+                else cout << "false";
+            }
             else if (comanda == "print")
             {
-                subset actual = *C;
-                for(int i=0; i < actual.size(); i++) {
-                    cout << actual[i] << ' ';
+                if (!C.end()) {
+                    subset actual = *C;
+                    for(int i=0; i < actual.size(); i++) {
+                        cout << actual[i] << ' ';
+                    }
+                    //c++98 no sho menja
+                    /*for(auto s: actual) {
+                        cout << s << ' ';
+                    }*/
                 }
-                //c++98 no sho menja
-                /*for(auto s: actual) {
-                    cout << s << ' ';
-                }*/
             }
             cout << endl;
         }

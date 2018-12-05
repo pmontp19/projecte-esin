@@ -94,23 +94,34 @@ typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s){
 		n = new node;
 		n->esq = n->dret = n->cent = NULL;
 		n->valor = s[posicio];
-		if(posicio < s.size()){
+        try {
+            if (posicio < s.length()-1) {
+                n->cent = insereix(n->cent, posicio+1, s);
+            }
+            else {
+                n->valor = s[posicio];
+                //paraules++;
+            }
+        }
+        catch (...) {
+            delete n;
+            throw;
+        }
+    }
+    else {
+        if(n->valor > s[posicio]){
+			    n->esq = insereix(n->esq, posicio, s);
+		    }
+		    else if(n->valor < s[posicio]){
+			    n->dret = insereix(n->dret, posicio, s);
+		}
+
+		else{   // (n->valor == s[posicio])
 			n->cent = insereix(n->cent, posicio+1, s);
 		}
-		//else paraules++;
-	}
-	else{
-		if(n->valor > s[posicio]){
-			n->esq = insereix(n->esq, posicio, s);
-		}
-		else if(n->valor < s[posicio]){
-			n->dret = insereix(n->dret, posicio, s);
-		}
-		else{
-			n->cent = insereix(n->cent, posicio+1, s);
-		}
-	}
-	return n;
+    }
+    return n;
+
 }
 
 void diccionari::insereix(const string& p) throw(error) {
