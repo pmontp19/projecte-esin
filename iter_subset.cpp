@@ -105,13 +105,15 @@ iter_subset iter_subset::operator++(int) throw(){
 bool iter_subset::operator==(const iter_subset& c) const throw(){
   /*Pre: Cert
   Post: Operadors relacionals.
+  Es compara totes les variables de iter_subset
   Cost: O(k) */
   bool iguals = true;
   nat i = 0;
-  if(n != c.n) iguals = false;
-  if(c.end() != final) iguals = false;
+  
+  if ( (n != c.n || k != c.k) && (k!=0 && c.k!=0) ) iguals = false;
+  if (c.end() != final) iguals = false;
   while (i < k && iguals){
-    if( c.actual[i] == actual[i]) i++;
+    if (c.actual[i] == actual[i]) i++;
     else iguals = false;
     }
   return iguals;
@@ -120,6 +122,6 @@ bool iter_subset::operator!=(const iter_subset& c) const throw(){
   /*Pre: Cert
   Post: Operadors relacionals.
   Cost: o(k) */
-  return !(actual==c.actual);
+  return !(*this==c);
 
 }
