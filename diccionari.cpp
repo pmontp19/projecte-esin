@@ -34,7 +34,7 @@ diccionari::diccionari() throw(error) {
 	arrel->cent = NULL;
 	arrel->dret = NULL;
 	arrel->valor = especial;
-	paraules = 0;
+	n_paraules = 0;
 }
 
 typename diccionari::node* diccionari::copia_nodes(node *m){
@@ -54,7 +54,7 @@ diccionari::diccionari(const diccionari& D) throw(error) {
 	/*Pre:
 	Post: Constructor per còpia
 	Cost: */
-	paraules = D.paraules;
+	n_paraules = D.n_paraules;
 	arrel = copia_nodes(D.arrel);
 }
 
@@ -63,7 +63,7 @@ diccionari& diccionari::operator=(const diccionari& D) throw(error) {
 	Post: operador d'assignació 
 	Cost: */
 	if (this != &D) {
-		paraules = D.paraules;
+		n_paraules = D.n_paraules;
 	    node* aux;
 	    aux = copia_nodes(D.arrel);
 	    esborra_nodes(arrel);
@@ -89,18 +89,18 @@ diccionari::~diccionari() throw() {
 
 }
 
-typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s){
+typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s, bool& afegida){
 	if(n == NULL){
 		n = new node;
 		n->esq = n->dret = n->cent = NULL;
 		n->valor = s[posicio];
         try {
             if (posicio < s.length()-1) {
-                n->cent = insereix(n->cent, posicio+1, s);
+                n->cent = insereix(n->cent, posicio+1, s, afegida);
             }
             else {
                 n->valor = s[posicio];
-                //paraules++;
+				afegida = true;
             }
         }
         catch (...) {
@@ -110,14 +110,14 @@ typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s){
     }
     else {
         if(n->valor > s[posicio]){
-			    n->esq = insereix(n->esq, posicio, s);
+			    n->esq = insereix(n->esq, posicio, s, afegida);
 		    }
 		    else if(n->valor < s[posicio]){
-			    n->dret = insereix(n->dret, posicio, s);
+			    n->dret = insereix(n->dret, posicio, s, afegida);
 		}
 
 		else{   // (n->valor == s[posicio])
-			n->cent = insereix(n->cent, posicio+1, s);
+			n->cent = insereix(n->cent, posicio+1, s, afegida);
 		}
     }
     return n;
@@ -130,8 +130,11 @@ void diccionari::insereix(const string& p) throw(error) {
     part del diccionari, l'operació no té cap efecte. 
 	Cost: */
 	string s = p + especial;
-	arrel = insereix(arrel, 0, s);
-
+	bool afegida = false;
+	arrel = insereix(arrel, 0, s, afegida);
+	if (afegida) {
+		n_paraules++;	
+	} 
 }
 
 string diccionari::prefix(node *n, string s, nat i, nat &j){
@@ -217,6 +220,5 @@ nat diccionari::num_pal() const throw() {
 	/*Pre:
 	Post: Retorna el nombre de paraules en el diccionari. 
 	Cost: */
-	return paraules;
-    
+	return n_paraules;
 }
