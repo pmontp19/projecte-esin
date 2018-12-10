@@ -7,7 +7,7 @@ struct node_hash {
     node_hash(const string &k, const list<string> &v, node_hash* seg = NULL) throw(error);
 };
 node_hash **_taula; 
-static nat _M;     // mida de la taula
+nat _M;     // mida de la taula
 nat _quants; // elements guardats
 
 static int hash(const string &k) throw() {
