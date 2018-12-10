@@ -62,20 +62,21 @@ void anagrames::insereix(const string& p) throw(error) {
 
 void anagrames::mateix_anagrama_canonic(const string& a, list<string>& L) const throw(error)
 {
-    string p_canonic = word_toolkit::anagrama_canonic(a);   
-    int i = hash(p_canonic);
-    node_hash *p = _taula[i];
+    //string p_canonic = word_toolkit::anagrama_canonic(a); 
+    if (!word_toolkit::es_canonic(a)) throw (NoEsCanonic);
+    int i = hash(a);
+    node_hash *punter = _taula[i];
     bool hi_es = false;
-    while (p != NULL and not hi_es)
+    while (punter != NULL && !hi_es)
     {
-        if (p->_k == p_canonic)
+        if (punter->_k == a)
         {
             hi_es = true;
-            L = p->_v;
+            L = punter->_v;
         }
         else
         {
-            p = p->_seg;
+            punter = punter->_seg;
         }
     }
 }
