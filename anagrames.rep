@@ -1,0 +1,17 @@
+struct node_hash {
+    // clau es l'anagrama canonic
+    string _k;  
+    // valor es la llista de paraules
+    list<string> _v;
+    node_hash* _seg;
+    node_hash(const string &k, const list<string> &v, node_hash* seg = NULL) throw(error);
+};
+node_hash **_taula; 
+static nat _M;     // mida de la taula
+nat _quants; // elements guardats
+
+static int hash(const string &k) throw() {
+    int index = util::hash(k);
+    index = index % _M;
+    return index;
+}
