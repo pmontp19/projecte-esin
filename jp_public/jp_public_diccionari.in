@@ -54447,3 +54447,26 @@ spats [ACEGIKMOPRTUWY,ACEGIKMOPRTUWY,*]
 spats [ACEGIKMOPRTUWY,ACEGIKMOPRTUWY,ACEGIKMOPRTUWY]
 #[ACT, AGE, AGO, APT, ARE, ARM, ART, CAT, COT, COW, CRY, CUP, CUT, EAR, EAT, EGG, ERA, ETC, EYE, GET, GOT, III, MAY, MET, ORG, OUR, OUT, PAR, PAY, PEG, PIT, POT, PRE, PUT, RAM, RIG, ROW, TIE, TOE, TOO, TOP, TOY, TRY, TWO, WAR, WAY, WOO, WWW, YET, YOU]
 ##!
+destroy
+##!
+##!-------------------------------------------------------------------
+##108 Diccionari amb 20 paraules de mes de 50 caracters
+##!-------------------------------------------------------------------
+##!
+init d108 dicc
+##!
+load dic20.in
+##!
+spats [A,P,R,O,X,I,M,A,D,A,M,E,N,T,E,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*]
+##!
+num_par 
+##!
+llista_paraules_p 71
+##!
+llista_paraules_p 75
+##!
+llista_paraules_p 77
+##!
+llista_paraules_p 78
+##!
+destroy

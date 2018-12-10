@@ -12,3 +12,4 @@ static void esborra_nodes(node *m);
 static node* insereix (node* n, nat posicio, string s, bool &afegida);
 static string prefix(node *n, string s, nat i, nat &j);
 static void satisfan_patro(node *n, const vector<string>& q, list<string>& L, nat i, string par);
+static void llista_paraules(node *n, nat k, list<string>& L, nat profunditat, string par);

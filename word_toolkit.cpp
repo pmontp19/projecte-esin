@@ -1,12 +1,11 @@
 #include "word_toolkit.hpp"
 #include <algorithm>
-//#include <array>
 
  bool word_toolkit::es_canonic(const string& s) throw(){
   /*PRE: Cert
 	POST: Retorna cert si i només si les lletres de l'string s estan en 
- 	ordre lexicogràfic ascendent. */
- 	//Cost: lineal O(n)
+ 	ordre lexicogràfic ascendent. 
+ 	Cost: lineal O(n) */
 	bool t = true;
 	uint i = 1;
 	while(s.size() > i && t){

@@ -16,9 +16,8 @@ Satisfa patro correcto ACABADO
 el paraules falla en un else++ hay que preguntar
 llista paraules no echo y funcion char especial hay que eliminarla
 
-
-
 */
+
 
 char especial(){
 	return '#';
@@ -132,9 +131,7 @@ void diccionari::insereix(const string& p) throw(error) {
 	string s = p + especial;
 	bool afegida = false;
 	arrel = insereix(arrel, 0, s, afegida);
-	if (afegida) {
-		n_paraules++;	
-	} 
+	if (afegida) n_paraules++;	
 }
 
 string diccionari::prefix(node *n, string s, nat i, nat &j){
@@ -196,6 +193,7 @@ void diccionari::satisfan_patro(node *n, const vector<string>& q, list<string>& 
 			satisfan_patro(n->dret, q , L, i, par);
 		}
 	}
+	return;
 }
 
 void diccionari::satisfan_patro(const vector<string>& q, list<string>& L) const throw(error) {
@@ -205,7 +203,22 @@ void diccionari::satisfan_patro(const vector<string>& q, list<string>& L) const 
     ascendent. 
 	Cost: */
 	satisfan_patro(arrel, q, L, 0, "");
+	return;
+}
 
+void diccionari::llista_paraules(node *n, nat k, list<string>& L, nat profunditat, string par){
+	if( n!= NULL ){
+		string par2 = par + n->valor;
+		if(n->valor == especial){
+			if(k <= profunditat){
+				L.push_back(par);
+			}
+		}
+		llista_paraules(n->esq, k, L, profunditat, par);
+		llista_paraules(n->cent, k, L, profunditat+1, par2);
+		llista_paraules(n->dret, k, L, profunditat, par);
+	}
+	return;
 }
 
 void diccionari::llista_paraules(nat k, list<string>& L) const throw(error) {
@@ -213,7 +226,8 @@ void diccionari::llista_paraules(nat k, list<string>& L) const throw(error) {
 	Post: Retorna una llista amb totes les paraules del diccionari 
     de longitud major o igual a k en ordre alfabètic ascendent.
 	Cost: */
-
+	llista_paraules(arrel, k, L, 0, "");
+	return;
 }
 
 nat diccionari::num_pal() const throw() {
