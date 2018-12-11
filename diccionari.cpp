@@ -19,10 +19,6 @@ llista paraules no echo y funcion char especial hay que eliminarla
 */
 
 
-char especial(){
-	return '#';
-}
-
 diccionari::diccionari() throw(error) {
 	/*Pre: Cert
 	Post: Construeix un diccionari que conté únicament una paraula:
