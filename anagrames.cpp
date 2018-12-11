@@ -1,15 +1,19 @@
 #include "anagrames.hpp"
 #include "word_toolkit.hpp"
 
+nat anagrames::hash(const string &k) const throw() {
+	return util::hash(k) % M;
+}
 
-anagrames::anagrames() throw(error) {
+anagrames::node_hash::node_hash(const string &k, const list<string> &v, node_hash* seg) throw(error) : k(k), v(v), seg(seg) { }
+
+anagrames::anagrames() throw(error) : quants(0) {
   /*Pre: Cert.
 	Post: Construeix un anagrama buit.
 	Cost: */
-	M = 101;
-	quants = 0;
+	M = 601;
     taula = new node_hash*[M];
-    for(nat i = 0; i < M; i++){
+    for(nat i = 0; i < M; ++i){
         taula[i] = NULL;
 	}
 }
@@ -62,7 +66,7 @@ anagrames::~anagrames() throw() {
   /*Pre: Cert.
 	Post: Destructor.
 	Cost: */
-	for(nat i = 0; i<M; i++){
+	/*for(nat i = 0; i<M; i++){
 		node_hash *aux = taula[i];
 		while(aux->seg != NULL){
 			node_hash *aux2 = aux->seg;
@@ -71,16 +75,10 @@ anagrames::~anagrames() throw() {
 		}
 		delete aux;
 		taula[i] = NULL;
-	}
+	}*/
 	delete taula;
 	M = 0;
 	quants = 0;
-}
-
-nat anagrames::hash(string k){
-	nat index = util::hash(k);
-    index = index % M;
-	return index;
 }
 
 void anagrames::insereix(const string& p) throw(error) {
@@ -89,22 +87,22 @@ void anagrames::insereix(const string& p) throw(error) {
     part de l'anagrama, l'operació no té cap efecte.
 	Cost: */
 	diccionari::insereix(p);
-	string canonic = word_toolkit::anagrama_canonic(p);
-	nat i = hash(canonic);
-	node_hash *aux = taula[i];
+	string p_canonic = word_toolkit::anagrama_canonic(p);
+	nat i = anagrames::hash(p_canonic);
+	node_hash *punter = taula[i];
 	bool trobat = false;
-	while(aux != NULL && !trobat){
-		if(aux->k == canonic) trobat = true;
-		else aux = aux->seg;
+	while(punter != NULL && !trobat){
+		if(punter->k == p_canonic) trobat = true;
+		else punter = punter->seg;
 	}
 	if(trobat) {
-		aux->v.push_back(p);
-		++quants;
+		punter->v.push_front(p);
 	}
 	else{
-		list<string> va;
-		va.push_back(p);
-		taula[i] = new node_hash(canonic, va, taula[i]);
+		list<string> llista_paraules;
+		llista_paraules.push_front(p);
+		taula[i] = new node_hash(p_canonic, llista_paraules, taula[i]);
+        ++quants;
 	}
 
 }
@@ -114,17 +112,17 @@ void anagrames::mateix_anagrama_canonic(const string& a, list<string>& L) const 
 	Post: Retorna la llista de paraules p tals que anagrama_canonic(p)=a.
 	Cost: */
 	if(word_toolkit::es_canonic(a)){
-		nat i = hash(a);
+		nat i = anagrames::hash(a);
 		node_hash *p = taula[i];
-		bool trobat = false;
-		while(p!= NULL && !trobat){
+		bool hi_es = false;
+		while(p!= NULL && !hi_es){
 			if(p->k == a) {
 				L = p->v;
-				trobat = true;
+				hi_es = true;
 			}
 			else p = p->seg;
 		}
 	}
-	else throw(NoEsCanonic);
+	else throw error(NoEsCanonic);
     
 }

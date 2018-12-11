@@ -2,9 +2,9 @@ struct node_hash{
 	string k;
 	list<string> v;
 	node_hash* seg;
-	node_hash(const string &k, const list<string> &v, node_hash* seg = NULL);
+	node_hash(const string &k, const list<string> &v, node_hash* seg = NULL) throw(error);
 };
 node_hash **taula;
 nat quants; //elements guardats a la taula
-static nat M; 		//mida de la taula
-static nat hash(string k);
+nat M; 		//mida de la taula
+nat hash(const string& k) const throw();
