@@ -7,6 +7,29 @@ nat anagrames::hash(const string &k) const throw() {
 
 anagrames::node_hash::node_hash(const string &k, const list<string> &v, node_hash* seg) throw(error) : k(k), v(v), seg(seg) { }
 
+void anagrames::rehash(node_hash *t) {
+    nat midaAbans = M;
+    M = M * 2 + 1;
+    node_hash** novaTaula = new node_hash*[M]();
+    /*for (nat i = 0; i < M; i++) {
+        novaTaula[i] = NULL;
+    }*/ 
+
+    for (nat i = 0; i < midaAbans; ++i) {
+        node_hash *n = taula[i];
+        while (n != NULL) {
+            node_hash *aux = n;
+            n = n->seg;
+
+            node_hash*& nou_punter = novaTaula[hash(aux->k)];
+            aux->seg = nou_punter;
+            nou_punter = aux;
+        }
+    }
+    delete [] taula;
+    taula = novaTaula;  
+}
+
 anagrames::anagrames() throw(error) : quants(0) {
   /*Pre: Cert.
 	Post: Construeix un anagrama buit.
@@ -66,19 +89,18 @@ anagrames::~anagrames() throw() {
   /*Pre: Cert.
 	Post: Destructor.
 	Cost: */
-	/*for(nat i = 0; i<M; i++){
-		node_hash *aux = taula[i];
-		while(aux->seg != NULL){
-			node_hash *aux2 = aux->seg;
-			delete aux;
-			aux = aux2;
-		}
-		delete aux;
-		taula[i] = NULL;
-	}*/
-	delete taula;
-	M = 0;
-	quants = 0;
+    node_hash* aux;
+    node_hash* auxSeg;
+    for (nat i = 0; i < M; ++i) {
+        aux = taula[i];
+        while (aux != NULL) {
+            auxSeg = aux->seg;
+            delete aux;
+            aux = auxSeg;
+        }
+        taula[i] = NULL;
+    }
+    delete [] taula;
 }
 
 void anagrames::insereix(const string& p) throw(error) {

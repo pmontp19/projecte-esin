@@ -8,3 +8,4 @@ node_hash **taula;
 nat quants; //elements guardats a la taula
 nat M; 		//mida de la taula
 nat hash(const string& k) const throw();
+void rehash(node_hash *t);
