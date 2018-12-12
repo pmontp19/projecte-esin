@@ -7,7 +7,7 @@ nat anagrames::hash(const string &k) const throw() {
 
 anagrames::node_hash::node_hash(const string &k, const list<string> &v, node_hash* seg) throw(error) : k(k), v(v), seg(seg) { }
 
-void anagrames::rehash(node_hash *t) {
+void anagrames::rehash() {
     nat midaAbans = M;
     M = M * 2 + 1;
     node_hash** novaTaula = new node_hash*[M]();
@@ -28,13 +28,21 @@ void anagrames::rehash(node_hash *t) {
     }
     delete [] taula;
     taula = novaTaula;  
+    //cout << "fent rehash " << M << endl;
+}
+
+void anagrames::prova_factor_carrega() {
+    float a = (float)quants / (float)M;
+    if (a >= 0.9) {
+        rehash();
+    }
 }
 
 anagrames::anagrames() throw(error) : quants(0) {
   /*Pre: Cert.
 	Post: Construeix un anagrama buit.
 	Cost: */
-	M = 601;
+	M = 10;
     taula = new node_hash*[M];
     for(nat i = 0; i < M; ++i){
         taula[i] = NULL;
@@ -125,6 +133,7 @@ void anagrames::insereix(const string& p) throw(error) {
 		llista_paraules.push_front(p);
 		taula[i] = new node_hash(p_canonic, llista_paraules, taula[i]);
         ++quants;
+        prova_factor_carrega();
 	}
 
 }
