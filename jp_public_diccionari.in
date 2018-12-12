@@ -1,0 +1,4 @@
+init d500 dicc
+##!
+load dicc_anagrames500.in
+##!
