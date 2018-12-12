@@ -66,19 +66,22 @@ anagrames::~anagrames() throw() {
   /*Pre: Cert.
 	Post: Destructor.
 	Cost: */
-	/*for(nat i = 0; i<M; i++){
-		node_hash *aux = taula[i];
-		while(aux->seg != NULL){
-			node_hash *aux2 = aux->seg;
-			delete aux;
-			aux = aux2;
-		}
-		delete aux;
-		taula[i] = NULL;
-	}*/
-	delete taula;
-	M = 0;
+	if(quants > 0){
+		node_hash* aux;
+	    node_hash* auxSeg;
+	    for (nat i = 0; i < M; ++i) {
+	        aux = taula[i];
+	        while (aux != NULL) {
+	            auxSeg = aux->seg;
+	            delete aux;
+	            aux = auxSeg;
+	        }
+	        taula[i] = NULL;
+	    }
+	}
+	delete [] taula;
 	quants = 0;
+	M = 0;
 }
 
 void anagrames::insereix(const string& p) throw(error) {
@@ -109,7 +112,8 @@ void anagrames::insereix(const string& p) throw(error) {
 
 void anagrames::mateix_anagrama_canonic(const string& a, list<string>& L) const throw(error) {
   /*Pre: Les llestre de a tenen que estar en ordre ascendent llença un error si no ho estan.
-	Post: Retorna la llista de paraules p tals que anagrama_canonic(p)=a.
+	Post: Retorna la llista de paraules p tals que anagrama_canonic(p)=a i la retorna ordenada
+	alfabeticament en ordre ascendent.
 	Cost: */
 	if(word_toolkit::es_canonic(a)){
 		nat i = anagrames::hash(a);
