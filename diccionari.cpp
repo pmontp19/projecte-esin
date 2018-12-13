@@ -86,7 +86,7 @@ diccionari::~diccionari() throw() {
 
 typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s, bool& repetit){
 	if(n == NULL){
-		if(posicio > s.length()-1) repetit = true;
+		/*if(posicio > s.length()-1) repetit = true;
 		n = new node;
 		n->esq = n->dret = n->cent = NULL;
 		n->valor = s[posicio];
@@ -94,7 +94,21 @@ typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s, 
             if (posicio < s.length()-1) {
                 n->cent = insereix(n->cent, posicio+1, s, repetit);
             }
-            else {
+            else if(posicio == s.length()-1){
+                n->valor = s[posicio];
+            }
+        }*/
+        if(posicio > s.length()-1) repetit = true;
+        try {
+            if (posicio < s.length()-1) {
+            	n = new node;
+				n->esq = n->dret = n->cent = NULL;
+            	n->valor = s[posicio];
+                n->cent = insereix(n->cent, posicio+1, s, repetit);
+            }
+            else if(posicio == s.length()-1){
+            	n = new node;
+				n->esq = n->dret = n->cent = NULL;
                 n->valor = s[posicio];
             }
         }
