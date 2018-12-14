@@ -86,51 +86,41 @@ diccionari::~diccionari() throw() {
 
 typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s, bool& repetit){
 	if(n == NULL){
-		/*if(posicio > s.length()-1) repetit = true;
-		n = new node;
-		n->esq = n->dret = n->cent = NULL;
-		n->valor = s[posicio];
-        try {
-            if (posicio < s.length()-1) {
-                n->cent = insereix(n->cent, posicio+1, s, repetit);
-            }
-            else if(posicio == s.length()-1){
-                n->valor = s[posicio];
-            }
-        }*/
-        if(posicio > s.length()-1) repetit = true;
-        try {
-            if (posicio < s.length()-1) {
-            	n = new node;
-				n->esq = n->dret = n->cent = NULL;
-            	n->valor = s[posicio];
-                n->cent = insereix(n->cent, posicio+1, s, repetit);
-            }
-            else if(posicio == s.length()-1){
-            	n = new node;
-				n->esq = n->dret = n->cent = NULL;
-                n->valor = s[posicio];
-            }
-        }
-        catch (...) {
-            delete n;
-            throw;
-        }
-    }
-    else {
-        if(n->valor > s[posicio]){
-			    n->esq = insereix(n->esq, posicio, s, repetit);
-		    }
-		    else if(n->valor < s[posicio]){
-			    n->dret = insereix(n->dret, posicio, s, repetit);
+		if(posicio > s.length()-1) {
+			repetit = true;
+		}
+		else {
+			n = new node;
+			n->esq = n->dret = n->cent = NULL;
+			n->valor = s[posicio];
+			try {
+				if (posicio < s.length()-1) {
+					n->cent = insereix(n->cent, posicio+1, s, repetit);
+				}
+				else {
+					n->valor = s[posicio];
+				}
+			}
+			catch (...) {
+				delete n;
+				throw;
+			}
 		}
 
-		else{   // (n->valor == s[posicio])
-			n->cent = insereix(n->cent, posicio+1, s, repetit);
-		}
     }
-    return n;
-
+	else
+	{
+		if (n->valor > s[posicio]) {
+			n->esq = insereix(n->esq, posicio, s, repetit);
+		}
+		else if (n->valor < s[posicio]) {
+			n->dret = insereix(n->dret, posicio, s, repetit);
+		}
+		else { // (n->valor == s[posicio])
+			n->cent = insereix(n->cent, posicio + 1, s, repetit);
+		}
+	}
+	return n;
 }
 
 void diccionari::insereix(const string& p) throw(error) {

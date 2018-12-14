@@ -24,4 +24,4 @@ clean:
 	rm iter_subset.o 
 	rm obte_paraules.o
 	rm word_toolkit.o 
-	rm driver.e
+	rm driver_joc_par.e

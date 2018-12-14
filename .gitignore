@@ -5,6 +5,8 @@ main
 *.o
 *.e
 *.swp
+diff*
+out*
 # Environments
 .env
 .venv
