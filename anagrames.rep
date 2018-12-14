@@ -8,5 +8,6 @@ node_hash **taula;
 nat quants; //elements guardats a la taula
 nat M; 		//mida de la taula
 nat hash(const string& k) const throw();
+void copiar(const anagrames &A);
 void rehash();
 void prova_factor_carrega();
