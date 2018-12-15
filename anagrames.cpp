@@ -1,7 +1,7 @@
 #include "anagrames.hpp"
 #include "word_toolkit.hpp"
 
-#define CAPACITAT 100
+#define CAPACITAT 1000
 
 nat anagrames::hash(const string &k) const throw() {
 	return util::hash(k) % M;
@@ -88,7 +88,7 @@ anagrames::anagrames(const anagrames& A) throw(error) {
   /*Pre: Cert.
 	Post: Constructor per còpia.
 	Cost: */
-	copiar(A);
+	//copiar(A);
 }
 
 anagrames& anagrames::operator=(const anagrames &A) throw(error)
@@ -99,7 +99,7 @@ anagrames& anagrames::operator=(const anagrames &A) throw(error)
     //copiat del constructor per copia, s'ha de provar
     if (&A != this)
     {
-        copiar(A);
+       // copiar(A);
     }
     return *this;
 }
@@ -108,17 +108,19 @@ anagrames::~anagrames() throw() {
   /*Pre: Cert.
 	Post: Destructor.
 	Cost: */
-    node_hash* aux;
-    node_hash* auxSeg;
-    for (nat i = 0; i < M; ++i) {
-        aux = taula[i];
-        while (aux != NULL) {
-            auxSeg = aux->seg;
-            delete aux;
-            aux = auxSeg;
-        }
-        taula[i] = NULL;
-    }
+	if(quants > 0){
+	    node_hash* aux;
+	    node_hash* auxSeg;
+	    for (nat i = 0; i < M; ++i) {
+	        aux = taula[i];
+	        while (aux != NULL) {
+	            auxSeg = aux->seg;
+	            delete aux;
+	            aux = auxSeg;
+	        }
+	        taula[i] = NULL;
+	    }
+	}
     delete [] taula;
 }
 
@@ -128,44 +130,59 @@ void anagrames::insereix(const string& p) throw(error) {
     part de l'anagrama, l'operació no té cap efecte.
 	Cost: */
 	diccionari::insereix(p);
-	string p_canonic = word_toolkit::anagrama_canonic(p);
-	nat i = anagrames::hash(p_canonic);
+	string canonic = word_toolkit::anagrama_canonic(p);
+	nat i = anagrames::hash(canonic);
 	node_hash *punter = taula[i];
 	bool trobat = false;
 	while(punter != NULL && !trobat){
-		if(punter->k == p_canonic) trobat = true;
+		if(punter->k == canonic) trobat = true;
 		else punter = punter->seg;
 	}
 	if(trobat) {
-		punter->v.push_front(p); // cost O(N)
-        punter->v.sort(); // cost O(N log(N))
-        punter->v.unique(); // cost O(n) 
+		list<string>::iterator it = punter->v.begin();
+		bool acabat = false;
+		while(it != punter->v.end() && !acabat){
+			if(*it == p){
+				acabat = true;
+			}
+			else if(*it > p) {
+				acabat = true;
+				punter->v.insert(it, p);
+			}
+			else it++;
+		}
+		if(!acabat) {
+			punter->v.push_back(p);
+		}
+		//punter->v.push_front(p); // cost O(N)
+        //punter->v.sort(); // cost O(N log(N))
+        //punter->v.unique(); // cost O(n) 
 	}
 	else{
 		list<string> llista_paraules;
 		llista_paraules.push_front(p);
-		taula[i] = new node_hash(p_canonic, llista_paraules, taula[i]);
-        ++quants;
+		taula[i] = new node_hash(canonic, llista_paraules, taula[i]);
+        quants++;
         prova_factor_carrega();
 	}
 
 }
 
 void anagrames::mateix_anagrama_canonic(const string& a, list<string>& L) const throw(error) {
-  /*Pre: Les llestre de a tenen que estar en ordre ascendent llença un error si no ho estan.
+  /*Pre: Les lletres de a tenen que estar en ordre ascendent llença un error si no ho estan.
 	Post: Retorna la llista de paraules p tals que anagrama_canonic(p)=a.
 	Cost: */
 	if(word_toolkit::es_canonic(a)){
 		nat i = anagrames::hash(a);
 		node_hash *p = taula[i];
-		bool hi_es = false;
-		while(p!= NULL && !hi_es){
+		bool trobat = false;
+		while(p!= NULL && !trobat){
 			if(p->k == a) {
 				L = p->v;
-				hi_es = true;
+				trobat = true;
 			}
 			else p = p->seg;
 		}
 	}
-	else throw error(NoEsCanonic);
+	//else throw error(NoEsCanonic);
 }
