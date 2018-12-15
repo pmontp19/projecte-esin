@@ -1,24 +1,6 @@
 #include "diccionari.hpp"
 
 
-/*
-
-DUDAS
-
--char especial en private esta bien segun el ACABADO
-
-- Dice que constructor esta correcto ACABADO
-
--Prefix acabado
-
-Satisfa patro correcto ACABADO
-
-el paraules falla en un else++ hay que preguntar
-llista paraules no echo y funcion char especial hay que eliminarla
-
-*/
-
-
 diccionari::diccionari() throw(error) {
 	/*Pre: Cert
 	Post: Construeix un diccionari que conté únicament una paraula:
@@ -86,41 +68,36 @@ diccionari::~diccionari() throw() {
 
 typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s, bool& repetit){
 	if(n == NULL){
-		if(posicio > s.length()-1) {
-			repetit = true;
-		}
-		else {
-			n = new node;
-			n->esq = n->dret = n->cent = NULL;
-			n->valor = s[posicio];
-			try {
-				if (posicio < s.length()-1) {
-					n->cent = insereix(n->cent, posicio+1, s, repetit);
-				}
-				else {
-					n->valor = s[posicio];
-				}
-			}
-			catch (...) {
-				delete n;
-				throw;
-			}
+        if(posicio > s.length()-1) repetit = true;
+        else{
+        	try {
+        		n = new node;
+				n->esq = n->dret = n->cent = NULL;
+				n->valor = s[posicio];
+	            if (posicio < s.length()-1) {
+	                n->cent = insereix(n->cent, posicio+1, s, repetit);
+	            }
+	        }
+	        catch (...) {
+	            delete n;
+	            throw;
+	        }
+        }
+    }
+    else {
+        if(n->valor > s[posicio]){
+			    n->esq = insereix(n->esq, posicio, s, repetit);
+		    }
+		    else if(n->valor < s[posicio]){
+			    n->dret = insereix(n->dret, posicio, s, repetit);
 		}
 
+		else{   // (n->valor == s[posicio])
+			n->cent = insereix(n->cent, posicio+1, s, repetit);
+		}
     }
-	else
-	{
-		if (n->valor > s[posicio]) {
-			n->esq = insereix(n->esq, posicio, s, repetit);
-		}
-		else if (n->valor < s[posicio]) {
-			n->dret = insereix(n->dret, posicio, s, repetit);
-		}
-		else { // (n->valor == s[posicio])
-			n->cent = insereix(n->cent, posicio + 1, s, repetit);
-		}
-	}
-	return n;
+    return n;
+
 }
 
 void diccionari::insereix(const string& p) throw(error) {
