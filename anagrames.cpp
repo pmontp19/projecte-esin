@@ -1,7 +1,7 @@
 #include "anagrames.hpp"
 #include "word_toolkit.hpp"
 
-#define CAPACITAT 1000
+#define CAPACITAT 100
 
 nat anagrames::hash(const string &k) const throw() {
 	return util::hash(k) % M;
@@ -10,7 +10,7 @@ nat anagrames::hash(const string &k) const throw() {
 anagrames::node_hash::node_hash(const string &k, const list<string> &v, node_hash* seg) throw(error) : k(k), v(v), seg(seg) { }
 
 void anagrames::copiar(const anagrames &A) {
-    M = A.M;
+   /* M = A.M;
     quants = A.quants;
     taula = new node_hash *[M];
     for (nat i = 0; i < M; i++)
@@ -39,23 +39,22 @@ void anagrames::copiar(const anagrames &A) {
             }
             dest->seg = NULL;
         }
-    }
+    }*/
 }
+/*
+typename anagrames::**node_hash anagrames::copiar(const anagrames &A){
+
+}*/
 
 void anagrames::rehash() {
     nat midaAbans = M;
     M = M * 2 + 1;
     node_hash** novaTaula = new node_hash*[M]();
-    /*for (nat i = 0; i < M; i++) {
-        novaTaula[i] = NULL;
-    }*/ 
-
     for (nat i = 0; i < midaAbans; ++i) {
         node_hash *n = taula[i];
         while (n != NULL) {
             node_hash *aux = n;
             n = n->seg;
-
             node_hash*& nou_punter = novaTaula[hash(aux->k)];
             aux->seg = nou_punter;
             nou_punter = aux;
@@ -63,7 +62,6 @@ void anagrames::rehash() {
     }
     delete [] taula;
     taula = novaTaula;  
-    //cout << "fent rehash " << M << endl;
 }
 
 void anagrames::prova_factor_carrega() {
@@ -88,7 +86,7 @@ anagrames::anagrames(const anagrames& A) throw(error) {
   /*Pre: Cert.
 	Post: Constructor per còpia.
 	Cost: */
-	//copiar(A);
+	copiar(A);
 }
 
 anagrames& anagrames::operator=(const anagrames &A) throw(error)
@@ -99,7 +97,7 @@ anagrames& anagrames::operator=(const anagrames &A) throw(error)
     //copiat del constructor per copia, s'ha de provar
     if (&A != this)
     {
-       // copiar(A);
+       copiar(A);
     }
     return *this;
 }
@@ -129,6 +127,7 @@ void anagrames::insereix(const string& p) throw(error) {
 	Post: Afegeix la paraula p a l'anagrama; si la paraula p ja formava
     part de l'anagrama, l'operació no té cap efecte.
 	Cost: */
+	//cout<<"insereix"<<endl;
 	diccionari::insereix(p);
 	string canonic = word_toolkit::anagrama_canonic(p);
 	nat i = anagrames::hash(canonic);
@@ -172,14 +171,20 @@ void anagrames::mateix_anagrama_canonic(const string& a, list<string>& L) const 
   /*Pre: Les lletres de a tenen que estar en ordre ascendent llença un error si no ho estan.
 	Post: Retorna la llista de paraules p tals que anagrama_canonic(p)=a.
 	Cost: */
+	//cout<<"consultan paraula "<<a<<endl;
 	if(word_toolkit::es_canonic(a)){
+		//cout<<"es canonic"<<endl;
 		nat i = anagrames::hash(a);
 		node_hash *p = taula[i];
 		bool trobat = false;
 		while(p!= NULL && !trobat){
 			if(p->k == a) {
-				L = p->v;
+				for (list<string>::iterator it = p->v.begin(); it!= p->v.end(); it++){
+					L.push_back(*it);
+				}
+				//L = p->v;
 				trobat = true;
+				//cout<<"TROBADA"<<endl;
 			}
 			else p = p->seg;
 		}
