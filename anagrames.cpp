@@ -189,5 +189,5 @@ void anagrames::mateix_anagrama_canonic(const string& a, list<string>& L) const 
 			else p = p->seg;
 		}
 	}
-	//else throw error(NoEsCanonic);
+	else throw error(NoEsCanonic);
 }
