@@ -1,5 +1,7 @@
 # projecte-esin
+
 ## in progress
+
 - [x] word_toolkit
 - [x] itersubset
 - [x] diccionari
@@ -9,11 +11,13 @@
 ![diagrama](https://i.imgur.com/Hi0SuP0.png)
 
 ## Makefile
+
 `make build` per compilar tots els fitxers del projecte i `make link` per linkar l'executable o `make all` per fer-ho d'una vegada.
 
 Si es vol comprovar les comandes abans de fer-les, dry-run amb `make clean -n`.
 
 ## Executar el programa amb jp_public
+
 Exemple amb mòdul iter_subset
 
 ```bash
@@ -27,6 +31,7 @@ Per passar els jocs de prova manualment, per mòduls (resultat correcte no hauri
 ```
 
 ## Depurar amb gdb
+
 Estem fent servir [gdbgui](https://github.com/cs01/gdbgui) per depurar el programa. Seguint l'enllaç es troben instruccions d'instal·lació per Ubuntu, Windows i OS X.
 
 Per instal·lar sobre un entorn virtual de Python, primer cal crear-lo, activar-lo i instal·lar `gdbgui`.
@@ -137,11 +142,11 @@ string s;
 unsigned long i = util::hash(s);
 ```
 
-Hash<T> esta definido (mediante especializacion parcial de
+`Hash<T>` esta definido (mediante especializacion parcial de
 templates) para los tipos T siguientes: `string`, const `char*`, `char*`, `char`, `unsigned char`, `signed char`, `short`, `unsigned short`, `int`, `unsigned int (= nat)`, `long`, `unsigned long`, `double` y `float`.
 
 Adicionalmente si `Hash<T>` esta definido para `T` entonces
-`Hash<T*>`, `Hash<const T*>`,` Hash<vector<T> >` y `Hash<list<T> >` tambien lo estan; y si `Hash<T1>` y `Hash<T2>` estan definidos para `T1` y `T2`, entonces `Hash<pair<T1,T2> >` tambien lo esta.
+`Hash<T*>`, `Hash<const T*>`, `Hash<vector<T> >` y `Hash<list<T> >` tambien lo estan; y si `Hash<T1>` y `Hash<T2>` estan definidos para `T1` y `T2`, entonces `Hash<pair<T1,T2> >` tambien lo esta.
 
 ## cpplint
 
