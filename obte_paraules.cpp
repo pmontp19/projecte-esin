@@ -1,19 +1,14 @@
 #include "obte_paraules.hpp"
 #include "word_toolkit.hpp"
 #include "iter_subset.hpp"
-
-/*
-	comentari:
-	throw error em genera 16 punters nous que no elimina, obte paraules funciona 100% però
-	s'hauria de mirar el sort i el unique ya que te aixó cost n cuadratic
-*/
   
 void obte_paraules::obte_paraules(nat k, const string& s, const anagrames& A, list<string>& paraules) throw(error) {
 	/*Pre: k no es major que la longitud de l'string s o k >= 3.
 	Post: Retorna la llista de paraules que es poden formar usant k lletres
     de la paraula s. Llança error si k és major que la longitud de
     l'string s o k < 3.
-	Cost: */
+	Cost: O((n!/k!(n-k)) * O(l)) sent n el tamany del string s i sent k la longitud del subset i
+	sent l el cost de mateix anagrama canonic  */
 	if( k >= 3 and k <= s.size()){
 		string ord = word_toolkit::anagrama_canonic(s);
 		iter_subset c(ord.size(), k);
@@ -22,17 +17,15 @@ void obte_paraules::obte_paraules(nat k, const string& s, const anagrames& A, li
 			string paraula = "";
 			for(nat i = 0; i<k; i++){
 				nat pos = act[i];
-				//cout<<pos<<endl;
 				paraula = paraula + ord[pos-1];
 			}
-			//cout<<"paraula "<<paraula<<endl;
 			A.mateix_anagrama_canonic(paraula,paraules);
 			c++;
 		}
 		paraules.sort();
 		paraules.unique();
 	}
-	//else throw error(LongitudInvalida);
+	else throw error(LongitudInvalida);
 }
 
 void obte_paraules::obte_paraules(const string& s, const anagrames& A, list<string>& paraules) throw(error) {
@@ -41,7 +34,8 @@ void obte_paraules::obte_paraules(const string& s, const anagrames& A, list<stri
     de la paraula s. La llista estarà ordenada de menys a més longitud; 
     a igual longitud les paraules estan en ordre alfabètic creixent. 
     Llança un error si l'string s té menys de tres lletres.
-	Cost: */
+	Cost: O(((n!/k!(n-k))*(n-k)) * O(l)) sent n el tamany del string s i sent k la longitud del subset i
+	sent l el cost de mateix anagrama canonic  */
 	if(s.size() > 2){
 		string ord = word_toolkit::anagrama_canonic(s);
 		for(nat i = 3; i-1 < ord.size(); i++){
@@ -54,7 +48,6 @@ void obte_paraules::obte_paraules(const string& s, const anagrames& A, list<stri
 					nat pos = act[j];
 					paraula = paraula + ord[pos-1];
 					}
-					//cout<<"paraula "<<paraula<<endl;
 				A.mateix_anagrama_canonic(paraula,par);
 				c++;
 				}
@@ -66,5 +59,5 @@ void obte_paraules::obte_paraules(const string& s, const anagrames& A, list<stri
 			}
 			paraules.unique();
 		}
-	//else throw error(LongitudInvalida);
+	else throw error(LongitudInvalida);
 }

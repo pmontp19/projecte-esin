@@ -86,7 +86,8 @@ anagrames::anagrames(const anagrames& A) throw(error) {
   /*Pre: Cert.
 	Post: Constructor per còpia.
 	Cost: */
-	copiar(A);
+	taula a;
+
 }
 
 anagrames& anagrames::operator=(const anagrames &A) throw(error)
@@ -170,10 +171,9 @@ void anagrames::insereix(const string& p) throw(error) {
 void anagrames::mateix_anagrama_canonic(const string& a, list<string>& L) const throw(error) {
   /*Pre: Les lletres de a tenen que estar en ordre ascendent llença un error si no ho estan.
 	Post: Retorna la llista de paraules p tals que anagrama_canonic(p)=a.
-	Cost: */
-	//cout<<"consultan paraula "<<a<<endl;
+	Cost: O (n) sent n el cost promig de les paraules de les llistes que tenen el
+	mateix anagrama canonic */
 	if(word_toolkit::es_canonic(a)){
-		//cout<<"es canonic"<<endl;
 		nat i = anagrames::hash(a);
 		node_hash *p = taula[i];
 		bool trobat = false;
@@ -182,12 +182,10 @@ void anagrames::mateix_anagrama_canonic(const string& a, list<string>& L) const 
 				for (list<string>::iterator it = p->v.begin(); it!= p->v.end(); it++){
 					L.push_back(*it);
 				}
-				//L = p->v;
 				trobat = true;
-				//cout<<"TROBADA"<<endl;
 			}
 			else p = p->seg;
 		}
 	}
-	//else throw error(NoEsCanonic);
+	else throw error(NoEsCanonic);
 }

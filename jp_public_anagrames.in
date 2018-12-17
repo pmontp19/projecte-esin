@@ -279,3 +279,27 @@ a destroy
 ##!
 ##!
 ##!
+##!------------------------------------------------------------------
+##9 Diccionari 500 paraules
+##!------------------------------------------------------------------
+##!
+init a anagrames
+##!
+load anagrames500.in
+##!
+mac EIOST
+#[ESTIO, OISTE, TIESO]
+mac AEPS
+#[PASE, PEAS, PESA, SEPA]
+mac AEPSS
+#[ASPES, PASES, PESAS, SEPAS]
+mac AAMR
+#[AMAR, ARMA]
+mac AAMRS
+#[ARMAS, MASAR, RAMAS]
+mac AAMS
+#[AMAS, ASMA, MASA]
+mac AADGMOOPRRR
+#[PROGRAMADOR]
+##!
+a destroy
