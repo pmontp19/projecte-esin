@@ -11,4 +11,3 @@ nat hash(const string& k) const throw();
 void copiar(const anagrames &A);
 void rehash();
 void prova_factor_carrega();
-//static node_hash** copiar(const anagrames &A);
