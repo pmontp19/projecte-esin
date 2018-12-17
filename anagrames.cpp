@@ -10,43 +10,6 @@ nat anagrames::hash(const string &k) const throw() {
 
 anagrames::node_hash::node_hash(const string &k, const list<string> &v, node_hash* seg) throw(error) : k(k), v(v), seg(seg) { }
 
-void anagrames::copiar(const anagrames &A) {
-   /* M = A.M;
-    quants = A.quants;
-    taula = new node_hash *[M];
-    for (nat i = 0; i < M; i++)
-    {
-        node_hash *orig = A.taula[i];
-        if (orig == NULL)
-        {
-            taula[i] = NULL;
-        }
-        else
-        {
-            node_hash *dest;
-            dest->k = orig->k;
-            dest->v = orig->v;
-
-            taula[i] = dest;
-            orig = orig->seg;
-            while (orig != NULL)
-            {
-                node_hash *dest2;
-                dest2->k = orig->k;
-                dest2->v = orig->v;
-                dest->seg = dest2;
-
-                orig = orig->seg;
-            }
-            dest->seg = NULL;
-        }
-    }*/
-}
-/*
-typename anagrames::**node_hash anagrames::copiar(const anagrames &A){
-
-}*/
-
 void anagrames::rehash() {
     nat midaAbans = M;
     M = M * 2 + 1;
@@ -111,7 +74,7 @@ anagrames& anagrames::operator=(const anagrames &A) throw(error) {
 	Cost: */
 
     if (&A != this) {
-       copiar(A);
+       //copiar(A);
     }
     return *this;
 }
