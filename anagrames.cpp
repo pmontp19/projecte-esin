@@ -2,6 +2,7 @@
 #include "word_toolkit.hpp"
 
 #define CAPACITAT 100
+#define FACTOR_CARREGA .9
 
 nat anagrames::hash(const string &k) const throw() {
 	return util::hash(k) % M;
@@ -61,12 +62,12 @@ void anagrames::rehash() {
         }
     }
     delete [] taula;
-    taula = novaTaula;  
+    taula = novaTaula;
 }
 
 void anagrames::prova_factor_carrega() {
-    float a = (float)quants / (float)M;
-    if (a >= 0.9) {
+    float a = static_cast<float>(quants) / static_cast<float>(M);
+    if (a >= FACTOR_CARREGA) {
         rehash();
     }
 }
@@ -77,7 +78,7 @@ anagrames::anagrames() throw(error) : quants(0) {
 	Cost: */
 	M = CAPACITAT;
     taula = new node_hash*[M];
-    for(nat i = 0; i < M; ++i){
+    for (nat i = 0; i < M; ++i) {
         taula[i] = NULL;
 	}
 }
@@ -86,18 +87,16 @@ anagrames::anagrames(const anagrames& A) throw(error) {
   /*Pre: Cert.
 	Post: Constructor per còpia.
 	Cost: */
-	taula a;
+	//taula a;
 
 }
 
-anagrames& anagrames::operator=(const anagrames &A) throw(error)
-{
+anagrames& anagrames::operator=(const anagrames &A) throw(error) {
     /*Pre: Cert.
 	Post: Operador d'assignació.
 	Cost: */
-    //copiat del constructor per copia, s'ha de provar
-    if (&A != this)
-    {
+
+    if (&A != this) {
        copiar(A);
     }
     return *this;
@@ -107,7 +106,7 @@ anagrames::~anagrames() throw() {
   /*Pre: Cert.
 	Post: Destructor.
 	Cost: */
-	if(quants > 0){
+	if (quants > 0) {
 	    node_hash* aux;
 	    node_hash* auxSeg;
 	    for (nat i = 0; i < M; ++i) {
@@ -133,38 +132,37 @@ void anagrames::insereix(const string& p) throw(error) {
 	nat i = anagrames::hash(canonic);
 	node_hash *punter = taula[i];
 	bool trobat = false;
-	while(punter != NULL && !trobat){
-		if(punter->k == canonic) trobat = true;
-		else punter = punter->seg;
+	while (punter != NULL && !trobat) {
+		if (punter->k == canonic) trobat = true;
+		else
+			punter = punter->seg;
 	}
 	if(trobat) {
 		list<string>::iterator it = punter->v.begin();
 		bool acabat = false;
-		while(it != punter->v.end() && !acabat){
-			if(*it == p){
+		while (it != punter->v.end() && !acabat) {
+			if (*it == p) {
 				acabat = true;
-			}
-			else if(*it > p) {
+			} else if (*it > p) {
 				acabat = true;
 				punter->v.insert(it, p);
+			} else {
+				it++;
 			}
-			else it++;
 		}
-		if(!acabat) {
+		if (!acabat) {
 			punter->v.push_back(p);
 		}
-		//punter->v.push_front(p); // cost O(N)
-        //punter->v.sort(); // cost O(N log(N))
-        //punter->v.unique(); // cost O(n) 
-	}
-	else{
+		// punter->v.push_front(p); // cost O(N)
+        // punter->v.sort(); // cost O(N log(N))
+        // punter->v.unique(); // cost O(n)
+	} else {
 		list<string> llista_paraules;
 		llista_paraules.push_front(p);
 		taula[i] = new node_hash(canonic, llista_paraules, taula[i]);
         quants++;
         prova_factor_carrega();
 	}
-
 }
 
 void anagrames::mateix_anagrama_canonic(const string& a, list<string>& L) const throw(error) {
@@ -172,19 +170,21 @@ void anagrames::mateix_anagrama_canonic(const string& a, list<string>& L) const 
 	Post: Retorna la llista de paraules p tals que anagrama_canonic(p)=a.
 	Cost: O (n) sent n el cost promig de les paraules de les llistes que tenen el
 	mateix anagrama canonic */
-	if(word_toolkit::es_canonic(a)){
+	if (word_toolkit::es_canonic(a)) {
 		nat i = anagrames::hash(a);
 		node_hash *p = taula[i];
 		bool trobat = false;
-		while(p!= NULL && !trobat){
-			if(p->k == a) {
-				for (list<string>::iterator it = p->v.begin(); it!= p->v.end(); it++){
+		while (p!= NULL && !trobat) {
+			if (p->k == a) {
+				for (list<string>::iterator it = p->v.begin(); it!= p->v.end(); it++) {
 					L.push_back(*it);
 				}
 				trobat = true;
+			} else {
+				p = p->seg;
 			}
-			else p = p->seg;
 		}
+	} else {
+		throw error(NoEsCanonic);
 	}
-	else throw error(NoEsCanonic);
 }
