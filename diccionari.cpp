@@ -2,10 +2,11 @@
 
 
 diccionari::diccionari() throw(error) {
-	/*Pre: Cert
-	Post: Construeix un diccionari que conté únicament una paraula:
-    la paraula buida.
-	Cost: */
+	/** 
+	 * Pre: Cert
+	 * Post: Construeix un diccionari que conté únicament una paraula: la paraula buida.
+	 * Cost:
+	*/
 	arrel = new node;
 	arrel->esq = NULL;
 	arrel->cent = NULL;
@@ -14,10 +15,11 @@ diccionari::diccionari() throw(error) {
 	n_paraules = 1;
 }
 
-typename diccionari::node* diccionari::copia_nodes(node *m){
+typename diccionari::node* diccionari::copia_nodes(node *m) {
 	node *n;
-	if(m == NULL) n = NULL;
-	else{
+	if (m == NULL) {
+		n = NULL;
+	} else {
 		n = new node;
 		n->valor = m->valor;
 		n->esq = copia_nodes(m->esq);
@@ -35,22 +37,22 @@ diccionari::diccionari(const diccionari& D) throw(error) {
 	arrel = copia_nodes(D.arrel);
 }
 
-diccionari& diccionari::operator=(const diccionari& D) throw(error) {
+diccionari &diccionari::operator=(const diccionari &D) throw(error) {
 	/*Pre:
 	Post: operador d'assignació 
 	Cost: */
 	if (this != &D) {
 		n_paraules = D.n_paraules;
-	    node* aux;
-	    aux = copia_nodes(D.arrel);
-	    esborra_nodes(arrel);
-	    arrel = aux;
- 		}
- 	return (*this);
+		node *aux;
+		aux = copia_nodes(D.arrel);
+		esborra_nodes(arrel);
+		arrel = aux;
 	}
+	return (*this);
+}
 
-void diccionari::esborra_nodes(node *m){
-	if(m!= NULL){
+void diccionari::esborra_nodes(node *m) {
+	if (m!= NULL) {
 		esborra_nodes(m->esq);
 		esborra_nodes(m->dret);
 		esborra_nodes(m->cent);
@@ -63,13 +65,13 @@ diccionari::~diccionari() throw() {
 	Post: destructor
 	Cost: */
 	esborra_nodes(arrel);
-
 }
 
-typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s, bool& repetit){
-	if(n == NULL){
-        if(posicio > s.length()-1) repetit = true;
-        else{
+typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s, bool& repetit) {
+	if (n == NULL) {
+        if (posicio > s.length()-1) {
+			repetit = true;
+		} else {
         	try {
         		n = new node;
 				n->esq = n->dret = n->cent = NULL;
@@ -83,21 +85,16 @@ typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s, 
 	            throw;
 	        }
         }
-    }
-    else {
-        if(n->valor > s[posicio]){
+    } else {
+        if (n->valor > s[posicio]) {
 			    n->esq = insereix(n->esq, posicio, s, repetit);
-		    }
-		    else if(n->valor < s[posicio]){
+		    } else if (n->valor < s[posicio]) {
 			    n->dret = insereix(n->dret, posicio, s, repetit);
-		}
-
-		else{   // (n->valor == s[posicio])
+		} else {   // (n->valor == s[posicio])
 			n->cent = insereix(n->cent, posicio+1, s, repetit);
 		}
     }
     return n;
-
 }
 
 void diccionari::insereix(const string& p) throw(error) {
@@ -111,26 +108,23 @@ void diccionari::insereix(const string& p) throw(error) {
 	if(!repetit) n_paraules++;
 }
 
-string diccionari::prefix(node *n, string s, nat i, nat &j){
+string diccionari::prefix(node *n, string s, nat i, nat &j) {
 	string paraula = "";
-	if(n != NULL){
-		if(n->valor == especial){
+	if (n != NULL) {
+		if (n->valor == especial) {
 			j = i;
 		}
-		if(n->valor == s[i]){
+		if (n->valor == s[i]) {
 			prefix(n->esq, s, i, j);
 			paraula+= s[i] + prefix(n->cent, s, i+1, j);
-		}
-		else if(n->valor > s[i]){
+		} else if (n->valor > s[i]) {
 			paraula+=prefix(n->esq, s, i, j);
-		}
-		else if(n->valor < s[i]){
+		} else if (n->valor < s[i]) {
 			prefix(n->esq, s, i, j);
 			paraula+=prefix(n->dret, s, i, j);
 		}
 	}
 	return paraula;
-
 }
 
 string diccionari::prefix(const string& p) const throw(error) {
@@ -142,30 +136,29 @@ string diccionari::prefix(const string& p) const throw(error) {
 	nat j = 0;
 	string s = prefix(arrel, p, 0, j);
 	string par = "";
-	for(nat i = 0; i< j; i++){
+	for(nat i = 0; i< j; i++) {
 		par+=s[i];
 	}
 	return par;
-
 }
 
 void diccionari::satisfan_patro(node *n, const vector<string>& q, list<string>& L, nat i, string par) {
-	if(n != NULL){
+	if (n != NULL) {
 		string par2 = par + n->valor;
 		satisfan_patro(n->esq, q , L, i, par);
-		if(i == q.size() and n->valor == especial){
+		if (i == q.size() && n->valor == especial) {
 			L.push_back(par);
-		}
-		else if (i < q.size()){
+		} else if (i < q.size()) {
 			string s = q[i];
 			nat cont = 0;
 			bool acabat = false;
-			while (cont < s.size() && !acabat){
-				if(s[cont] == n->valor){
+			while (cont < s.size() && !acabat) {
+				if (s[cont] == n->valor) {
 					acabat = true;
 					satisfan_patro(n->cent, q , L, i+1, par2);
+				} else {
+					cont++;
 				}
-				else cont++;
 			}
 			satisfan_patro(n->dret, q , L, i, par);
 		}
@@ -183,11 +176,11 @@ void diccionari::satisfan_patro(const vector<string>& q, list<string>& L) const 
 	return;
 }
 
-void diccionari::llista_paraules(node *n, nat k, list<string>& L, nat profunditat, string par){
-	if( n!= NULL ){
+void diccionari::llista_paraules(node *n, nat k, list<string>& L, nat profunditat, string par) {
+	if ( n!= NULL ) {
 		string par2 = par + n->valor;
-		if(n->valor == especial){
-			if(k <= profunditat){
+		if (n->valor == especial) {
+			if (k <= profunditat) {
 				L.push_back(par);
 			}
 		}

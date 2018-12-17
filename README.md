@@ -2,9 +2,9 @@
 ## in progress
 - [x] word_toolkit
 - [x] itersubset
-- [ ] diccionari
-- [ ] anagrames
-- [ ] obte_paraules
+- [x] diccionari
+- [x] anagrames
+- [x] obte_paraules
 
 ![diagrama](https://i.imgur.com/Hi0SuP0.png)
 
@@ -142,3 +142,7 @@ templates) para los tipos T siguientes: `string`, const `char*`, `char*`, `char`
 
 Adicionalmente si `Hash<T>` esta definido para `T` entonces
 `Hash<T*>`, `Hash<const T*>`,` Hash<vector<T> >` y `Hash<list<T> >` tambien lo estan; y si `Hash<T1>` y `Hash<T2>` estan definidos para `T1` y `T2`, entonces `Hash<pair<T1,T2> >` tambien lo esta.
+
+## cpplint
+
+La guia d'estil que estem seguint és la [guia de C++ de Google](https://google.github.io/styleguide/cppguide.html)
