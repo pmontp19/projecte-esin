@@ -113,7 +113,8 @@ a_ins ZUTOL
 a_ins DEMOSTU
 a_ins DETOSMU
 a_ins TOLUZ
-##!
+init b anagrames
+b(a)
 a_pre OCASO
 #OCAS
 ##!

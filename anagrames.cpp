@@ -86,8 +86,23 @@ anagrames::anagrames(const anagrames& A) throw(error) {
   /*Pre: Cert.
 	Post: Constructor per còpia.
 	Cost: */
-	taula a;
-
+	M = A.M;
+	taula = new node_hash*[M];
+	for(nat i = 0; i < M; ++i){
+		node_hash *p = A.taula[i];
+		if(p == NULL){
+			taula[i] = NULL;
+		}
+		else{
+			node_hash *aux = new node_hash(p->k, p->v, taula[i]);
+			while(p->seg != NULL){
+				node_hash *aux2 = new node_hash(p->seg->k, p->seg->v, taula[i]);
+				aux->seg = aux2;
+				aux = aux2;
+				p = p->seg;
+			}
+		}  
+	}
 }
 
 anagrames& anagrames::operator=(const anagrames &A) throw(error)
