@@ -128,7 +128,6 @@ void anagrames::insereix(const string& p) throw(error) {
 	Post: Afegeix la paraula p a l'anagrama; si la paraula p ja formava
     part de l'anagrama, l'operació no té cap efecte.
 	Cost: */
-	//cout<<"insereix"<<endl;
 	diccionari::insereix(p);
 	string canonic = word_toolkit::anagrama_canonic(p);
 	nat i = anagrames::hash(canonic);

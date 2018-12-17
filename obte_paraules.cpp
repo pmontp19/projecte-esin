@@ -3,7 +3,7 @@
 #include "iter_subset.hpp"
   
 void obte_paraules::obte_paraules(nat k, const string& s, const anagrames& A, list<string>& paraules) throw(error) {
-	/*Pre: k no es major que la longitud de l'string s o k >= 3.
+	/*Pre: k no es major que la longitud de l'string s o k >= 3 i string s almenys tres lletres.
 	Post: Retorna la llista de paraules que es poden formar usant k lletres
     de la paraula s. Llança error si k és major que la longitud de
     l'string s o k < 3.
