@@ -51,19 +51,21 @@ anagrames::anagrames(const anagrames& A) throw(error) {
 	Post: Constructor per còpia.
 	Cost: */
 	M = A.M;
+	quants = A.quants;
 	taula = new node_hash*[M];
 	for (nat i = 0; i < M; ++i) {
 		node_hash *p = A.taula[i];
 		if (p == NULL) {
 			taula[i] = NULL;
 		} else {
-			node_hash *aux = new node_hash(p->k, p->v, taula[i]);
-			while (p->seg != NULL) {
-				node_hash *aux2 = new node_hash(p->seg->k, p->seg->v, taula[i]);
-				aux->seg = aux2;
-				aux = aux2;
+			node_hash *q = new node_hash(p->k, p->v, taula[i]);
+			p = p->seg;
+			while (p != NULL) {
+				node_hash *aux = new node_hash(p->k, p->v, taula[i]);
+				q->seg = aux;
 				p = p->seg;
 			}
+			q->seg = NULL;
 		}
 	}
 }
@@ -74,7 +76,7 @@ anagrames& anagrames::operator=(const anagrames &A) throw(error) {
 	Cost: */
 
     if (&A != this) {
-       //copiar(A);
+       // copiar(A);
     }
     return *this;
 }
