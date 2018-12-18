@@ -10,15 +10,14 @@
 
 	Cost rehash es n o 2n ja que amplia per 2 la taula (n)?
 
-	Falta pres post cost de - HASH
-							- Insereix
+	Falta cost de - Insereix
 */
 
 nat anagrames::hash(const string &k) const throw() {
 	/** 
 	 * Pre:  Cert.
 	 * Post: Retorna la posició d'accés a la taula hash.
-	 * Cost:
+	 * Cost: O(n) lineal respeta el tamany del string donat.
 	*/
 	return util::hash(k) % M;
 }
