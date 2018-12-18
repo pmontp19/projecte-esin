@@ -1,0 +1,27 @@
+#!/bin/bash
+
+tn=1
+t() {
+    echo Test $tn $@
+}
+pass() {
+    echo Test $tn OK
+    tn=$(($tn+1))
+}
+fail() {
+    echo Test $tn FAILED
+    exit 1
+}
+
+./driver_joc_par.e < jp_public.in > a
+cat jp_public.res > b
+DIFF=$(diff a b)
+t program should run
+if ["DIFF" = "" ]
+then
+    pass
+else
+    fail
+fi
+
+echo ALL TESTS PASSED

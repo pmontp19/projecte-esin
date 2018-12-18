@@ -1,3 +1,5 @@
+CXXFLAGS = -g -Wall -O0 -ansi -std=c++98 -lesin
+
 all: build link
 build: word_toolkit iter_subset anagrames diccionari obte_paraules  driver
 driver: driver_joc_par.cpp
@@ -18,10 +20,8 @@ main_iter: main_iter.cc
 	g++ main_iter.cc -std=c++98 -Wall -O0 -ansi -g -lesin -o main_iter.e
 
 clean:
-	rm driver_joc_par.o 
-	rm anagrames.o 
-	rm diccionari.o 
-	rm iter_subset.o 
-	rm obte_paraules.o
-	rm word_toolkit.o 
-	rm driver_joc_par.e
+	$(RM) $(ALL) *.o
+	$(RM) $(ALL) *.e
+
+test: all
+	bash test
