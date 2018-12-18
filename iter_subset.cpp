@@ -1,10 +1,10 @@
 #include "iter_subset.hpp"
 
 iter_subset::iter_subset(nat n, nat k) throw(error): n(n), k(k), actual(k) {
-  /*Pre: Cert
+  /*Pre: k <= n
   Construeix un iterador sobre els subconjunts de k elements 
   de {1, ..., n}; si k > n no hi ha res a recórrer. 
-  Cost: O(k) */
+  Cost: O(k) sent k el tamany del subset*/
   final = false;
   final = k > n;
   for (nat i = 0; i< k; i++) {
@@ -35,7 +35,7 @@ iter_subset& iter_subset::operator=(const iter_subset& its) throw(error) {
 iter_subset::~iter_subset() throw() {
   /*Pre: Cert
   Post: destructor
-  Cost: */
+  Cost: O(k) sent k el tamany del subset*/
   k = 0;
   n = 0;
   actual.erase(actual.begin(), actual.end());
@@ -64,7 +64,7 @@ iter_subset& iter_subset::operator++() throw() {
   Post: Operador de preincrement. 
   Avança l'iterador al següent subconjunt en la seqüència i el retorna; 
   no es produeix l'avançament si l'iterador ja apuntava al sentinella.
-  Cost: O(k) */
+  Cost: O(k) sent k el tamany del subset*/
   bool acabat = false, modificat = false;
   nat i, j, max;
   max = n;
@@ -97,14 +97,14 @@ iter_subset iter_subset::operator++(int) throw() {
   Post: Operador de postincrement. 
   Avança l'iterador al següent subconjunt en la seqüència i retorna el seu valor
   previ; no es produeix l'avançament si l'iterador ja apuntava al sentinella.
-  Cost: O(k) */
+  Cost: O(k) sent k el tamany del subset*/
   return ++*this;
 }
 bool iter_subset::operator==(const iter_subset& c) const throw() {
   /*Pre: Cert
   Post: Operadors relacionals.
   Es compara totes les variables de iter_subset
-  Cost: O(k) */
+  Cost: O(k) sent k el tamany del subset */
   bool iguals = true;
   nat i = 0;
 
@@ -120,6 +120,6 @@ bool iter_subset::operator==(const iter_subset& c) const throw() {
 bool iter_subset::operator!=(const iter_subset& c) const throw() {
   /*Pre: Cert
   Post: Operadors relacionals.
-  Cost: o(k) */
+  Cost: O(k) sent k el tamany del subset */
   return !(*this == c);
 }

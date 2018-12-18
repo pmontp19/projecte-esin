@@ -5,7 +5,7 @@ diccionari::diccionari() throw(error) {
 	/** 
 	 * Pre: Cert
 	 * Post: Construeix un diccionari que conté únicament una paraula: la paraula buida.
-	 * Cost:
+	 * Cost: O(1) constant
 	*/
 	arrel = new node;
 	arrel->esq = NULL;
@@ -16,6 +16,11 @@ diccionari::diccionari() throw(error) {
 }
 
 typename diccionari::node* diccionari::copia_nodes(node *m) {
+	/** 
+	 * Pre: 
+	 * Post: 
+	 * Cost:
+	*/
 	node *n;
 	if (m == NULL) {
 		n = NULL;
@@ -30,17 +35,21 @@ typename diccionari::node* diccionari::copia_nodes(node *m) {
 }
 
 diccionari::diccionari(const diccionari& D) throw(error) {
-	/*Pre:
-	Post: Constructor per còpia
-	Cost: */
+	/** 
+	 * Pre: 
+	 * Post: Constructor per còpia
+	 * Cost:
+	*/
 	n_paraules = D.n_paraules;
 	arrel = copia_nodes(D.arrel);
 }
 
 diccionari &diccionari::operator=(const diccionari &D) throw(error) {
-	/*Pre:
-	Post: operador d'assignació 
-	Cost: */
+	/** 
+	 * Pre: 
+	 * Post: Operador d'assignació 
+	 * Cost:
+	*/
 	if (this != &D) {
 		n_paraules = D.n_paraules;
 		node *aux;
@@ -52,6 +61,11 @@ diccionari &diccionari::operator=(const diccionari &D) throw(error) {
 }
 
 void diccionari::esborra_nodes(node *m) {
+	/** 
+	 * Pre: 
+	 * Post: 
+	 * Cost:
+	*/
 	if (m!= NULL) {
 		esborra_nodes(m->esq);
 		esborra_nodes(m->dret);
@@ -61,13 +75,20 @@ void diccionari::esborra_nodes(node *m) {
 }
 
 diccionari::~diccionari() throw() {
-	/*Pre:
-	Post: destructor
-	Cost: */
+	/** 
+	 * Pre: 
+	 * Post: destructor
+	 * Cost:
+	*/
 	esborra_nodes(arrel);
 }
 
 typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s, bool& repetit) {
+	/** 
+	 * Pre: 
+	 * Post: 
+	 * Cost:
+	*/
 	if (n == NULL) {
         if (posicio > s.length()-1) {
 			repetit = true;
@@ -98,10 +119,12 @@ typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s, 
 }
 
 void diccionari::insereix(const string& p) throw(error) {
-	/*Pre:
-	Post: Afegeix la paraula p al diccionari; si la paraula p ja formava
-    part del diccionari, l'operació no té cap efecte. 
-	Cost: */
+	/** 
+	 * Pre: 
+	 * Post: Afegeix la paraula p al diccionari; si la paraula p ja formava
+ 			 part del diccionari, l'operació no té cap efecte. 
+	 * Cost:
+	*/
 	string s = p + especial;
 	bool repetit = false;
 	arrel = insereix(arrel, 0, s, repetit);
@@ -109,6 +132,11 @@ void diccionari::insereix(const string& p) throw(error) {
 }
 
 string diccionari::prefix(node *n, string s, nat i, nat &j) {
+	/** 
+	 * Pre: 
+	 * Post: 
+	 * Cost:
+	*/
 	string paraula = "";
 	if (n != NULL) {
 		if (n->valor == especial) {
@@ -128,11 +156,13 @@ string diccionari::prefix(node *n, string s, nat i, nat &j) {
 }
 
 string diccionari::prefix(const string& p) const throw(error) {
-	/*Pre:
-	Post: Retorna el prefix més llarg de p que és una paraula que pertany
-    al diccionari, o dit d'una forma més precisa, retorna la
-    paraula més llarga del diccionari que és prefix de p.
-	Cost: */
+	/** 
+	 * Pre: 
+	 * Post: Retorna el prefix més llarg de p que és una paraula que pertany
+ 			 al diccionari, o dit d'una forma més precisa, retorna la
+ 			 paraula més llarga del diccionari que és prefix de p.
+	 * Cost:
+	*/
 	nat j = 0;
 	string s = prefix(arrel, p, 0, j);
 	string par = "";
@@ -143,6 +173,11 @@ string diccionari::prefix(const string& p) const throw(error) {
 }
 
 void diccionari::satisfan_patro(node *n, const vector<string>& q, list<string>& L, nat i, string par) {
+	/** 
+	 * Pre: 
+	 * Post: 
+	 * Cost:
+	*/
 	if (n != NULL) {
 		string par2 = par + n->valor;
 		satisfan_patro(n->esq, q , L, i, par);
@@ -167,16 +202,23 @@ void diccionari::satisfan_patro(node *n, const vector<string>& q, list<string>& 
 }
 
 void diccionari::satisfan_patro(const vector<string>& q, list<string>& L) const throw(error) {
-	/*Pre:
-	Post: Retorna la llista de paraules del diccionari que satisfan el
-    patró especificat en el vector d'strings q, en ordre alfabètic
-    ascendent. 
-	Cost: */
+	/** 
+	 * Pre: 
+	 * Post: Retorna la llista de paraules del diccionari que satisfan el
+   			 patró especificat en el vector d'strings q, en ordre alfabètic
+   			 ascendent.
+	 * Cost:
+	*/
 	satisfan_patro(arrel, q, L, 0, "");
 	return;
 }
 
 void diccionari::llista_paraules(node *n, nat k, list<string>& L, nat profunditat, string par) {
+	/** 
+	 * Pre: 
+	 * Post: 
+	 * Cost:
+	*/
 	if ( n!= NULL ) {
 		string par2 = par + n->valor;
 		if (n->valor == especial) {
@@ -192,17 +234,21 @@ void diccionari::llista_paraules(node *n, nat k, list<string>& L, nat profundita
 }
 
 void diccionari::llista_paraules(nat k, list<string>& L) const throw(error) {
-	/*Pre:
-	Post: Retorna una llista amb totes les paraules del diccionari 
-    de longitud major o igual a k en ordre alfabètic ascendent.
-	Cost: */
+	/** 
+	 * Pre: 
+	 * Post: Retorna una llista amb totes les paraules del diccionari 
+     		 de longitud major o igual a k en ordre alfabètic ascendent.
+	 * Cost:
+	*/
 	llista_paraules(arrel, k, L, 0, "");
 	return;
 }
 
 nat diccionari::num_pal() const throw() {
-	/*Pre:
-	Post: Retorna el nombre de paraules en el diccionari. 
-	Cost: */
+	/** 
+	 * Pre: 
+	 * Post: Retorna el nombre de paraules en el diccionari. 
+	 * Cost:
+	*/
 	return n_paraules;
 }
