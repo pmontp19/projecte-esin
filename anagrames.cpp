@@ -6,7 +6,9 @@
 
 /*
 	INSEREIX es cost lineal per que el recorrer la llista es lineal o 
-	el pitjor cost d'insereix es el de rehash? a,b el factor de carrega
+	el pitjor cost d'insereix es el de rehash? amb el factor de carrega
+
+	Cost rehash es n o 2n ja que amplia per 2 la taula (n)?
 
 	falta operator =
 
