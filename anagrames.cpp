@@ -4,13 +4,36 @@
 #define CAPACITAT 100
 #define FACTOR_CARREGA .9
 
+/*
+	INSEREIX es cost lineal per que el recorrer la llista es lineal o 
+	el pitjor cost d'insereix es el de rehash? a,b el factor de carrega
+
+	falta operator =
+
+	falta arreglar constructor per copia
+
+	Falta pres post cost de - HASH
+							- Factor Carrega
+							- Insereix
+*/
+
 nat anagrames::hash(const string &k) const throw() {
+	/*Pre: Cert.
+	Post: 
+	Cost: */
 	return util::hash(k) % M;
 }
 
 anagrames::node_hash::node_hash(const string &k, const list<string> &v, node_hash* seg) throw(error) : k(k), v(v), seg(seg) { }
+  /*Pre: Cert.
+	Post: Construeix un node hash per parametres.
+	Cost: 0(1) constan t*/
+
 
 void anagrames::rehash() {
+	/*Pre: Cert.
+	Post: Amplia la mida de la taula hash i dispersa els valors.
+	Cost: 0(n) sent n el tamany de la taula */
     nat midaAbans = M;
     M = M * 2 + 1;
     node_hash** novaTaula = new node_hash*[M]();
@@ -38,8 +61,9 @@ void anagrames::prova_factor_carrega() {
 anagrames::anagrames() throw(error) : quants(0) {
   /*Pre: Cert.
 	Post: Construeix un anagrama buit.
-	Cost: */
+	Cost: 0(n) sent n el tamany de la taula*/
 	M = CAPACITAT;
+	quants = 0;
     taula = new node_hash*[M];
     for (nat i = 0; i < M; ++i) {
         taula[i] = NULL;
@@ -49,7 +73,7 @@ anagrames::anagrames() throw(error) : quants(0) {
 anagrames::anagrames(const anagrames& A) throw(error) {
   /*Pre: Cert.
 	Post: Constructor per còpia.
-	Cost: */
+	Cost: o(n) sent n el tamany de la taula*/
 	M = A.M;
 	quants = A.quants;
 	taula = new node_hash*[M];
@@ -73,7 +97,7 @@ anagrames::anagrames(const anagrames& A) throw(error) {
 anagrames& anagrames::operator=(const anagrames &A) throw(error) {
     /*Pre: Cert.
 	Post: Operador d'assignació.
-	Cost: */
+	Cost: O(n) sent n el tamay de la taula */
 
     if (&A != this) {
        // copiar(A);
@@ -84,7 +108,7 @@ anagrames& anagrames::operator=(const anagrames &A) throw(error) {
 anagrames::~anagrames() throw() {
   /*Pre: Cert.
 	Post: Destructor.
-	Cost: */
+	Cost: O(n) sent n el tamany de la taula */
 	if (quants > 0) {
 	    node_hash* aux;
 	    node_hash* auxSeg;
@@ -98,6 +122,7 @@ anagrames::~anagrames() throw() {
 	        taula[i] = NULL;
 	    }
 	}
+	quants = 0;
     delete [] taula;
 }
 
