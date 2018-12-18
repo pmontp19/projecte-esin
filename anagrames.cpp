@@ -15,7 +15,6 @@
 	falta arreglar constructor per copia
 
 	Falta pres post cost de - HASH
-							- Factor Carrega
 							- Insereix
 */
 
@@ -54,6 +53,9 @@ void anagrames::rehash() {
 }
 
 void anagrames::prova_factor_carrega() {
+	/*Pre: Cert.
+	Post: Comprova que el factor de carrega sigui el desitjat en cas contrari fa dispersio
+	Cost: O(1) constant */
     float a = static_cast<float>(quants) / static_cast<float>(M);
     if (a >= FACTOR_CARREGA) {
         rehash();
@@ -75,7 +77,7 @@ anagrames::anagrames() throw(error) : quants(0) {
 anagrames::anagrames(const anagrames& A) throw(error) {
   /*Pre: Cert.
 	Post: Constructor per còpia.
-	Cost: o(n) sent n el tamany de la taula*/
+	Cost: O(n) sent n el tamany de la taula*/
 	M = A.M;
 	quants = A.quants;
 	taula = new node_hash*[M];

@@ -20,7 +20,7 @@ int main()
     a.insereix(par4);
     a.insereix(par5);
     anagrames b(a);
-    cout << "anagrames a numero paraules " << a.num_pal() << endl;
+    /*cout << "anagrames a numero paraules " << a.num_pal() << endl;
     list<string> l;
     a.mateix_anagrama_canonic("COORR", l);
     while (!l.empty()) {
@@ -56,5 +56,5 @@ int main()
         l3.pop_front();
     }
 
-    return 0;
+    return 0;*/
 }
