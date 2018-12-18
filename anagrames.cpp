@@ -19,22 +19,27 @@
 */
 
 nat anagrames::hash(const string &k) const throw() {
-	/*Pre: Cert.
-	Post: 
-	Cost: */
+	/** 
+	 * Pre:  Cert.
+	 * Post: Retorna la posició d'accés a la taula hash.
+	 * Cost:
+	*/
 	return util::hash(k) % M;
 }
 
 anagrames::node_hash::node_hash(const string &k, const list<string> &v, node_hash* seg) throw(error) : k(k), v(v), seg(seg) { }
-  /*Pre: Cert.
-	Post: Construeix un node hash per parametres.
-	Cost: 0(1) constan t*/
-
+	/** 
+	 * Pre:  Cert.
+	 * Post: Construeix un node hash per parametres.
+	 * Cost: 0(1) constant.
+	*/
 
 void anagrames::rehash() {
-	/*Pre: Cert.
-	Post: Amplia la mida de la taula hash i dispersa els valors.
-	Cost: 0(n) sent n el tamany de la taula */
+	/** 
+	 * Pre:  Cert.
+	 * Post: Amplia la mida de la taula hash i dispersa els valors.
+	 * Cost: 0(n) sent n el tamany de la taula.
+	*/
     nat midaAbans = M;
     M = M * 2 + 1;
     node_hash** novaTaula = new node_hash*[M]();
@@ -53,9 +58,11 @@ void anagrames::rehash() {
 }
 
 void anagrames::prova_factor_carrega() {
-	/*Pre: Cert.
-	Post: Comprova que el factor de carrega sigui el desitjat en cas contrari fa dispersio
-	Cost: O(1) constant */
+	/** 
+	 * Pre:  Cert.
+	 * Post: Comprova que el factor de carrega sigui el desitjat en cas contrari fa dispersio.
+	 * Cost: O(1) constant.
+	*/
     float a = static_cast<float>(quants) / static_cast<float>(M);
     if (a >= FACTOR_CARREGA) {
         rehash();
@@ -63,9 +70,11 @@ void anagrames::prova_factor_carrega() {
 }
 
 anagrames::anagrames() throw(error) : quants(0) {
-  /*Pre: Cert.
-	Post: Construeix un anagrama buit.
-	Cost: 0(n) sent n el tamany de la taula*/
+	/** 
+	 * Pre:  Cert.
+	 * Post: Construeix un anagrama buit.
+	 * Cost: 0(n) sent n el tamany de la taula.
+	*/
 	M = CAPACITAT;
 	quants = 0;
     taula = new node_hash*[M];
@@ -75,9 +84,11 @@ anagrames::anagrames() throw(error) : quants(0) {
 }
 
 anagrames::anagrames(const anagrames& A) throw(error) {
-  /*Pre: Cert.
-	Post: Constructor per còpia.
-	Cost: O(n) sent n el tamany de la taula*/
+	/** 
+	 * Pre:  Cert.
+	 * Post: Constructor per còpia.
+	 * Cost: O(n) sent n el tamany de la taula.
+	*/
 	M = A.M;
 	quants = A.quants;
 	taula = new node_hash*[M];
@@ -101,10 +112,11 @@ anagrames::anagrames(const anagrames& A) throw(error) {
 }
 
 anagrames& anagrames::operator=(const anagrames &A) throw(error) {
-    /*Pre: Cert.
-	Post: Operador d'assignació.
-	Cost: O(n) sent n el tamay de la taula */
-
+	/** 
+	 * Pre:  Cert.
+	 * Post: Operador d'assignació.
+	 * Cost: O(n) sent n el tamay de la taula.
+	*/
     if (&A != this) {
        // copiar(A);
     }
@@ -112,9 +124,11 @@ anagrames& anagrames::operator=(const anagrames &A) throw(error) {
 }
 
 anagrames::~anagrames() throw() {
-  /*Pre: Cert.
-	Post: Destructor.
-	Cost: O(n) sent n el tamany de la taula */
+	/** 
+	 * Pre:  Cert.
+	 * Post: Destructor.
+	 * Cost: O(n) sent n el tamany de la taula.
+	*/
 	if (quants > 0) {
 	    node_hash* aux;
 	    node_hash* auxSeg;
@@ -133,10 +147,12 @@ anagrames::~anagrames() throw() {
 }
 
 void anagrames::insereix(const string& p) throw(error) {
-  /*Pre: Cert
-	Post: Afegeix la paraula p a l'anagrama; si la paraula p ja formava
-    part de l'anagrama, l'operació no té cap efecte.
-	Cost: */
+	/** 
+	 * Pre:  Cert
+	 * Post: Afegeix la paraula p a l'anagrama; si la paraula p ja formava
+   			 part de l'anagrama, l'operació no té cap efecte.
+	 * Cost:
+	*/
 	diccionari::insereix(p);
 	string canonic = word_toolkit::anagrama_canonic(p);
 	nat i = anagrames::hash(canonic);
@@ -173,10 +189,12 @@ void anagrames::insereix(const string& p) throw(error) {
 }
 
 void anagrames::mateix_anagrama_canonic(const string& a, list<string>& L) const throw(error) {
-  /*Pre: Les lletres de a tenen que estar en ordre ascendent llença un error si no ho estan.
-	Post: Retorna la llista de paraules p tals que anagrama_canonic(p)=a.
-	Cost: O (n) sent n el cost promig de les paraules de les llistes que tenen el
-	mateix anagrama canonic */
+	/** 
+	 * Pre:  Les lletres de a tenen que estar en ordre ascendent llença un error si no ho estan.
+	 * Post: Retorna la llista de paraules p ordenada tals que anagrama_canonic(p)=a.
+	 * Cost: O(n) sent n el cost promig de les paraules de les llistes que tenen el
+			 mateix anagrama canonic .
+	*/
 	if (word_toolkit::es_canonic(a)) {
 		nat i = anagrames::hash(a);
 		node_hash *p = taula[i];
