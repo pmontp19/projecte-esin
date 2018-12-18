@@ -79,7 +79,7 @@ anagrames::anagrames() throw(error) : quants(0) {
 	}
 }
 
-anagrames::anagrames(const anagrames &A) throw(error) {
+anagrames::anagrames(const anagrames &A) throw(error) : diccionari(A) {
 	/** 
 	 * Pre:  Cert.
 	 * Post: Constructor per còpia.
@@ -114,6 +114,7 @@ anagrames &anagrames::operator=(const anagrames &A) throw(error) {
 	 * Cost: O(n) sent n el tamay de la taula.
 	*/
 	if (&A != this) {
+		diccionari::operator=(A);
 		M = A.M;
 		quants = A.quants;
 		taula = new node_hash *[M];
