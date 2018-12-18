@@ -59,6 +59,7 @@ anagrames::anagrames(const anagrames& A) throw(error) {
 			taula[i] = NULL;
 		} else {
 			node_hash *q = new node_hash(p->k, p->v, taula[i]);
+			taula[i] = q;
 			p = p->seg;
 			while (p != NULL) {
 				node_hash *aux = new node_hash(p->k, p->v, taula[i]);
