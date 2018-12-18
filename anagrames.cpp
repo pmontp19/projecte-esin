@@ -132,9 +132,6 @@ void anagrames::insereix(const string& p) throw(error) {
 		if (!acabat) {
 			punter->v.push_back(p);
 		}
-		// punter->v.push_front(p); // cost O(N)
-        // punter->v.sort(); // cost O(N log(N))
-        // punter->v.unique(); // cost O(n)
 	} else {
 		list<string> llista_paraules;
 		llista_paraules.push_front(p);
