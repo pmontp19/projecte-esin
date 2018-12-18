@@ -2,6 +2,8 @@ language: cpp
 install:
   - LIBESIN_URL="https://www.dropbox.com/s/9rcoiiut4u35i0j/libesin.tar.xz?dl=1"
   - travis_retry wget --quiet -O - ${LIBESIN_URL} | tar --strip-components=1 -xJ -C ${TRAVIS_BUILD_DIR}
+  - ls
+  - mv libesin_4.8.5_amd64.so lib/libesin.so
   - export CPLUS_INCLUDE_PATH=${TRAVIS_BUILD_DIR}/incl
   - export LIBRARY_PATH=${TRAVIS_BUILD_DIR}/lib
   - export LD_LIBRARY_PATH=${TRAVIS_BUILD_DIR}/lib:"$LD_LIBRARY_PATH"
