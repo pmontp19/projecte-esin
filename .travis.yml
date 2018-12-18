@@ -12,4 +12,4 @@ compiler:
   - gcc
 script:
   - make all
-  - ./driver_joc_par.e
+  - ./driver_joc_par.e < jp_public.in | diff - jp_public.res
