@@ -5,9 +5,7 @@
 #include "diccionari.hpp"
 using namespace std;
 
-int main()
-{
-
+int main() {
     anagrames a;
     string par1 = "CORRO";
     string par2 = "CORRO";
@@ -19,7 +17,28 @@ int main()
     a.insereix(par3);
     a.insereix(par4);
     a.insereix(par5);
+    
     anagrames b(a);
+    //anagrames b;
+    
+    b.insereix("CORRRR");
+    b.insereix(par1);
+    b.insereix(par3);
+    b.insereix(par4);
+
+    anagrames c = b;
+
+    if (a == b) {
+      cout << "true" << endl;
+    } else {
+      cout << "false" << endl;
+    }
+    if (a == c) {
+      cout << "true" << endl;
+    } else {
+      cout << "false" << endl;
+    }
+    
     /*cout << "anagrames a numero paraules " << a.num_pal() << endl;
     list<string> l;
     a.mateix_anagrama_canonic("COORR", l);

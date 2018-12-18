@@ -10,10 +10,6 @@
 
 	Cost rehash es n o 2n ja que amplia per 2 la taula (n)?
 
-	falta operator =
-
-	falta arreglar constructor per copia
-
 	Falta pres post cost de - HASH
 							- Insereix
 */
@@ -27,8 +23,8 @@ nat anagrames::hash(const string &k) const throw() {
 	return util::hash(k) % M;
 }
 
-anagrames::node_hash::node_hash(const string &k, const list<string> &v, node_hash* seg) throw(error) : k(k), v(v), seg(seg) { }
-	/** 
+anagrames::node_hash::node_hash(const string &k, const list<string> &v, node_hash *seg) throw(error) : k(k), v(v), seg(seg) {}
+/** 
 	 * Pre:  Cert.
 	 * Post: Construeix un node hash per parametres.
 	 * Cost: 0(1) constant.
@@ -40,21 +36,21 @@ void anagrames::rehash() {
 	 * Post: Amplia la mida de la taula hash i dispersa els valors.
 	 * Cost: 0(n) sent n el tamany de la taula.
 	*/
-    nat midaAbans = M;
-    M = M * 2 + 1;
-    node_hash** novaTaula = new node_hash*[M]();
-    for (nat i = 0; i < midaAbans; ++i) {
-        node_hash *n = taula[i];
-        while (n != NULL) {
-            node_hash *aux = n;
-            n = n->seg;
-            node_hash*& nou_punter = novaTaula[hash(aux->k)];
-            aux->seg = nou_punter;
-            nou_punter = aux;
-        }
-    }
-    delete [] taula;
-    taula = novaTaula;
+	nat midaAbans = M;
+	M = M * 2 + 1;
+	node_hash **novaTaula = new node_hash *[M]();
+	for (nat i = 0; i < midaAbans; ++i) {
+		node_hash *n = taula[i];
+		while (n != NULL) {
+			node_hash *aux = n;
+			n = n->seg;
+			node_hash *&nou_punter = novaTaula[hash(aux->k)];
+			aux->seg = nou_punter;
+			nou_punter = aux;
+		}
+	}
+	delete[] taula;
+	taula = novaTaula;
 }
 
 void anagrames::prova_factor_carrega() {
@@ -63,10 +59,48 @@ void anagrames::prova_factor_carrega() {
 	 * Post: Comprova que el factor de carrega sigui el desitjat en cas contrari fa dispersio.
 	 * Cost: O(1) constant.
 	*/
-    float a = static_cast<float>(quants) / static_cast<float>(M);
-    if (a >= FACTOR_CARREGA) {
-        rehash();
-    }
+	float a = static_cast<float>(quants) / static_cast<float>(M);
+	if (a >= FACTOR_CARREGA) {
+		rehash();
+	}
+}
+
+bool anagrames::operator==(const anagrames &A) const throw() {
+	/**
+	 * Pre: Cert
+	 * Post: Operadors relacionls
+	 * Cost: O(k) sent k la mida del subset
+	 */
+
+	bool iguals = true;
+	if (quants != A.quants || M != A.M)
+		iguals = false;
+
+	for (nat i = 0; i < M && iguals; ++i) {
+		node_hash *p = taula[i];
+		node_hash *q = A.taula[i];
+		if ((p == NULL && q != NULL) || (p != NULL && q == NULL))
+		{
+			iguals = false;
+		}
+		if (p != NULL && q != NULL && iguals)
+		{
+			if (p->k != q->k)
+			{
+				iguals = false;
+			}
+			while (p->seg != NULL && q->seg != NULL && iguals)
+			{
+				p = p->seg;
+				q = q->seg;
+				if (p->k != q->k && p->v != q->v)
+				{
+					iguals = false;
+				}
+			}
+		}
+	}
+	return iguals;
 }
 
 anagrames::anagrames() throw(error) : quants(0) {
@@ -77,13 +111,13 @@ anagrames::anagrames() throw(error) : quants(0) {
 	*/
 	M = CAPACITAT;
 	quants = 0;
-    taula = new node_hash*[M];
-    for (nat i = 0; i < M; ++i) {
-        taula[i] = NULL;
+	taula = new node_hash *[M];
+	for (nat i = 0; i < M; ++i) {
+		taula[i] = NULL;
 	}
 }
 
-anagrames::anagrames(const anagrames& A) throw(error) {
+anagrames::anagrames(const anagrames &A) throw(error) {
 	/** 
 	 * Pre:  Cert.
 	 * Post: Constructor per còpia.
@@ -91,7 +125,7 @@ anagrames::anagrames(const anagrames& A) throw(error) {
 	*/
 	M = A.M;
 	quants = A.quants;
-	taula = new node_hash*[M];
+	taula = new node_hash *[M];
 	for (nat i = 0; i < M; ++i) {
 		node_hash *p = A.taula[i];
 		if (p == NULL) {
@@ -111,16 +145,35 @@ anagrames::anagrames(const anagrames& A) throw(error) {
 	}
 }
 
-anagrames& anagrames::operator=(const anagrames &A) throw(error) {
+anagrames &anagrames::operator=(const anagrames &A) throw(error) {
 	/** 
 	 * Pre:  Cert.
 	 * Post: Operador d'assignació.
 	 * Cost: O(n) sent n el tamay de la taula.
 	*/
-    if (&A != this) {
-       // copiar(A);
-    }
-    return *this;
+	if (&A != this) {
+		M = A.M;
+		quants = A.quants;
+		taula = new node_hash *[M];
+		for (nat i = 0; i < M; ++i) {
+			node_hash *p = A.taula[i];
+			if (p == NULL) {
+				taula[i] = NULL;
+			} else {
+				node_hash *q = new node_hash(p->k, p->v, taula[i]);
+				taula[i] = q;
+				p = p->seg;
+				while (p != NULL) {
+					node_hash *aux = new node_hash(p->k, p->v, taula[i]);
+					q->seg = aux;
+					p = p->seg;
+					q = aux;
+				}
+				q->seg = NULL;
+			}
+		}
+	}
+	return *this;
 }
 
 anagrames::~anagrames() throw() {
@@ -130,23 +183,23 @@ anagrames::~anagrames() throw() {
 	 * Cost: O(n) sent n el tamany de la taula.
 	*/
 	if (quants > 0) {
-	    node_hash* aux;
-	    node_hash* auxSeg;
-	    for (nat i = 0; i < M; ++i) {
-	        aux = taula[i];
-	        while (aux != NULL) {
-	            auxSeg = aux->seg;
-	            delete aux;
-	            aux = auxSeg;
-	        }
-	        taula[i] = NULL;
-	    }
+		node_hash *aux;
+		node_hash *auxSeg;
+		for (nat i = 0; i < M; ++i) {
+			aux = taula[i];
+			while (aux != NULL) {
+				auxSeg = aux->seg;
+				delete aux;
+				aux = auxSeg;
+			}
+			taula[i] = NULL;
+		}
 	}
 	quants = 0;
-    delete [] taula;
+	delete[] taula;
 }
 
-void anagrames::insereix(const string& p) throw(error) {
+void anagrames::insereix(const string &p) throw(error) {
 	/** 
 	 * Pre:  Cert
 	 * Post: Afegeix la paraula p a l'anagrama; si la paraula p ja formava
@@ -159,11 +212,12 @@ void anagrames::insereix(const string& p) throw(error) {
 	node_hash *punter = taula[i];
 	bool trobat = false;
 	while (punter != NULL && !trobat) {
-		if (punter->k == canonic) trobat = true;
+		if (punter->k == canonic)
+			trobat = true;
 		else
 			punter = punter->seg;
 	}
-	if(trobat) {
+	if (trobat) {
 		list<string>::iterator it = punter->v.begin();
 		bool acabat = false;
 		while (it != punter->v.end() && !acabat) {
@@ -183,25 +237,25 @@ void anagrames::insereix(const string& p) throw(error) {
 		list<string> llista_paraules;
 		llista_paraules.push_front(p);
 		taula[i] = new node_hash(canonic, llista_paraules, taula[i]);
-        quants++;
-        prova_factor_carrega();
+		quants++;
+		prova_factor_carrega();
 	}
 }
 
-void anagrames::mateix_anagrama_canonic(const string& a, list<string>& L) const throw(error) {
+void anagrames::mateix_anagrama_canonic(const string &a, list<string> &L) const throw(error) {
 	/** 
 	 * Pre:  Les lletres de a tenen que estar en ordre ascendent llença un error si no ho estan.
 	 * Post: Retorna la llista de paraules p ordenada tals que anagrama_canonic(p)=a.
 	 * Cost: O(n) sent n el cost promig de les paraules de les llistes que tenen el
-			 mateix anagrama canonic .
-	*/
+	 * mateix anagrama canonic .
+	 */
 	if (word_toolkit::es_canonic(a)) {
 		nat i = anagrames::hash(a);
 		node_hash *p = taula[i];
 		bool trobat = false;
-		while (p!= NULL && !trobat) {
+		while (p != NULL && !trobat) {
 			if (p->k == a) {
-				for (list<string>::iterator it = p->v.begin(); it!= p->v.end(); it++) {
+				for (list<string>::iterator it = p->v.begin(); it != p->v.end(); it++) {
 					L.push_back(*it);
 				}
 				trobat = true;
