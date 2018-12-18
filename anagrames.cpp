@@ -65,44 +65,6 @@ void anagrames::prova_factor_carrega() {
 	}
 }
 
-bool anagrames::operator==(const anagrames &A) const throw() {
-	/**
-	 * Pre: Cert
-	 * Post: Operadors relacionls
-	 * Cost: O(k) sent k la mida del subset
-	 */
-
-	bool iguals = true;
-	if (quants != A.quants || M != A.M)
-		iguals = false;
-
-	for (nat i = 0; i < M && iguals; ++i) {
-		node_hash *p = taula[i];
-		node_hash *q = A.taula[i];
-		if ((p == NULL && q != NULL) || (p != NULL && q == NULL))
-		{
-			iguals = false;
-		}
-		if (p != NULL && q != NULL && iguals)
-		{
-			if (p->k != q->k)
-			{
-				iguals = false;
-			}
-			while (p->seg != NULL && q->seg != NULL && iguals)
-			{
-				p = p->seg;
-				q = q->seg;
-				if (p->k != q->k && p->v != q->v)
-				{
-					iguals = false;
-				}
-			}
-		}
-	}
-	return iguals;
-}
-
 anagrames::anagrames() throw(error) : quants(0) {
 	/** 
 	 * Pre:  Cert.
