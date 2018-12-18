@@ -91,6 +91,7 @@ anagrames::anagrames(const anagrames& A) throw(error) {
 				node_hash *aux = new node_hash(p->k, p->v, taula[i]);
 				q->seg = aux;
 				p = p->seg;
+				q = aux;
 			}
 			q->seg = NULL;
 		}
