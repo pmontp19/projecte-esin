@@ -3,7 +3,7 @@
 
 diccionari::diccionari() throw(error) {
 	/** 
-	 * Pre: Cert
+	 * Pre:  Cert
 	 * Post: Construeix un diccionari que conté únicament una paraula: la paraula buida.
 	 * Cost: O(1) constant
 	*/
