@@ -4,7 +4,7 @@ install:
   - travis_retry wget --quiet -O - ${LIBESIN_URL} | tar --strip-components=1 -xJ -C ${TRAVIS_BUILD_DIR}
   - export CPLUS_INCLUDE_PATH=${TRAVIS_BUILD_DIR}/incl
   - export LIBRARY_PATH=${TRAVIS_BUILD_DIR}/lib
-	- export LD_LIBRARY_PATH=${TRAVIS_BUILD_DIR}/lib:"$LD_LIBRARY_PATH"
+  - export LD_LIBRARY_PATH=${TRAVIS_BUILD_DIR}/lib:"$LD_LIBRARY_PATH"
 
 compiler:
   - gcc
