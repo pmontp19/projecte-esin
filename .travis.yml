@@ -8,3 +8,7 @@ install:
 
 compiler:
   - gcc
+script:
+  - g++ main.cpp -o travis_gcc_cpp98
+  - g++ anagrames.cpp diccionari.cpp iter_subset.cpp obte_paraules.cpp word_toolkit.cpp driver_joc_par.cpp -o driver_joc_par.e -lesin
+  - ./driver_joc_par.e
