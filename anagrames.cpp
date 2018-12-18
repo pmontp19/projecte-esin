@@ -74,7 +74,7 @@ anagrames::anagrames() throw(error) : quants(0) {
 	}
 }
 
-anagrames::anagrames(const anagrames& A) throw(error) {
+anagrames::anagrames(const anagrames& A) throw(error) : diccionari(A) {
   /*Pre: Cert.
 	Post: Constructor per còpia.
 	Cost: O(n) sent n el tamany de la taula*/
