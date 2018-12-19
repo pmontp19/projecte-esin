@@ -4,10 +4,6 @@
 #define CAPACITAT 100
 #define FACTOR_CARREGA .9
 
-/*
-	falta nearest prime
-*/
-
 bool is_prime(nat n) {
 	/** 
 	 * Pre:  Cert. 
