@@ -12,7 +12,7 @@ bool is_prime(nat n) {
 	/** 
 	 * Pre:  Cert. 
 	 * Post: Retorna si el nat n es primer o no.
-	 * Cost: 
+	 * Cost: O(n) lineal respecte el tamany del numero.
 	*/
     if ((n <= 2) || (n % 2 == 0)) return n <= 2;
     nat j = 3;
@@ -25,7 +25,7 @@ nat nearest_prime(nat n){
 	/** 
 	 * Pre:  Cert.
 	 * Post: Retorna el nombre primer mes proper al del parametre implicit.
-	 * Cost:	
+	 * Cost: O(n).
 	*/
 	nat i = n;
     while (!is_prime(i)) 
@@ -57,7 +57,6 @@ void anagrames::rehash() {
 	*/
 	nat midaAbans = _M;
 	_M = nearest_prime(_M * 2 + 1);
-	cout<<"nueva M  "<<_M<<endl;
 	node_hash **novaTaula = new node_hash *[_M]();
 	for (nat i = 0; i < midaAbans; ++i) {
 		node_hash *n = _taula[i];
