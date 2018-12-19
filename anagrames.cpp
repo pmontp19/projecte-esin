@@ -5,12 +5,7 @@
 #define FACTOR_CARREGA .9
 
 /*
-	INSEREIX es cost lineal per que el recorrer la llista es lineal o 
-	el pitjor cost d'insereix es el de rehash? amb el factor de carrega
-
-	Cost rehash es n o 2n ja que amplia per 2 la taula (n)?
-
-	Falta cost de - Insereix
+	falta nearest prime
 */
 
 nat anagrames::hash(const string &k) const throw() {
@@ -33,7 +28,7 @@ void anagrames::rehash() {
 	/** 
 	 * Pre:  Cert.
 	 * Post: Amplia la mida de la taula hash i dispersa els valors.
-	 * Cost: 0(n) sent n el tamany de la taula.
+	 * Cost: 0(M) sent M el tamany de la nova taula.
 	*/
 	nat midaAbans = _M;
 	_M = _M * 2 + 1;
@@ -68,7 +63,7 @@ anagrames::anagrames() throw(error) : _quants(0) {
 	/** 
 	 * Pre:  Cert.
 	 * Post: Construeix un anagrama buit.
-	 * Cost: 0(n) sent n el tamany de la taula.
+	 * Cost: 0(M) sent M el tamany de la taula.
 	*/
 	_M = CAPACITAT;
 	_quants = 0;
@@ -82,7 +77,7 @@ anagrames::anagrames(const anagrames &A) throw(error) : diccionari(A) {
 	/** 
 	 * Pre:  Cert.
 	 * Post: Constructor per còpia.
-	 * Cost: O(n) sent n el tamany de la taula.
+	 * Cost: O(M) sent M el tamany de la taula.
 	*/
 	_M = A._M;
 	_quants = A._quants;
@@ -110,7 +105,7 @@ anagrames &anagrames::operator=(const anagrames &A) throw(error) {
 	/** 
 	 * Pre:  Cert.
 	 * Post: Operador d'assignació.
-	 * Cost: O(n) sent n el tamay de la taula.
+	 * Cost: O(M) sent M el tamay de la taula.
 	*/
 	if (&A != this) {
 		diccionari::operator=(A);
@@ -142,7 +137,7 @@ anagrames::~anagrames() throw() {
 	/** 
 	 * Pre:  Cert.
 	 * Post: Destructor.
-	 * Cost: O(n) sent n el tamany de la taula.
+	 * Cost: O(M) sent M el tamany de la taula.
 	*/
 	if (_quants > 0) {
 		node_hash *aux;
@@ -166,7 +161,8 @@ void anagrames::insereix(const string &p) throw(error) {
 	 * Pre:  Cert
 	 * Post: Afegeix la paraula p a l'anagrama; si la paraula p ja formava
    			 part de l'anagrama, l'operació no té cap efecte.
-	 * Cost:
+	 * Cost: El cost mig es constant O(1) però en el pitjor dels casos tindra
+	 		 que fer redispersió i tindra O(n) n en funció de la mida de la taula.
 	*/
 	diccionari::insereix(p);
 	string canonic = word_toolkit::anagrama_canonic(p);

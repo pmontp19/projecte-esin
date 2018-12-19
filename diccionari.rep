@@ -4,9 +4,9 @@ struct node{
 	node *dret;
 	node *cent;
 };
-node *arrel;
-nat n_paraules;
-static const char especial = '#';
+node *_arrel;
+nat _n_paraules;
+static const char _especial = '#';
 static node* copia_nodes(node *m);
 static void esborra_nodes(node *m);
 static node* insereix (node* n, nat posicio, string s, bool &repetit);
