@@ -4,9 +4,9 @@ struct node_hash{
 	node_hash* seg;
 	node_hash(const string &k, const list<string> &v, node_hash* seg = NULL) throw(error);
 };
-node_hash **taula;
-nat quants; //elements guardats a la taula
-nat M; 		//mida de la taula
+node_hash **_taula;
+nat _quants; 	//elements guardats a la taula
+nat _M; 		//mida de la taula
 nat hash(const string& k) const throw();
 void copiar(const anagrames &A);
 void rehash();
