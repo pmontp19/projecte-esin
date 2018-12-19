@@ -87,7 +87,8 @@ typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s, 
 	/** 
 	 * Pre:  Cert.
 	 * Post: Afegeix la lletra del string s allotjada a la posicio del nat posicio.
-	 * Cost: 
+	 * Cost: O(l*log s) sent l el número de simbols que hem queden per visitar i s el número
+	 		 promig de simbols.
 	*/
 	if (n == NULL) {
         if (posicio > s.length()-1) {
@@ -123,7 +124,7 @@ void diccionari::insereix(const string& p) throw(error) {
 	 * Pre:  Cert.
 	 * Post: Afegeix la paraula p al diccionari; si la paraula p ja formava
  			 part del diccionari, l'operació no té cap efecte. 
-	 * Cost: O(l*log s) sent l la longitud mitja i s el numero de simbols.
+	 * Cost: O(l*log s) sent l la longitud mitja i s el numero promig de simbols.
 	*/
 	string s = p + _especial;
 	bool repetit = false;
@@ -137,7 +138,8 @@ string diccionari::prefix(node *n, string s, nat i, nat &j) {
 	 * Post: Retorna el prefix més llarg de p que és una paraula que pertany
  			 al diccionari, o dit d'una forma més precisa, retorna la
  			 paraula més llarga del diccionari que és prefix de p.
-	 * Cost: 
+	 * Cost: O(l*log s) sent l el número de simbols que hem queden per visitar i s el número
+	 		 promig de simbols.
 	*/
 	string paraula = "";
 	if (n != NULL) {
@@ -163,7 +165,7 @@ string diccionari::prefix(const string& p) const throw(error) {
 	 * Post: Retorna el prefix més llarg de p que és una paraula que pertany
  			 al diccionari, o dit d'una forma més precisa, retorna la
  			 paraula més llarga del diccionari que és prefix de p.
-	 * Cost: O(l*log s) sent l la longitud mitja i s el numero de simbols.
+	 * Cost: O(l*log s) sent l la longitud mitja i s el numero de simbols promig.
 	*/
 	nat j = 0;
 	string s = prefix(_arrel, p, 0, j);
@@ -180,7 +182,7 @@ void diccionari::satisfan_patro(node *n, const vector<string>& q, list<string>& 
 	 * Post: Retorna la llista de paraules del diccionari que satisfan el
    			 patró especificat en el vector d'strings q, en ordre alfabètic
    			 ascendent.
-	 * Cost:
+	 * Cost: O(l*n) l és l'altura promig i n el número total de nodes.
 	*/
 	if (n != NULL) {
 		string par2 = par + n->valor;
@@ -211,7 +213,7 @@ void diccionari::satisfan_patro(const vector<string>& q, list<string>& L) const 
 	 * Post: Retorna la llista de paraules del diccionari que satisfan el
    			 patró especificat en el vector d'strings q, en ordre alfabètic
    			 ascendent.
-	 * Cost: O(l*log s) sent l la longitud mitja i s el numero de simbols.
+	 * Cost: O(l*n) l és l'altura promig i n el número total de nodes.
 	*/
 	satisfan_patro(_arrel, q, L, 0, "");
 	return;
@@ -222,7 +224,7 @@ void diccionari::llista_paraules(node *n, nat k, list<string>& L, nat profundita
 	 * Pre:  Cert.
 	 * Post: Retorna una llista amb totes les paraules del diccionari 
      		 de longitud major o igual a k en ordre alfabètic ascendent.
-	 * Cost:
+	 * Cost: O(l*n) l és l'altura promig i n el número total de nodes.
 	*/
 	if ( n!= NULL ) {
 		string par2 = par + n->valor;
@@ -243,7 +245,7 @@ void diccionari::llista_paraules(nat k, list<string>& L) const throw(error) {
 	 * Pre:  Cert.
 	 * Post: Retorna una llista amb totes les paraules del diccionari 
      		 de longitud major o igual a k en ordre alfabètic ascendent.
-	 * Cost:
+	 * Cost: O(l*n) l és l'altura promig i n el número total de nodes.
 	*/
 	llista_paraules(_arrel, k, L, 0, "");
 	return;

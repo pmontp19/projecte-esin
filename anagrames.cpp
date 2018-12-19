@@ -8,6 +8,31 @@
 	falta nearest prime
 */
 
+bool is_prime(nat n) {
+	/** 
+	 * Pre:  Cert. 
+	 * Post: Retorna si el nat n es primer o no.
+	 * Cost: 
+	*/
+    if ((n <= 2) || (n % 2 == 0)) return n <= 2;
+    nat j = 3;
+    while (j * j <= n && n % j != 0) 
+      j += 2;
+    return (j * j > n);
+}
+
+nat nearest_prime(nat n){
+	/** 
+	 * Pre:  Cert.
+	 * Post: Retorna el nombre primer mes proper al del parametre implicit.
+	 * Cost:	
+	*/
+	nat i = n;
+    while (!is_prime(i)) 
+      i++;
+    return i;
+ }
+
 nat anagrames::hash(const string &k) const throw() {
 	/** 
 	 * Pre:  Cert.
@@ -18,7 +43,7 @@ nat anagrames::hash(const string &k) const throw() {
 }
 
 anagrames::node_hash::node_hash(const string &k, const list<string> &v, node_hash *seg) throw(error) : k(k), v(v), seg(seg) {}
-/** 
+	/** 
 	 * Pre:  Cert.
 	 * Post: Construeix un node hash per parametres.
 	 * Cost: 0(1) constant.
@@ -31,7 +56,8 @@ void anagrames::rehash() {
 	 * Cost: 0(M) sent M el tamany de la nova taula.
 	*/
 	nat midaAbans = _M;
-	_M = _M * 2 + 1;
+	_M = nearest_prime(_M * 2 + 1);
+	cout<<"nueva M  "<<_M<<endl;
 	node_hash **novaTaula = new node_hash *[_M]();
 	for (nat i = 0; i < midaAbans; ++i) {
 		node_hash *n = _taula[i];
@@ -65,7 +91,7 @@ anagrames::anagrames() throw(error) : _quants(0) {
 	 * Post: Construeix un anagrama buit.
 	 * Cost: 0(M) sent M el tamany de la taula.
 	*/
-	_M = CAPACITAT;
+	_M = nearest_prime(CAPACITAT);
 	_quants = 0;
 	_taula = new node_hash *[_M];
 	for (nat i = 0; i < _M; ++i) {
@@ -108,25 +134,39 @@ anagrames &anagrames::operator=(const anagrames &A) throw(error) {
 	 * Cost: O(M) sent M el tamay de la taula.
 	*/
 	if (&A != this) {
-		diccionari::operator=(A);
-		_M = A._M;
-		_quants = A._quants;
-		_taula = new node_hash *[_M];
-		for (nat i = 0; i < _M; ++i) {
-			node_hash *p = A._taula[i];
-			if (p == NULL) {
-				_taula[i] = NULL;
-			} else {
-				node_hash *q = new node_hash(p->k, p->v, _taula[i]);
-				_taula[i] = q;
-				p = p->seg;
-				while (p != NULL) {
-					node_hash *aux = new node_hash(p->k, p->v, _taula[i]);
-					q->seg = aux;
-					p = p->seg;
-					q = aux;
+		if (_quants > 0) {
+			node_hash *aux;
+			node_hash *auxSeg;
+			for (nat i = 0; i < _M; ++i) {
+				aux = _taula[i];
+				while (aux != NULL) {
+					auxSeg = aux->seg;
+					delete aux;
+					aux = auxSeg;
 				}
-				q->seg = NULL;
+				_taula[i] = NULL;
+			}
+			delete[] _taula;
+			diccionari::operator=(A);
+			_M = A._M;
+			_quants = A._quants;
+			_taula = new node_hash *[_M];
+			for (nat i = 0; i < _M; ++i) {
+				node_hash *p = A._taula[i];
+				if (p == NULL) {
+					_taula[i] = NULL;
+				} else {
+					node_hash *q = new node_hash(p->k, p->v, _taula[i]);
+					_taula[i] = q;
+					p = p->seg;
+					while (p != NULL) {
+						node_hash *aux = new node_hash(p->k, p->v, _taula[i]);
+						q->seg = aux;
+						p = p->seg;
+						q = aux;
+					}
+					q->seg = NULL;
+				}
 			}
 		}
 	}
