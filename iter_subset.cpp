@@ -1,16 +1,16 @@
 #include "iter_subset.hpp"
 
-iter_subset::iter_subset(nat n, nat k) throw(error): n(n), k(k), actual(k) {
+iter_subset::iter_subset(nat n, nat k) throw(error): _n(n), _k(k), _actual(k) {
   /** 
    * Pre:  k <= n.
    * Post: Construeix un iterador sobre els subconjunts de k elements 
            de {1, ..., n}; si k > n no hi ha res a recórrer. 
    * Cost: O(k) sent k el tamany del subset.
   */
-  final = false;
-  final = k > n;
-  for (nat i = 0; i< k; i++) {
-      actual[i] = i+1;
+  _final = false;
+  _final = _k > _n;
+  for (nat i = 0; i< _k; i++) {
+      _actual[i] = i+1;
     }
   }
 
@@ -20,10 +20,10 @@ iter_subset::iter_subset(const iter_subset& its) throw(error) {
    * Post: Constructor per còpia.
    * Cost: constant O(1).
   */
-  n = its.n;
-  k = its.k;
-  actual = its.actual;
-  final = its.final;
+  _n = its._n;
+  _k = its._k;
+  _actual = its._actual;
+  _final = its._final;
 }
 
 iter_subset& iter_subset::operator=(const iter_subset& its) throw(error) {
@@ -32,10 +32,10 @@ iter_subset& iter_subset::operator=(const iter_subset& its) throw(error) {
    * Post: Operador d'assignació.
    * Cost: Constant O(1).
   */
-  n = its.n;
-  k = its.k;
-  actual = its.actual;
-  final = its.final;
+  _n = its._n;
+  _k = its._k;
+  _actual = its._actual;
+  _final = its._final;
   return *this;
 }
 iter_subset::~iter_subset() throw() {
@@ -44,10 +44,10 @@ iter_subset::~iter_subset() throw() {
    * Post: Destructor.
    * Cost: O(k) sent k el tamany del subset.
   */
-  k = 0;
-  n = 0;
-  actual.erase(actual.begin(), actual.end());
-  final = true;
+  _k = 0;
+  _n = 0;
+  _actual.erase(_actual.begin(), _actual.end());
+  _final = true;
 }
 bool iter_subset::end() const throw() {
   /** 
@@ -58,7 +58,7 @@ bool iter_subset::end() const throw() {
            que queda a continuació de l'últim subconjunt vàlid.
    * Cost: Constant O(1).
   */
-  return final;
+  return _final;
 }
 subset iter_subset::operator*() const throw(error) {
   /** 
@@ -67,8 +67,8 @@ subset iter_subset::operator*() const throw(error) {
            l'iterador; llança un error si l'iterador apunta al sentinella.
    * Cost: Constant O(1).
   */
-  if (final) throw error(IterSubsetIncorr);
-  return actual;
+  if (_final) throw error(IterSubsetIncorr);
+  return _actual;
 }
 
 iter_subset& iter_subset::operator++() throw() {
@@ -81,15 +81,15 @@ iter_subset& iter_subset::operator++() throw() {
   */
   bool acabat = false, modificat = false;
   nat i, j, max;
-  max = n;
+  max = _n;
 
-  if (k > 0 && !final) {
-    for (i = k - 1; !acabat && !modificat; i--) {
-      if (actual[i] < max - (k - 1) + i) {  // calcula que no sigui el valor maxim
-        actual[i]++;
-        if (i < k - 1) {
-          for (j = i + 1; j < k; j++) {
-            actual[j] = actual[j - 1] + 1;  // +1 de l'anterior fins al final
+  if (_k > 0 && !_final) {
+    for (i = _k - 1; !acabat && !modificat; i--) {
+      if (_actual[i] < max - (_k - 1) + i) {  // calcula que no sigui el valor maxim
+        _actual[i]++;
+        if (i < _k - 1) {
+          for (j = i + 1; j < _k; j++) {
+            _actual[j] = _actual[j - 1] + 1;  // +1 de l'anterior fins al final
           }
         }
         modificat = true;
@@ -98,10 +98,10 @@ iter_subset& iter_subset::operator++() throw() {
     }
     if (!modificat) {
       // si no s'ha modificat vol dir que estem al final
-      final = true;
+      _final = true;
     }
   } else {  // si k<=0 final
-    final = true;
+    _final = true;
   }
   return *this;
 }
@@ -125,10 +125,10 @@ bool iter_subset::operator==(const iter_subset& c) const throw() {
   bool iguals = true;
   nat i = 0;
 
-  if ( (n != c.n || k != c.k) && (k != 0 && c.k != 0) ) iguals = false;
-  if (c.end() != final) iguals = false;
-  while (i < k && iguals) {
-    if (c.actual[i] == actual[i]) i++;
+  if ( (_n != c._n || _k != c._k) && (_k != 0 && c._k != 0) ) iguals = false;
+  if (c.end() != _final) iguals = false;
+  while (i < _k && iguals) {
+    if (c._actual[i] == _actual[i]) i++;
     else
       iguals = false;
     }

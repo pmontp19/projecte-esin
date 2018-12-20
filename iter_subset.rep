@@ -1,4 +1,4 @@
-nat n;
-nat k;
-subset actual;
-bool final;
+nat _n;
+nat _k;
+subset _actual;
+bool _final;
