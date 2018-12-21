@@ -4,6 +4,7 @@ main
 .vscode/settings.json
 *.o
 *.e
+*.so
 *.swp
 diff*
 out*
