@@ -1,8 +1,8 @@
 struct node_hash {
-	string k;
-	list<string> v;
-	node_hash* seg;
-	node_hash(const string &k, const list<string> &v, node_hash* seg = NULL) throw(error);
+  string k;
+  list<string> v;
+  node_hash* seg;
+  node_hash(const string &k, const list<string> &v, node_hash* seg = NULL) throw(error);
 };
 node_hash **_taula;
 nat _quants; 	//elements guardats a la taula

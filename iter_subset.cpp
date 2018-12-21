@@ -10,9 +10,9 @@ iter_subset::iter_subset(nat n, nat k) throw(error): _n(n), _k(k), _actual(k) {
   _final = false;
   _final = _k > _n;
   for (nat i = 0; i< _k; i++) {
-      _actual[i] = i+1;
-    }
+    _actual[i] = i+1;
   }
+}
 
 iter_subset::iter_subset(const iter_subset& its) throw(error) {
   /** 
@@ -38,6 +38,7 @@ iter_subset& iter_subset::operator=(const iter_subset& its) throw(error) {
   _final = its._final;
   return *this;
 }
+
 iter_subset::~iter_subset() throw() {
   /** 
    * Pre:  Cert.
@@ -49,6 +50,7 @@ iter_subset::~iter_subset() throw() {
   _actual.erase(_actual.begin(), _actual.end());
   _final = true;
 }
+
 bool iter_subset::end() const throw() {
   /** 
    * Pre:  Cert.
@@ -60,6 +62,7 @@ bool iter_subset::end() const throw() {
   */
   return _final;
 }
+
 subset iter_subset::operator*() const throw(error) {
   /** 
    * Pre:  Cert.
@@ -89,10 +92,10 @@ iter_subset& iter_subset::operator++() throw() {
         _actual[i]++;
         if (i < _k - 1) {
           for (j = i + 1; j < _k; j++) {
-            _actual[j] = _actual[j - 1] + 1;  // +1 de l'anterior fins al final
+          _actual[j] = _actual[j - 1] + 1;  // +1 de l'anterior fins al final
           }
         }
-        modificat = true;
+      modificat = true;
       }
       if (i == 0) acabat = true;
     }
@@ -115,11 +118,12 @@ iter_subset iter_subset::operator++(int) throw() {
   */
   return ++*this;
 }
+
 bool iter_subset::operator==(const iter_subset& c) const throw() {
   /** 
    * Pre:  Cert.
    * Post: Operadors relacionals.
-           Es compara totes les variables de iter_subset.
+       Es compara totes les variables de iter_subset.
    * Cost: O(k) sent k el tamany del subset.
   */
   bool iguals = true;
@@ -128,10 +132,11 @@ bool iter_subset::operator==(const iter_subset& c) const throw() {
   if ( (_n != c._n || _k != c._k) && (_k != 0 && c._k != 0) ) iguals = false;
   if (c.end() != _final) iguals = false;
   while (i < _k && iguals) {
-    if (c._actual[i] == _actual[i]) i++;
+    if (c._actual[i] == _actual[i])
+      i++;
     else
       iguals = false;
-    }
+  }
   return iguals;
 }
 bool iter_subset::operator!=(const iter_subset& c) const throw() {

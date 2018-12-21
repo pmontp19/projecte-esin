@@ -1,8 +1,8 @@
 struct node {
-	char valor;
-	node *esq;
-	node *dret;
-	node *cent;
+  char valor;
+  node *esq;
+  node *dret;
+  node *cent;
 };
 node *_arrel;
 nat _n_paraules;
