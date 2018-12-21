@@ -26,8 +26,10 @@ int main() {
     b.insereix(par3);
     b.insereix(par4);
 
-    anagrames c = b;
-
+    anagrames c = a;
+    cout << "anagrames a numero paraules " << a.num_pal() << endl;
+    cout << "anagrames b numero paraules " << b.num_pal() << endl;
+    cout << "anagrames c numero paraules " << c.num_pal() << endl;
     if (a == b) {
       cout << "true" << endl;
     } else {

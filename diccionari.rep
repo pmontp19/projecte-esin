@@ -1,4 +1,4 @@
-struct node{
+struct node {
 	char valor;
 	node *esq;
 	node *dret;

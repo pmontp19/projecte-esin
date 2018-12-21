@@ -3,14 +3,14 @@
 ## diccionari.rep
 
 ```cpp
-struct node{
- char valor;
- node *esq;
- node *dret;
- node *cent;
+struct node {
+  char valor;
+  node *esq;
+  node *dret;
+  node *cent;
 };
-node *arrel;
-nat n_paraules;
+node *_arrel;
+nat _n_paraules;
 ...
 ```
 
@@ -23,15 +23,15 @@ De mitjana el cost de les operacions d'inserir, esborrar i buscar (`satisfan_pat
 ## anagrames.rep
 
 ```cpp
-struct node_hash{
- string k;
- list<string> v;
- node_hash* seg;
- ...
+struct node_hash {
+  string k;
+  list<string> v;
+  node_hash* seg;
+  ...
 };
-node_hash **taula;
-nat quants;
-nat M;
+node_hash **_taula;
+nat _quants;
+nat _M;
 ...
 ```
 
@@ -42,9 +42,9 @@ La resta d'estructures considerades (arbres binaris de cerca, arbres equilibrats
 ## iter_subset.rep
 
 ```cpp
-nat n;
-nat k;
-subset actual;
+nat _n;
+nat _k;
+subset _actual;
 ...
 ```
 

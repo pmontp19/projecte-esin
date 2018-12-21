@@ -1,4 +1,4 @@
-struct node_hash{
+struct node_hash {
 	string k;
 	list<string> v;
 	node_hash* seg;
