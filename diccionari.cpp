@@ -129,7 +129,7 @@ void diccionari::insereix(const string& p) throw(error) {
   string s = p + _especial;
   bool repetit = false;
   _arrel = insereix(_arrel, 0, s, repetit);
-  if(!repetit) _n_paraules++;
+  if (!repetit) _n_paraules++;
 }
 
 string diccionari::prefix(node *n, string s, nat i, nat &j) {
@@ -170,7 +170,7 @@ string diccionari::prefix(const string& p) const throw(error) {
   nat j = 0;
   string s = prefix(_arrel, p, 0, j);
   string par = "";
-  for(nat i = 0; i< j; i++) {
+  for (nat i = 0; i< j; i++) {
     par+=s[i];
   }
   return par;

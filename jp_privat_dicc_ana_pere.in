@@ -1,0 +1,89 @@
+##! Memoria general
+set_memory 1000000 1000000000
+
+#### DICCIONARI
+
+## Test mètodes llista_paraules i num_pal
+init d1 dicc
+load dic77777.in
+num_par
+#77778
+lpap 23
+#[ELECTROENCEFALOGRAFISTA]
+lpap 22
+#[ELECTROENCEFALOGRAFICO, ELECTROENCEFALOGRAFISTA, ESTERNOCLEIDOMASTOIDEO]
+lpap 24
+#[]
+
+## Test constructor per còpia
+initcopy d2 = d1
+d2 num_par
+#77778
+d2 lpap 22
+#[ELECTROENCEFALOGRAFICO, ELECTROENCEFALOGRAFISTA, ESTERNOCLEIDOMASTOIDEO]
+d1 destroy
+d2 num_par
+#77778
+d2 lpap 22
+#[ELECTROENCEFALOGRAFICO, ELECTROENCEFALOGRAFISTA, ESTERNOCLEIDOMASTOIDEO]
+
+## Test mètodes llista_paraules i num_pal
+init d1 dicc
+load dic74.in
+num_par
+#75
+lpap 10
+#[ENTREVISTA, RADIOGRAFIA]
+lpap 16
+#[]
+
+## Test operador assignació
+d2 = d1
+d2 num_par
+#75
+d2 lpap 10
+#[ENTREVISTA, RADIOGRAFIA]
+d1 destroy
+d2 num_par
+#75
+d2 lpap 10
+#[ENTREVISTA, RADIOGRAFIA]
+d2 destroy
+pm 0
+#[0/0]
+
+
+#### ANAGRAMES
+
+init a1 anagrames
+load anagrames77777.in
+a_pre NATACIO
+#NATA
+mac AAMS
+#[NATA, MASA, SAMA]
+
+## Test constructor per còpia
+initcopy a2 = a1
+a2 a_pre NATACIO
+#NATA
+a2 mac AAMS
+#[NATA, MASA, SAMA]
+a1 destroy
+a2 a_pre NATACIO
+#NATA
+a2 mac AAMS
+#[NATA, MASA, SAMA]
+
+init a1 anagrames
+a_ins ESIN
+a_ins SIEN
+
+## Test operador assignació
+a2 = a1
+a2 a_pre SIENA
+a2 mac EINS
+a1 destroy
+a2 a_pre SIENA
+a2 mac EINS
+a2 destroy
+pm 0
