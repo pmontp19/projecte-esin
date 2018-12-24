@@ -180,8 +180,8 @@ void diccionari::satisfan_patro(node *n, const vector<string>& q, list<string>& 
   /** 
    * Pre:  Cert.
    * Post: Retorna la llista de paraules del diccionari que satisfan el
-          patró especificat en el vector d'strings q, en ordre alfabètic
-          ascendent.
+   *       patró especificat en el vector d'strings q, en ordre alfabètic
+   *       ascendent.
    * Cost: O(l*n) l és l'altura promig i n el número total de nodes.
   */
   if (n != NULL) {
@@ -211,8 +211,8 @@ void diccionari::satisfan_patro(const vector<string>& q, list<string>& L) const 
   /** 
    * Pre:  Cert.
    * Post: Retorna la llista de paraules del diccionari que satisfan el
-          patró especificat en el vector d'strings q, en ordre alfabètic
-          ascendent.
+   *       patró especificat en el vector d'strings q, en ordre alfabètic
+   *       ascendent.
    * Cost: O(l*n) l és l'altura promig i n el número total de nodes.
   */
   satisfan_patro(_arrel, q, L, 0, "");
@@ -223,7 +223,7 @@ void diccionari::llista_paraules(node *n, nat k, list<string>& L, nat profundita
   /** 
    * Pre:  Cert.
    * Post: Retorna una llista amb totes les paraules del diccionari 
-        de longitud major o igual a k en ordre alfabètic ascendent.
+   *       de longitud major o igual a k en ordre alfabètic ascendent.
    * Cost: O(l*n) l és l'altura promig i n el número total de nodes.
   */
   if ( n!= NULL ) {
@@ -244,7 +244,7 @@ void diccionari::llista_paraules(nat k, list<string>& L) const throw(error) {
   /** 
    * Pre:  Cert.
    * Post: Retorna una llista amb totes les paraules del diccionari 
-        de longitud major o igual a k en ordre alfabètic ascendent.
+   *       de longitud major o igual a k en ordre alfabètic ascendent.
    * Cost: O(l*n) l és l'altura promig i n el número total de nodes.
   */
   llista_paraules(_arrel, k, L, 0, "");

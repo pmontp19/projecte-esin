@@ -195,9 +195,9 @@ void anagrames::insereix(const string &p) throw(error) {
   /** 
    * Pre:  Cert
    * Post: Afegeix la paraula p a l'anagrama; si la paraula p ja formava
-   *      part de l'anagrama, l'operació no té cap efecte.
+   *       part de l'anagrama, l'operació no té cap efecte.
    * Cost: El cost mig es constant O(1) però en el pitjor dels casos tindra
-   *    que fer redispersió i tindra O(n) n en funció de la mida de la taula.
+   *       que fer redispersió i tindra O(n) n en funció de la mida de la taula.
   */
   diccionari::insereix(p);
   string canonic = word_toolkit::anagrama_canonic(p);
@@ -240,7 +240,7 @@ void anagrames::mateix_anagrama_canonic(const string &a, list<string> &L) const 
    * Pre:  Les lletres de a tenen que estar en ordre ascendent llença un error si no ho estan.
    * Post: Retorna la llista de paraules p ordenada tals que anagrama_canonic(p)=a.
    * Cost: O(n) sent n el cost promig de les paraules de les llistes que tenen el
-   * mateix anagrama canonic .
+   *       mateix anagrama canonic .
    */
   if (word_toolkit::es_canonic(a)) {
     nat i = anagrames::hash(a);

@@ -123,7 +123,7 @@ bool iter_subset::operator==(const iter_subset& c) const throw() {
   /** 
    * Pre:  Cert.
    * Post: Operadors relacionals.
-       Es compara totes les variables de iter_subset.
+   *       Es compara totes les variables de iter_subset.
    * Cost: O(k) sent k el tamany del subset.
   */
   bool iguals = true;

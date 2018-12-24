@@ -5,7 +5,7 @@ bool word_toolkit::es_canonic(const string& s) throw() {
   /** 
    * Pre:  Cert.
    * Post: Retorna cert si i només si les lletres de l'string s estan en 
-   *    ordre lexicogràfic ascendent. 
+   *       ordre lexicogràfic ascendent. 
    * Cost: lineal O(n).
    */
   bool t = true;
@@ -36,12 +36,12 @@ char word_toolkit::mes_frequent(const string& excl, const list<string>& L) throw
   /** 
    * Pre:  L es una llista no buida.
    * Post: Retorna el caràcter que no apareix a l'string excl i és el més
-   *         freqüent en la llista de paraules L, sent L una llista no buida
-   *   de paraules formades exclusivament amb lletres majúscules de
-   *   la 'A' a la 'Z' (excloses la 'Ñ', 'Ç', majúscules accentuades, ...).
-   *   En cas d'empat, es retornaria el caràcter alfabèticament menor.
-   *      Si l'string excl inclou totes les lletres de la 'A' a la 'Z' es 
-   *     retorna el caràcter '\0', és a dir, el caràcter de codi ASCII 0.
+   *       freqüent en la llista de paraules L, sent L una llista no buida
+   *       de paraules formades exclusivament amb lletres majúscules de
+   *       la 'A' a la 'Z' (excloses la 'Ñ', 'Ç', majúscules accentuades, ...).
+   *       En cas d'empat, es retornaria el caràcter alfabèticament menor.
+   *       Si l'string excl inclou totes les lletres de la 'A' a la 'Z' es 
+   *       retorna el caràcter '\0', és a dir, el caràcter de codi ASCII 0.
    * Cost: lineal respecte al numero de caracters de string de la llista O(n).
    */
   char resposta;
