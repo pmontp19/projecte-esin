@@ -18,6 +18,8 @@ L'estructura escollida per la representació de la classe `diccionari` és un ar
 
 Cada node conté tres punters: dos apunten als fills esquerre i dret d'un BST i un altre central que forma un sub BST i que conté els símbols de la següent posició de totes les claus que tenen el mateix prefix.
 
+Tením també un punter al primer node `node *_arrel` per facilitar l'accés i un natural `nat _n_paraules` per reduir els cost de calcular el nombre de paraules a constant.
+
 De mitjana el cost de les operacions d'inserir, eliminar i consultar un node és de O(l·log(s))), sent s el nombre de símbols i l és la longitud mitjana dels símbols de les claus. Té uns costos millors que un trie de tipus primer fill següent germà que seria O(l·s) però no millors que un vector punter que tindria O(l).
 
 Els arbres ternaris de cerca combinen l'eficiència en l'accés dels subarbres amb l'estalvi de memòria, ja que és semblant al BST. L'eficiència dels TST varia significantment depenent de les entrades, van millor quan s'afegeix strings similars, especialment quan aquests comparteixen prefix. Alternativament els TST són efectius també quan emmagatzemen un nombre gran de strings curts com en el cas d'un diccionari. Els costos són molt similars als del BST, normalment el temps mitjà és logarítmic però pot ser lineal en el pitjor dels casos.
@@ -46,6 +48,8 @@ Per la representació de la classe anagrames s'ha escollit una estructura de tau
 Hem escollit la taula d'encadenats indirectes, cada entrada apunta a la llista encadenada de sinònims. La taula no guarda els elements en si, sinó un punter al primer element de la llista.
 
 La taula hash conté un `string k` que serà la clau amb què relacionarem la posició de la taula, una llista de sinònims `list<string>; v` que contindrà els sinònims relacionats amb aquella clau i un punter `node_hash* seg` que marcarà un punter al següent element de la llista en cas de col·lisió.
+
+També tenim una variable amb la taula hash per poder accedir-hi `node_hash **_taula`, un natural amb el nombre d'elements inserits `nat _quants`, amb aixó podrem calcular el factor de càrrega i veure si necesitem practicar la redispersió i finalment un natural amb la mida de la taula `nat _M`.
 
 En aquest cas hem escollit taules hash perquè les taules hash permeten l'accés a l'instant quan l'element es troba dintre de l'estructura. En el plantejament ens demanen una llista amb els elements que comparteixen el mateix canònic en `mateix_anagrama_canonic`, per tant aquests compartiran la mateixa clau `string k`. Com hem comentat en l'estructura anterior les taules hash són una molt bona opció quan la clau que busquem ja es troba inserida a l'estructura com és en aquest cas sent llavors una elecció molt més eficient que el tries.
 
