@@ -103,3 +103,4 @@ if (condicio) { // Espai després d'IF i abans de {
 }
 ```
 
+Hem pres com a referència de la [guia d'estil de Google en C++](http://google.github.io/styleguide/cppguide.html) només obviant el nom de les variables privades (no recomana els guions precedents) i la llargada de línies de 80 caràcters com a màxim, ja que les pantalles d'avui en dia permeten ja visualitzar més de 80 caràcters.
