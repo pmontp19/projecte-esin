@@ -20,11 +20,11 @@ Cada node conté tres punters: dos apunten als fills esquerre i dret d'un BST i 
 
 De mitjana el cost de les operacions d'inserir, eliminar i consultar un node és de O(l·log(s))), sent s el nombre de símbols i l és la longitud mitjana dels símbols de les claus. Té uns costos millors que un trie de tipus primer fill següent germà que seria O(l·s) però no millors que un vector punter que tindria O(l).
 
-Els arbres ternaris de cerca combinen l'eficiència en l'accés dels subarbres amb l'estalvi de memòria ja que es semblant al BST. L'eficiencia dels TST varia significantment depenent de les entrades, van millor quan s'afegeix strings similars, especialment quant aquests comparteixen prefix. Alternativament els TST son efectius també quan enmgatzeman un nombre gran de strings curts com en el cas d'un diccionari. Els costos son molt similars als del BST, normalment el temps mig es logaritmic però pot ser lineal en el pitjor dels casos.
+Els arbres ternaris de cerca combinen l'eficiència en l'accés dels subarbres amb l'estalvi de memòria, ja que és semblant al BST. L'eficiència dels TST varia significantment depenent de les entrades, van millor quan s'afegeix strings similars, especialment quan aquests comparteixen prefix. Alternativament els TST són efectius també quan emmagatzemen un nombre gran de strings curts com en el cas d'un diccionari. Els costos són molt similars als del BST, normalment el temps mitjà és logarítmic però pot ser lineal en el pitjor dels casos.
 
-Si comparem el tries amb les taules hash, les taules hash frecuentment usen més memoria que els tries i són més lents quan es tracta de comparar un string que no es troba dintre de l'estructura, perque ha de comparar tot el string sencer en comptes de només uns caracters com fa el tries. Així que no ho vam veure com una bona opció.
+Si comparem el tries amb les taules hash, les taules hash freqüentment usen més memòria que els tries i són més lents quan es tracta de comparar un string que no es troba dintre de l'estructura, perquè ha de comparar tot el string sencer en comptes de només uns caràcters com fa el tries. Així que no ho vam veure com una bona opció.
 
-Per tant encara que no sigui l'implementació més ràpida de tries, sent vector punter més rapida que aquesta, els TST són la millor opció per enmagatzemar grans quantitats de strings degut a la seva eficiencia enmagatzeman informació, i sent perfecte per guardar strings similars. Per tant considerem que és la millor estructura per un diccionari ja que estalvia més memoria i quan parlem de gran quantitats de paraules similars com és el cas d'un diccionari, és molt important no consumir en excés tots els recursos.
+Per tant encara que no sigui la implementació més ràpida de tries, sent vector punter més rapida que aquesta, els TST són la millor opció per emmagatzemar grans quantitats de strings a causa de la seva eficiència emmagatzeman informació, i sent perfecte per guardar strings similars. Per tant considerem que és la millor estructura per un diccionari, ja que estalvia més memòria i quan parlem de grans quantitats de paraules similars com és el cas d'un diccionari, és molt important no consumir en excés tots els recursos.
 
 ## anagrames.rep
 
@@ -41,9 +41,17 @@ nat _M;
 ...
 ```
 
-Per la representació de la classe anagrames s'ha escollit una estructura de taula de dispersió per la velocitat d'accés a les dades quan tenim un conjunt de dades grans. El cost de les operacions s'inserir, buscar (`mateix_anagrama_canonic`) és constant O(1) un cop tenim l'índex i podria ser O(n) en el pitjor dels casos, en cas de colisions. Per evitar les colisions es crea sempre una taula amb un numero prim ja que la possibilitat de colisions es menor, i quan s'arriba al 90% de carrega practiquen la redispersió.
+Per la representació de la classe anagrames s'ha escollit una estructura de taula de dispersió per la velocitat d'accés a les dades quan tenim un conjunt de dades grans. El cost de les operacions d'inserir, buscar (`mateix_anagrama_canonic`) és constant O(1) un cop tenim l'índex, i podria ser O(n) en el pitjor dels casos, en cas de col·lisions. Per evitar les col·lisions es crea sempre una taula amb un número primer, ja que la possibilitat de col·lisions és menor, i quan s'arriba al 90% de càrrega practiquem la redispersió.
 
-La resta d'estructures considerades (arbres binaris de cerca, arbres equilibrats) tenen un cost de mitjana O(log(n)) o O(n) en el pitjor 
+Hem escollit la taula d'encadenats indirectes, cada entrada apunta a la llista encadenada de sinònims. La taula no guarda els elements en si, sinó un punter al primer element de la llista.
+
+La taula hash conté un `string k` que serà la clau amb què relacionarem la posició de la taula, una llista de sinònims `list<string>; v` que contindrà els sinònims relacionats amb aquella clau i un punter `node_hash* seg` que marcarà un punter al següent element de la llista en cas de col·lisió.
+
+En aquest cas hem escollit taules hash perquè les taules hash permeten l'accés a l'instant quan l'element es troba dintre de l'estructura. En el plantejament ens demanen una llista amb els elements que comparteixen el mateix canònic en `mateix_anagrama_canonic`, per tant aquests compartiran la mateixa clau `string k`. Com hem comentat en l'estructura anterior les taules hash són una molt bona opció quan la clau que busquem ja es troba inserida a l'estructura com és en aquest cas sent llavors una elecció molt més eficient que el tries.
+
+Un cop trobada la clau a l'estructura, s'introduirà l'element en la llista de sinònims per tal que pugui ser accessible en la pròxima cerca. En cas que hi hagi col·lisió en el punter seg es crearà o s'actualitzara un altre punter amb la informació de la col·lisió. Si la funció de dispersió és correcta com és en aquest cas, les col·lisions seran mínimes.
+
+Hem escollit les taules hash d'encadenats indirectes, aquestes faciliten l'ordenació per clau que ens era molt important en aquesta part del projecte. L'accés al primer element no és immediat, hi ha una taula per mig. Les taules d'encadenats indirectes ens permeten no tenir que comprovar si una posició està lliure o no i treballar sense necessitat de llistes auxiliar per tant ho hem vist una estructura molt més eficient que les taules d'encadenats directes o de direccionament obert.
 
 ## iter_subset.rep
 
@@ -51,7 +59,16 @@ La resta d'estructures considerades (arbres binaris de cerca, arbres equilibrats
 nat _n;
 nat _k;
 subset _actual;
+bool _final;
 ...
 ```
 
 L'estructura de iter_subset en sí mateix és un renombrament d'un vector de naturals, per tant, la definició de la classe es basa en aquest i ja ens ve donada. Els costos per les operacions d'incrementar o construir seran costos lineals en funció de la variable `k`.
+
+L'estructura conté un natural `nat _n` que ens dóna la mida màxima del string donat i un natural `nat _k` que ens dóna la mida del nostre vector. L'estructura també conta d'un subset `subset _actual` que ens diu el subset que tenim en aquest mateix moment i un boolea `bool _final` que ens marca si ens trobem a l'última posició del vector o no.
+
+Pensant en els temps de càlcul vam decidir que en comptes de calcular tots els subsets era molt millor calcular el subset on ens trobàvem en aquest precís moment `subset _actual` i en cas que volguéssim avançar l'estructura calculés el següent. Estalviàvem molt més temps, ja que si calculéssim tots els subsets d'un string molt gran podríem acabar trigant molt i només podria ser que en necessitéssim un o dos.
+
+L'estructura amb el bool `bool _final` era per poder accedir rapidament a saber si estàvem en l'última posició, ja que només havíem de preguntar si era vertader. Això és essencial en un vector, ja que quan el recorres vols saber si estàs en l'última posició per acabar de recorre'l rapidament i afegint un bool amb la resposta fèiem que el temps de calcular d'això fos constant.
+
+Per tant considerem que aquesta és la millor estructura quant a temps i eficiencia, ja que combina una càrrega petita de treball amb uns accessos ràpids.
