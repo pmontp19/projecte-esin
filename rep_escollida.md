@@ -1,6 +1,8 @@
-# Representacio escollida
+# Documentació projecte esin
 
-## diccionari.rep
+## Representacio escollida
+
+### diccionari.rep
 
 ```cpp
 struct node {
@@ -28,7 +30,7 @@ Si comparem el tries amb les taules de dispersió, les taules de dispersió freq
 
 Per tant, encara que no sigui la implementació més ràpida de tries (la de vector punter és més ràpida que aquesta), els TST són la millor opció per emmagatzemar grans quantitats d'_strings_ gràcies a la seva eficiència emmagatzemant informació i sent perfecte per guardar _strings_ similars. Per tant, considerem que és la millor estructura per a un diccionari, ja que estalvia més memòria i, quan parlem de grans quantitats de paraules similars com és el cas d'un diccionari, és molt important no consumir en excés tots els recursos.
 
-## anagrames.rep
+### anagrames.rep
 
 ```cpp
 struct node_hash {
@@ -57,7 +59,7 @@ Un cop trobada la clau a l'estructura, s'introduirà l'element en la llista de s
 
 Hem escollit les taules de dispersió d'encadenats indirectes. Aquest tipus de taules faciliten l'ordenació per clau, cosa que ens era important en aquesta part del projecte. L'accés al primer element no és immediat, sinó que es fa mitjançant una taula. Les taules d'encadenats indirectes ens permeten no haver de comprovar si una posició està lliure o no i treballar sense necessitat de llistes auxiliars, per tant hem considerat que era una estructura més eficient que les taules d'encadenats directes o d'encaminament obert.
 
-## iter_subset.rep
+### iter_subset.rep
 
 ```cpp
 nat _n;
@@ -76,3 +78,28 @@ Pensant en els temps de càlcul, vam decidir que en comptes de calcular tots els
 L'estructura amb el booleà `bool _final` era per poder accedir rapidament a saber si estàvem en l'última posició, ja que només havíem de preguntar si era vertader. Això és essencial en un vector, ja que quan el recorres vols saber si estàs en l'última posició per acabar de recorre'l rapidament i afegint un booleà amb la resposta fèiem que el temps de calcular-ho fos constant.
 
 Per tant considerem que aquesta és la millor estructura quant a temps i eficiència, ja que combina una càrrega petita de treball amb uns accessos ràpids.
+
+## Estil i convencions
+
+Per les variables hem adoptat el següent conveni:
+
+- Constants: majúscules i paraules separades per guions baixos
+- Variables privades: guió baix a l'inici
+
+```cpp
+_quants // variable privada
+CAPACITAT // constant
+```
+
+La identació és de 2 espais. Al voltant dels operadors va un espai en blanc.
+
+Si un dels blocs de `if else` té un claudàtor, l'altra també encara que sigui una sola línia. L'`else` va a la mateixa línia que el claudàtor que tanca. Hi ha d'haver un espai entre la entre `if` i el parèntesi obert, igual que abans del claudàtor que obre.
+
+```cpp
+if (condicio) { // Espai després d'IF i abans de {
+  ...  // 2 espais d'identació
+} else {  // L'else va a la mateixa línia que el claudàtor que tanca
+  ...
+}
+```
+
