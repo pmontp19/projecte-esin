@@ -1,7 +1,7 @@
 #include "anagrames.hpp"
 #include "word_toolkit.hpp"
 
-#define CAPACITAT 100
+#define CAPACITAT 1000
 #define FACTOR_CARREGA .9
 
 bool is_prime(nat n) {
@@ -53,6 +53,7 @@ void anagrames::rehash() {
   */
   nat midaAbans = _M;
   _M = nearest_prime(_M * 2 + 1);
+  cout << "rehash a " << _M << endl;
   node_hash **novaTaula = new node_hash *[_M]();
   for (nat i = 0; i < midaAbans; ++i) {
     node_hash *n = _taula[i];
