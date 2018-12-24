@@ -53,7 +53,6 @@ void anagrames::rehash() {
   */
   nat midaAbans = _M;
   _M = nearest_prime(_M * 2 + 1);
-  cout << "rehash a " << _M << endl;
   node_hash **novaTaula = new node_hash *[_M]();
   for (nat i = 0; i < midaAbans; ++i) {
     node_hash *n = _taula[i];
