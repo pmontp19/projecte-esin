@@ -1,7 +1,7 @@
 #include "anagrames.hpp"
 #include "word_toolkit.hpp"
 
-#define CAPACITAT 100
+#define CAPACITAT 1000
 #define FACTOR_CARREGA .9
 
 bool is_prime(nat n) {

@@ -88,7 +88,7 @@ typename diccionari::node* diccionari::insereix(node *n, nat posicio, string s, 
    * Pre:  Cert.
    * Post: Afegeix la lletra del string s allotjada a la posicio del nat posicio.
    * Cost: O(l*log s) sent l el número de simbols que hem queden per visitar i s el número
-        promig de simbols.
+   *       promig de simbols.
   */
   if (n == NULL) {
     if (posicio > s.length()-1) {
@@ -123,23 +123,23 @@ void diccionari::insereix(const string& p) throw(error) {
   /** 
    * Pre:  Cert.
    * Post: Afegeix la paraula p al diccionari; si la paraula p ja formava
-        part del diccionari, l'operació no té cap efecte. 
+   *       part del diccionari, l'operació no té cap efecte. 
    * Cost: O(l*log s) sent l la longitud mitja i s el numero promig de simbols.
   */
   string s = p + _especial;
   bool repetit = false;
   _arrel = insereix(_arrel, 0, s, repetit);
-  if(!repetit) _n_paraules++;
+  if (!repetit) _n_paraules++;
 }
 
 string diccionari::prefix(node *n, string s, nat i, nat &j) {
   /** 
    * Pre:  Cert.
    * Post: Retorna el prefix més llarg de p que és una paraula que pertany
-        al diccionari, o dit d'una forma més precisa, retorna la
-        paraula més llarga del diccionari que és prefix de p.
+   *       al diccionari, o dit d'una forma més precisa, retorna la
+   *       paraula més llarga del diccionari que és prefix de p.
    * Cost: O(l*log s) sent l el número de simbols que hem queden per visitar i s el número
-        promig de simbols.
+   *       promig de simbols.
   */
   string paraula = "";
   if (n != NULL) {
@@ -163,14 +163,14 @@ string diccionari::prefix(const string& p) const throw(error) {
   /** 
    * Pre:  Cert.
    * Post: Retorna el prefix més llarg de p que és una paraula que pertany
-        al diccionari, o dit d'una forma més precisa, retorna la
-        paraula més llarga del diccionari que és prefix de p.
+   *       al diccionari, o dit d'una forma més precisa, retorna la
+   *       paraula més llarga del diccionari que és prefix de p.
    * Cost: O(l*log s) sent l la longitud mitja i s el numero de simbols promig.
   */
   nat j = 0;
   string s = prefix(_arrel, p, 0, j);
   string par = "";
-  for(nat i = 0; i< j; i++) {
+  for (nat i = 0; i< j; i++) {
     par+=s[i];
   }
   return par;

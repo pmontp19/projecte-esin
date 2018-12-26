@@ -92,10 +92,10 @@ iter_subset& iter_subset::operator++() throw() {
         _actual[i]++;
         if (i < _k - 1) {
           for (j = i + 1; j < _k; j++) {
-          _actual[j] = _actual[j - 1] + 1;  // +1 de l'anterior fins al final
+            _actual[j] = _actual[j - 1] + 1;  // +1 de l'anterior fins al final
           }
         }
-      modificat = true;
+        modificat = true;
       }
       if (i == 0) acabat = true;
     }
