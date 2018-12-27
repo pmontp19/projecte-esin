@@ -6,7 +6,7 @@ void obte_paraules::obte_paraules(nat k, const string& s, const anagrames& A, li
   /** 
    * Pre:  k no es major que la longitud de l'string s o k >= 3 i string s almenys tres lletres.
    * Post: Retorna la llista de paraules que es poden formar usant k lletres
-   *    	 de la paraula s. Llança error si k és major que la longitud de
+   *       de la paraula s. Llança error si k és major que la longitud de
    *    	 l'string s o k < 3.
    * Cost: O((n!/k!(n-k)) * O(l)) sent "n" el tamany del string s i sent "k" la longitud del subset
    *  		 i sent "l" el cost de mateix anagrama canonic.
