@@ -11,3 +11,19 @@ nat hash(const string& k) const throw();
 void copiar(const anagrames &A);
 void rehash();
 void prova_factor_carrega();
+
+/*
+Per a la representació de la classe anagrames s'ha escollit una estructura de taula de dispersió per la velocitat d'accés a les dades quan tenim un conjunt de dades grans. El cost de les operacions d'inserir, buscar (mateix_anagrama_canonic) és constant O(1) un cop tenim l'índex, i podria ser O(n) en el pitjor dels casos, en cas de col·lisions. Per tal d'evitar les col·lisions, es crea sempre una taula amb un nombre primer, ja que la possibilitat de col·lisions és menor, i quan s'arriba al 90% de càrrega practiquem la redispersió.
+
+Hem escollit la taula d'encadenats indirectes en què cada entrada apunta a la llista encadenada de sinònims. La taula no guarda els elements en si, sinó un punter al primer element de la llista.
+
+La taula de dispersió conté un string k que serà la clau que identifica l'anagrama canònic i que relacionarem amb la posició de la taula, una llista de sinònims list<string> v, que contindrà els sinònims relacionats amb la clau, i un punter node_hash* seg,  que marcarà un punter a l'element següent de la llista en cas de col·lisió.
+
+També tenim una variable amb la taula de dispersió per poder accedir-hi node_hash **_taula, un natural amb el nombre d'elements inserits nat _quants i, finalment, un natural amb la mida de la taula nat _M. Amb aquestes dues últimes variables podrem calcular el factor de càrrega i veure si necessitem aplicar una redispersió.
+
+En aquest cas, hem escollit taules de dispersió perquè permeten l'accés a l'instant quan l'element es troba dintre de l'estructura. En el plantejament ens demanen una llista amb els elements que comparteixen el mateix canònic en mateix_anagrama_canonic, per tant aquests compartiran la mateixa clau string k. Com hem comentat en l'estructura anterior, les taules de dispersió són una molt bona opció quan la clau que busquem ja es troba inserida a l'estructura, com és en aquest cas sent llavors una elecció més eficient que el tries.
+
+Un cop trobada la clau a l'estructura, s'introduirà l'element en la llista de sinònims per tal que pugui ser accessible en la pròxima cerca. En cas que hi hagi col·lisió en el punter seg es crearà o s'actualitzarà un altre punter amb la informació de la col·lisió. Si la funció de dispersió és correcta, com és en aquest cas, les col·lisions seran mínimes.
+
+Hem escollit les taules de dispersió d'encadenats indirectes. Aquest tipus de taules faciliten l'ordenació per clau, cosa que ens era important en aquesta part del projecte. L'accés al primer element no és immediat, sinó que es fa mitjançant una taula. Les taules d'encadenats indirectes ens permeten no haver de comprovar si una posició està lliure o no i treballar sense necessitat de llistes auxiliars, per tant hem considerat que era una estructura més eficient que les taules d'encadenats directes o d'encaminament obert.
+*/

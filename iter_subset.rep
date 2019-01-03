@@ -2,3 +2,15 @@ nat _n;
 nat _k;
 subset _actual;
 bool _final;
+
+/*
+L'estructura de iter_subset en si mateixa és un renombrament d'un vector de naturals, per tant, la definició de la classe es basa en aquest i ja ens ve donada. Els costos per les operacions d'incrementar o construir seran costos lineals en funció de la variable k.
+
+L'estructura conté un natural nat _n que ens dona la mida màxima del string donat i un natural nat _k que ens dona la mida del nostre vector. L'estructura també té un subset subset _actual, que ens diu el subset que tenim en un moment donat, i un booleà bool _final, que ens marca si ens trobem en l'últim element del subconjunt.
+
+Pensant en els temps de càlcul, vam decidir que en comptes de calcular tots els subsets era molt millor calcular el subset on ens trobàvem en un moment donat (subset _actual) i que, en cas que volguéssim avançar l'estructura, calculés el següent. Estalviàvem molt més temps perquè si calculéssim tots els subsets d'un string molt gran podríem acabar trigant molt i podria ser que només en necessitéssim un o dos.
+
+L'estructura amb el booleà bool _final era per poder accedir rapidament a saber si estàvem en l'última posició, ja que només havíem de preguntar si era vertader. Això és essencial en un vector, ja que quan el recorres vols saber si estàs en l'última posició per acabar de recorre'l rapidament i afegint un booleà amb la resposta fèiem que el temps de calcular-ho fos constant.
+
+Per tant considerem que aquesta és la millor estructura quant a temps i eficiència, ja que combina una càrrega petita de treball amb uns accessos ràpids.
+*/

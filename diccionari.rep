@@ -13,3 +13,20 @@ static node* insereix (node* n, nat posicio, string s, bool &repetit);
 static string prefix(node *n, string s, nat i, nat &j);
 static void satisfan_patro(node *n, const vector<string>& q, list<string>& L, nat i, string par);
 static void llista_paraules(node *n, nat k, list<string>& L, nat profunditat, string par);
+
+/*
+L'estructura escollida per la representació de la classe diccionari és un arbre ternari de cerca (TST). Aquesta estructura, semblant a un BST, facilita la cerca incremental d'strings per prefixos, que és l'objectiu que cercàvem. Els arbres ternaris de cerca faciliten la descomposició de paraules.
+
+Cada node conté tres punters: dos apunten als fills esquerre i dret d'un BST i un altre central que forma un sub BST i que conté els símbols de la posició següent de totes les claus que tenen el mateix prefix.
+
+Tenim també un punter al primer node node *_arrel per facilitar l'accés i un natural nat _n_paraules per reduir els cost de calcular el nombre de paraules a constant.
+
+De mitjana, el cost de les operacions d'inserir, eliminar i consultar un node és de O(l·log(s))), sent s el nombre de símbols i l la longitud mitjana dels símbols de les claus. Té uns costos millors que un trie de tipus primer fill següent germà que seria O(l·s) però no millors que un vector punter que tindria O(l).
+
+Els arbres ternaris de cerca combinen l'eficiència en l'accés dels subarbres amb l'estalvi de memòria, ja que com s'ha dit és semblant al BST. L'eficiència dels TST varia significativament depenent de les entrades. Van millor quan s'afegeixen strings similars, especialment quan aquests comparteixen prefix. Alternativament, els TST són efectius també quan emmagatzemen un gran nombre d'strings curts com en el cas d'un diccionari. Els costos són molt similars als del BST; normalment, el temps mitjà és logarítmic, però pot ser lineal en el pitjor dels casos.
+
+Si comparem el tries amb les taules de dispersió, les taules de dispersió freqüentment usen més memòria que els tries i són més lentes quan es tracta de comparar un string que no es troba dintre de l'estructura, perquè ha de comparar tot l'string sencer en comptes de només uns caràcters com fa el tries. Així que no ho vam considerar una bona opció.
+
+Per tant, encara que no sigui la implementació més ràpida de tries (la de vector punter és més ràpida que aquesta), els TST són la millor opció per emmagatzemar grans quantitats d'strings gràcies a la seva eficiència emmagatzemant informació i sent perfecte per guardar strings similars. Per tant, considerem que és la millor estructura per a un diccionari, ja que estalvia més memòria i, quan parlem de grans quantitats de paraules similars com és el cas d'un diccionari, és molt important no consumir en excés tots els recursos.
+
+*/
