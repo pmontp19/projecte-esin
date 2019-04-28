@@ -1,13 +1,5 @@
 # projecte-esin
 
-## in progress
-
-- [x] word_toolkit
-- [x] itersubset
-- [x] diccionari
-- [x] anagrames
-- [x] obte_paraules
-
 ![diagrama](https://i.imgur.com/Hi0SuP0.png)
 
 ## Makefile
